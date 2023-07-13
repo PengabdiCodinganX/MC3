@@ -51,8 +51,10 @@
 		2B9278AA2A5D063C00E9E8C8 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				6C97861B2A5F9CAE00B852DE /* ViewModels */,
+				6C97861A2A5F9CA800B852DE /* Models */,
+				6C9786192A5F9CA200B852DE /* Views */,
 				2B9278AB2A5D063C00E9E8C8 /* MC3App.swift */,
-				2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */,
 				2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */,
 				2B9278B12A5D063D00E9E8C8 /* Preview Content */,
 			);
@@ -65,6 +67,28 @@
 				2B9278B22A5D063D00E9E8C8 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6C9786192A5F9CA200B852DE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6C97861A2A5F9CA800B852DE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6C97861B2A5F9CAE00B852DE /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
