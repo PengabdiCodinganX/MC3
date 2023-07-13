@@ -1,5 +1,5 @@
 //
-//  StoryModel.swift
+//  StoryCategoryModel.swift
 //  MC3
 //
 //  Created by Muhammad Adha Fajri Jonison on 13/07/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StoryModel {
+struct StoryCategoryModel {
     var id: UUID?
-    var story: String?
+    var category: String?
 }
