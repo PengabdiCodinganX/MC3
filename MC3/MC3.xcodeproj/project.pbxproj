@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		232A02A52A5FA1BC00171E3A /* WorryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232A02A42A5FA1BC00171E3A /* WorryView.swift */; };
+		232A02A72A5FA35300171E3A /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */; };
 		2B9278AC2A5D063C00E9E8C8 /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9278AB2A5D063C00E9E8C8 /* MC3App.swift */; };
 		2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */; };
 		2B9278B02A5D063D00E9E8C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		232A02A42A5FA1BC00171E3A /* WorryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorryView.swift; sourceTree = "<group>"; };
+		232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		2B9278A82A5D063C00E9E8C8 /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9278AB2A5D063C00E9E8C8 /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */,
+				232A02A42A5FA1BC00171E3A /* WorryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				6C97861C2A5F9F7100B852DE /* AuthViewModel.swift */,
+				232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -168,9 +174,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */,
+				232A02A52A5FA1BC00171E3A /* WorryView.swift in Sources */,
 				6C97861F2A5F9FE700B852DE /* StoryModel.swift in Sources */,
 				2B9278AC2A5D063C00E9E8C8 /* MC3App.swift in Sources */,
 				6C97861D2A5F9F7100B852DE /* AuthViewModel.swift in Sources */,
+				232A02A72A5FA35300171E3A /* SpeechRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,9 +307,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 5G78Q4RCCL;
+				DEVELOPMENT_TEAM = 7FUC59ZN7P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorderd to transcribe. Audio recordings are discarded after transcription";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transription in the app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -328,9 +338,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 5G78Q4RCCL;
+				DEVELOPMENT_TEAM = 7FUC59ZN7P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorderd to transcribe. Audio recordings are discarded after transcription";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transription in the app";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
