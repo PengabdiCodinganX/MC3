@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MC3App: App {
+    @StateObject var userViewModel: UserViewModel = UserViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(userViewModel)
         }
     }
 }

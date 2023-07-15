@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct StoryFeedbackModel {
+struct StoryFeedbackModel: Identifiable {
     var id: UUID?
     var concern: String?
-    var rating: Int32
+    var rating: Int16?
     var feedback: String?
+    var user: UserModel?
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Affirmation" representedClassName="Affirmation" syncable="YES" codeGenerationType="class">
         <attribute name="affirmation" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="storyFeedback" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryFeedback" inverseName="affirmation" inverseEntity="StoryFeedback"/>
     </entity>
     <entity name="PublicFigure" representedClassName="PublicFigure" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -12,6 +13,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="story" optional="YES" attributeType="String"/>
         <relationship name="storyCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryCategory" inverseName="story" inverseEntity="StoryCategory"/>
+        <relationship name="storyFeedback" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryFeedback" inverseName="story" inverseEntity="StoryFeedback"/>
     </entity>
     <entity name="StoryCategory" representedClassName="StoryCategory" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
@@ -23,12 +25,13 @@
         <attribute name="feedback" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="affirmation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Affirmation"/>
-        <relationship name="story" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Story"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
+        <relationship name="affirmation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Affirmation" inverseName="storyFeedback" inverseEntity="Affirmation"/>
+        <relationship name="story" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Story" inverseName="storyFeedback" inverseEntity="Story"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="storyFeedback" inverseEntity="User"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="storyFeedback" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoryFeedback" inverseName="user" inverseEntity="StoryFeedback"/>
     </entity>
 </model>

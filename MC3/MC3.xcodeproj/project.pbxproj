@@ -11,6 +11,8 @@
 		2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */; };
 		2B9278B02A5D063D00E9E8C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */; };
 		2B9278B32A5D063D00E9E8C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B9278B22A5D063D00E9E8C8 /* Preview Assets.xcassets */; };
+		6C2817F22A62830E003E9904 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817F12A62830E003E9904 /* UserViewModel.swift */; };
+		6C2817F42A6285A7003E9904 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817F32A6285A7003E9904 /* Persistence.swift */; };
 		6C97861D2A5F9F7100B852DE /* StoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */; };
 		6C97861F2A5F9FE700B852DE /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97861E2A5F9FE700B852DE /* StoryModel.swift */; };
 		6C97862A2A5FEB3300B852DE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9786292A5FEB3300B852DE /* UserModel.swift */; };
@@ -27,6 +29,10 @@
 		2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B9278B22A5D063D00E9E8C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6C2817F12A62830E003E9904 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		6C2817F32A6285A7003E9904 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		6C2817F52A629365003E9904 /* MC3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MC3.entitlements; sourceTree = "<group>"; };
+		6C2817F62A62936E003E9904 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewModel.swift; sourceTree = "<group>"; };
 		6C97861E2A5F9FE700B852DE /* StoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
 		6C9786292A5FEB3300B852DE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -67,10 +73,13 @@
 		2B9278AA2A5D063C00E9E8C8 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				6C2817F62A62936E003E9904 /* Info.plist */,
+				6C2817F52A629365003E9904 /* MC3.entitlements */,
 				6C97861B2A5F9CAE00B852DE /* ViewModels */,
 				6C97861A2A5F9CA800B852DE /* Models */,
 				6C9786192A5F9CA200B852DE /* Views */,
 				2B9278AB2A5D063C00E9E8C8 /* MC3App.swift */,
+				6C2817F32A6285A7003E9904 /* Persistence.swift */,
 				2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */,
 				6C9786332A5FFF7A00B852DE /* MC3.xcdatamodeld */,
 				2B9278B12A5D063D00E9E8C8 /* Preview Content */,
@@ -111,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */,
+				6C2817F12A62830E003E9904 /* UserViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -186,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C97862E2A5FEEEF00B852DE /* StoryCategoryModel.swift in Sources */,
+				6C2817F22A62830E003E9904 /* UserViewModel.swift in Sources */,
 				6C9786352A5FFF7A00B852DE /* MC3.xcdatamodeld in Sources */,
 				2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */,
 				6C97861F2A5F9FE700B852DE /* StoryModel.swift in Sources */,
@@ -193,6 +204,7 @@
 				6C97862C2A5FEEB600B852DE /* PublicFigureModel.swift in Sources */,
 				6C9786302A5FFD9A00B852DE /* StoryFeedbackModel.swift in Sources */,
 				2B9278AC2A5D063C00E9E8C8 /* MC3App.swift in Sources */,
+				6C2817F42A6285A7003E9904 /* Persistence.swift in Sources */,
 				6C97862A2A5FEB3300B852DE /* UserModel.swift in Sources */,
 				6C97861D2A5F9F7100B852DE /* StoryViewModel.swift in Sources */,
 			);
@@ -320,12 +332,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MC3/MC3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 5G78Q4RCCL;
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -349,12 +363,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MC3/MC3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 5G78Q4RCCL;
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
