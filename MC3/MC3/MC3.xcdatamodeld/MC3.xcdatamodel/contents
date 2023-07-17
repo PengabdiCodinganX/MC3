@@ -30,8 +30,10 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="storyFeedback" inverseEntity="User"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="userIdentifier" optional="YES" attributeType="String"/>
         <relationship name="storyFeedback" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoryFeedback" inverseName="user" inverseEntity="StoryFeedback"/>
     </entity>
 </model>
