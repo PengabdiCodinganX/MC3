@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2324B92F2A67C0FB001223AA /* SelfAffirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324B92E2A67C0FB001223AA /* SelfAffirmationView.swift */; };
 		2324B9312A67C3D8001223AA /* SelfAffirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324B9302A67C3D8001223AA /* SelfAffirmationViewModel.swift */; };
+		2324B9332A6828BF001223AA /* MeditationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2324B9322A6828BF001223AA /* MeditationView.swift */; };
 		232A02A52A5FA1BC00171E3A /* WorryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232A02A42A5FA1BC00171E3A /* WorryView.swift */; };
 		232A02A72A5FA35300171E3A /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */; };
 		232A02AB2A60492C00171E3A /* TextToSpeechExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232A02AA2A60492C00171E3A /* TextToSpeechExampleView.swift */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		2324B92E2A67C0FB001223AA /* SelfAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAffirmationView.swift; sourceTree = "<group>"; };
 		2324B9302A67C3D8001223AA /* SelfAffirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAffirmationViewModel.swift; sourceTree = "<group>"; };
+		2324B9322A6828BF001223AA /* MeditationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationView.swift; sourceTree = "<group>"; };
 		232A02A42A5FA1BC00171E3A /* WorryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorryView.swift; sourceTree = "<group>"; };
 		232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		232A02AA2A60492C00171E3A /* TextToSpeechExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechExampleView.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				232A02A42A5FA1BC00171E3A /* WorryView.swift */,
 				232A02AA2A60492C00171E3A /* TextToSpeechExampleView.swift */,
 				2324B92E2A67C0FB001223AA /* SelfAffirmationView.swift */,
+				2324B9322A6828BF001223AA /* MeditationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				232A02AB2A60492C00171E3A /* TextToSpeechExampleView.swift in Sources */,
 				6C2817F42A6285A7003E9904 /* Persistence.swift in Sources */,
 				6CFF7C982A66A4C90015041C /* ButtonType.swift in Sources */,
+				2324B9332A6828BF001223AA /* MeditationView.swift in Sources */,
 				6C2817FB2A63B1CC003E9904 /* SignInViewModel.swift in Sources */,
 				6CFF7C9A2A66A5DE0015041C /* OnboardingType.swift in Sources */,
 				6C97862A2A5FEB3300B852DE /* UserModel.swift in Sources */,
