@@ -8,7 +8,7 @@
 import Foundation
 
 enum ButtonType: String {
-    case next
-    case getStarted
-    case done
+    case next = "Next"
+    case getStarted = "Get Started"
+    case done = "Done"
 }

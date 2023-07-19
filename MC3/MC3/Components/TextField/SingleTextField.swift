@@ -12,7 +12,7 @@ struct SingleTextField: View {
     @Binding var text: String
     
     var body: some View {
-            TextField("fwqknqw", text: $text)
+            TextField(placeholder, text: $text)
             .textFieldStyle(.roundedBorder)
                  
         
