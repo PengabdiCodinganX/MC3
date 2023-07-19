@@ -15,8 +15,28 @@
 		2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */; };
 		2B9278B02A5D063D00E9E8C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */; };
 		2B9278B32A5D063D00E9E8C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B9278B22A5D063D00E9E8C8 /* Preview Assets.xcassets */; };
-		6C97861D2A5F9F7100B852DE /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97861C2A5F9F7100B852DE /* AuthViewModel.swift */; };
+		6C2817F22A62830E003E9904 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817F12A62830E003E9904 /* UserViewModel.swift */; };
+		6C2817F42A6285A7003E9904 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817F32A6285A7003E9904 /* Persistence.swift */; };
+		6C2817F92A63B0C6003E9904 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817F82A63B0C6003E9904 /* SignInView.swift */; };
+		6C2817FB2A63B1CC003E9904 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817FA2A63B1CC003E9904 /* SignInViewModel.swift */; };
+		6C2817FE2A63CAD1003E9904 /* AppStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2817FD2A63CAD1003E9904 /* AppStorageService.swift */; };
+		6C97861D2A5F9F7100B852DE /* StoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */; };
 		6C97861F2A5F9FE700B852DE /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97861E2A5F9FE700B852DE /* StoryModel.swift */; };
+		6C97862A2A5FEB3300B852DE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9786292A5FEB3300B852DE /* UserModel.swift */; };
+		6C97862C2A5FEEB600B852DE /* PublicFigureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97862B2A5FEEB600B852DE /* PublicFigureModel.swift */; };
+		6C97862E2A5FEEEF00B852DE /* StoryCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97862D2A5FEEEF00B852DE /* StoryCategoryModel.swift */; };
+		6C9786302A5FFD9A00B852DE /* StoryFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C97862F2A5FFD9A00B852DE /* StoryFeedbackModel.swift */; };
+		6C9786322A5FFF6700B852DE /* AffirmationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9786312A5FFF6700B852DE /* AffirmationModel.swift */; };
+		6C9786352A5FFF7A00B852DE /* MC3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6C9786332A5FFF7A00B852DE /* MC3.xcdatamodeld */; };
+		6CFF7C872A6592B40015041C /* TitleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C862A6592B40015041C /* TitleText.swift */; };
+		6CFF7C892A6593510015041C /* BodyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C882A6593510015041C /* BodyText.swift */; };
+		6CFF7C8E2A6651670015041C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C8D2A6651670015041C /* OnboardingView.swift */; };
+		6CFF7C902A66518E0015041C /* BubbleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C8F2A66518E0015041C /* BubbleText.swift */; };
+		6CFF7C932A66A2B30015041C /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C922A66A2B30015041C /* PrimaryButton.swift */; };
+		6CFF7C952A66A3580015041C /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C942A66A3580015041C /* OnboardingViewModel.swift */; };
+		6CFF7C982A66A4C90015041C /* ButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C972A66A4C90015041C /* ButtonType.swift */; };
+		6CFF7C9A2A66A5DE0015041C /* OnboardingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C992A66A5DE0015041C /* OnboardingType.swift */; };
+		6CFF7C9D2A66B4D30015041C /* SingleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFF7C9C2A66B4D30015041C /* SingleTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,8 +49,30 @@
 		2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B9278B22A5D063D00E9E8C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6C97861C2A5F9F7100B852DE /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		6C2817F12A62830E003E9904 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		6C2817F32A6285A7003E9904 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		6C2817F52A629365003E9904 /* MC3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MC3.entitlements; sourceTree = "<group>"; };
+		6C2817F62A62936E003E9904 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C2817F82A63B0C6003E9904 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		6C2817FA2A63B1CC003E9904 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		6C2817FD2A63CAD1003E9904 /* AppStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageService.swift; sourceTree = "<group>"; };
+		6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewModel.swift; sourceTree = "<group>"; };
 		6C97861E2A5F9FE700B852DE /* StoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
+		6C9786292A5FEB3300B852DE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		6C97862B2A5FEEB600B852DE /* PublicFigureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicFigureModel.swift; sourceTree = "<group>"; };
+		6C97862D2A5FEEEF00B852DE /* StoryCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCategoryModel.swift; sourceTree = "<group>"; };
+		6C97862F2A5FFD9A00B852DE /* StoryFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryFeedbackModel.swift; sourceTree = "<group>"; };
+		6C9786312A5FFF6700B852DE /* AffirmationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffirmationModel.swift; sourceTree = "<group>"; };
+		6C9786342A5FFF7A00B852DE /* MC3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MC3.xcdatamodel; sourceTree = "<group>"; };
+		6CFF7C862A6592B40015041C /* TitleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleText.swift; sourceTree = "<group>"; };
+		6CFF7C882A6593510015041C /* BodyText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyText.swift; sourceTree = "<group>"; };
+		6CFF7C8D2A6651670015041C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		6CFF7C8F2A66518E0015041C /* BubbleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleText.swift; sourceTree = "<group>"; };
+		6CFF7C922A66A2B30015041C /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		6CFF7C942A66A3580015041C /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		6CFF7C972A66A4C90015041C /* ButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonType.swift; sourceTree = "<group>"; };
+		6CFF7C992A66A5DE0015041C /* OnboardingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingType.swift; sourceTree = "<group>"; };
+		6CFF7C9C2A66B4D30015041C /* SingleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +105,17 @@
 		2B9278AA2A5D063C00E9E8C8 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				6CFF7C852A6592A10015041C /* Components */,
+				6C2817FC2A63CAC2003E9904 /* Services */,
+				6C2817F62A62936E003E9904 /* Info.plist */,
+				6C2817F52A629365003E9904 /* MC3.entitlements */,
 				6C97861B2A5F9CAE00B852DE /* ViewModels */,
 				6C97861A2A5F9CA800B852DE /* Models */,
 				6C9786192A5F9CA200B852DE /* Views */,
 				2B9278AB2A5D063C00E9E8C8 /* MC3App.swift */,
+				6C2817F32A6285A7003E9904 /* Persistence.swift */,
 				2B9278AF2A5D063D00E9E8C8 /* Assets.xcassets */,
+				6C9786332A5FFF7A00B852DE /* MC3.xcdatamodeld */,
 				2B9278B12A5D063D00E9E8C8 /* Preview Content */,
 			);
 			path = MC3;
@@ -81,9 +129,27 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		6C2817F72A63B0B8003E9904 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				6C2817F82A63B0C6003E9904 /* SignInView.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		6C2817FC2A63CAC2003E9904 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6C2817FD2A63CAD1003E9904 /* AppStorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		6C9786192A5F9CA200B852DE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6CFF7C8C2A6651570015041C /* Onboarding */,
+				6C2817F72A63B0B8003E9904 /* SignIn */,
 				2B9278AD2A5D063C00E9E8C8 /* ContentView.swift */,
 				232A02A42A5FA1BC00171E3A /* WorryView.swift */,
 				232A02AA2A60492C00171E3A /* TextToSpeechExampleView.swift */,
@@ -95,6 +161,11 @@
 			isa = PBXGroup;
 			children = (
 				6C97861E2A5F9FE700B852DE /* StoryModel.swift */,
+				6C9786292A5FEB3300B852DE /* UserModel.swift */,
+				6C97862B2A5FEEB600B852DE /* PublicFigureModel.swift */,
+				6C97862D2A5FEEEF00B852DE /* StoryCategoryModel.swift */,
+				6C97862F2A5FFD9A00B852DE /* StoryFeedbackModel.swift */,
+				6C9786312A5FFF6700B852DE /* AffirmationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -105,8 +176,66 @@
 				6C97861C2A5F9F7100B852DE /* AuthViewModel.swift */,
 				232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */,
 				2349A0042A62FF9A00572196 /* TextToSpeech.swift */,
+				6CFF7C962A66A46B0015041C /* Onboarding */,
+				6C97861C2A5F9F7100B852DE /* StoryViewModel.swift */,
+				6C2817F12A62830E003E9904 /* UserViewModel.swift */,
+				6C2817FA2A63B1CC003E9904 /* SignInViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6CFF7C852A6592A10015041C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C9B2A66AE980015041C /* TextFields */,
+				6CFF7C912A66A2A10015041C /* Buttons */,
+				6CFF7C8A2A6593530015041C /* Texts */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		6CFF7C8A2A6593530015041C /* Texts */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C862A6592B40015041C /* TitleText.swift */,
+				6CFF7C882A6593510015041C /* BodyText.swift */,
+				6CFF7C8F2A66518E0015041C /* BubbleText.swift */,
+			);
+			path = Texts;
+			sourceTree = "<group>";
+		};
+		6CFF7C8C2A6651570015041C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C8D2A6651670015041C /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		6CFF7C912A66A2A10015041C /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C922A66A2B30015041C /* PrimaryButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		6CFF7C962A66A46B0015041C /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C942A66A3580015041C /* OnboardingViewModel.swift */,
+				6CFF7C972A66A4C90015041C /* ButtonType.swift */,
+				6CFF7C992A66A5DE0015041C /* OnboardingType.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		6CFF7C9B2A66AE980015041C /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				6CFF7C9C2A66B4D30015041C /* SingleTextField.swift */,
+			);
+			path = TextFields;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,14 +308,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C97862E2A5FEEEF00B852DE /* StoryCategoryModel.swift in Sources */,
+				6CFF7C872A6592B40015041C /* TitleText.swift in Sources */,
+				6CFF7C932A66A2B30015041C /* PrimaryButton.swift in Sources */,
+				6CFF7C9D2A66B4D30015041C /* SingleTextField.swift in Sources */,
+				6CFF7C902A66518E0015041C /* BubbleText.swift in Sources */,
+				6C2817F22A62830E003E9904 /* UserViewModel.swift in Sources */,
+				6CFF7C8E2A6651670015041C /* OnboardingView.swift in Sources */,
+				6C9786352A5FFF7A00B852DE /* MC3.xcdatamodeld in Sources */,
 				2B9278AE2A5D063C00E9E8C8 /* ContentView.swift in Sources */,
 				232A02A52A5FA1BC00171E3A /* WorryView.swift in Sources */,
 				6C97861F2A5F9FE700B852DE /* StoryModel.swift in Sources */,
+				6C9786322A5FFF6700B852DE /* AffirmationModel.swift in Sources */,
+				6C2817FE2A63CAD1003E9904 /* AppStorageService.swift in Sources */,
+				6C97862C2A5FEEB600B852DE /* PublicFigureModel.swift in Sources */,
+				6C9786302A5FFD9A00B852DE /* StoryFeedbackModel.swift in Sources */,
 				2B9278AC2A5D063C00E9E8C8 /* MC3App.swift in Sources */,
 				6C97861D2A5F9F7100B852DE /* AuthViewModel.swift in Sources */,
 				2349A0052A62FF9A00572196 /* TextToSpeech.swift in Sources */,
 				232A02A72A5FA35300171E3A /* SpeechRecognizer.swift in Sources */,
 				232A02AB2A60492C00171E3A /* TextToSpeechExampleView.swift in Sources */,
+				6C2817F42A6285A7003E9904 /* Persistence.swift in Sources */,
+				6CFF7C982A66A4C90015041C /* ButtonType.swift in Sources */,
+				6C2817FB2A63B1CC003E9904 /* SignInViewModel.swift in Sources */,
+				6CFF7C9A2A66A5DE0015041C /* OnboardingType.swift in Sources */,
+				6C97862A2A5FEB3300B852DE /* UserModel.swift in Sources */,
+				6C97861D2A5F9F7100B852DE /* StoryViewModel.swift in Sources */,
+				6CFF7C892A6593510015041C /* BodyText.swift in Sources */,
+				6CFF7C952A66A3580015041C /* OnboardingViewModel.swift in Sources */,
+				6C2817F92A63B0C6003E9904 /* SignInView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,14 +462,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MC3/MC3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 7FUC59ZN7P;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorderd to transcribe. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transription in the app";
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -343,14 +495,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MC3/MC3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 7FUC59ZN7P;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorderd to transcribe. Audio recordings are discarded after transcription";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a text transription in the app";
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -391,6 +545,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6C9786332A5FFF7A00B852DE /* MC3.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6C9786342A5FFF7A00B852DE /* MC3.xcdatamodel */,
+			);
+			currentVersion = 6C9786342A5FFF7A00B852DE /* MC3.xcdatamodel */;
+			path = MC3.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2B9278A02A5D063C00E9E8C8 /* Project object */;
 }
