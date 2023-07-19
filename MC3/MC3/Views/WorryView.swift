@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct WorryView: View {
     @StateObject var speechRecognizer = SpeechRecognizer()
     @State private var isRecording = false
+    
     
     var body: some View {
         Text(speechRecognizer.transcript)
@@ -33,6 +35,8 @@ struct WorryView: View {
         })
         //TODO: Circle with button
         //TODO: Convert live speech to text
+        //TODO: Button to text to speech
+        
     }
 }
 
