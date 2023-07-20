@@ -19,19 +19,9 @@ struct SelfAffirmationView: View {
             Image("Mascot")
                 .padding(16)
             //MARK: Button speech
-            Button {
+            ControlButton(systemName: selfAffirmationVM.isRecording ? "stop.fill" : "mic.fill") {
                 selfAffirmationVM.toggleRecording()
-            } label: {
-                Image(systemName: selfAffirmationVM.isRecording ? "stop.fill" : "mic.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 35)
-                    .tint(.white)
-                    .padding(16)
             }
-            .frame(width: 80, height: 80)
-            .background(.black)
-            .cornerRadius(100)
             
             //check answer
             if (selfAffirmationVM.isAnswer){
