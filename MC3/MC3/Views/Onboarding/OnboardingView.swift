@@ -68,8 +68,8 @@ struct OnboardingView: View {
         .onAppear {
             print("[OnboardingView][viewModel.userIdentifier]", viewModel.userIdentifier)
             print("[OnboardingView][viewModel.isOnboardingFinished]", viewModel.isOnboardingFinished)
-            if viewModel.isOnboardingFinished {
-                guard !viewModel.userIdentifier.isEmpty else {
+            guard !viewModel.isOnboardingFinished else {
+                guard viewModel.isSignedIn() else {
                     viewModel.proceedToSignIn()
                     return
                 }
@@ -78,7 +78,7 @@ struct OnboardingView: View {
                 return
             }
             
-            guard viewModel.userIdentifier.isEmpty else {
+            guard viewModel.isSignedIn() else {
                 print("[OnboardingView][userIdentifier]", viewModel.userIdentifier)
                 guard viewModel.isMicrophonePermissionAllowed else {
                     print("[viewModel.isMicrophonePermissionAllowed]", viewModel.isMicrophonePermissionAllowed)
