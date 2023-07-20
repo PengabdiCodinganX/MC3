@@ -1,0 +1,19 @@
+name: MC3
+options:
+  bundleIdPrefix: com.Vincent-Gunawan
+  settings:
+    iOS:
+      TARGETED_DEVICE_FAMILY: "1"  # 1 for iPhone, 2 for iPad
+targets:
+  CleanSwift:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.4"
+    sources:
+      - MC3
+    info:
+      path: MC3/Info.plist
+      properties:
+        UILaunchScreen: LaunchScreen
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"

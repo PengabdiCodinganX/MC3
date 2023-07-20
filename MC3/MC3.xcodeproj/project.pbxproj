@@ -244,7 +244,6 @@
 				6C2817F12A62830E003E9904 /* UserViewModel.swift */,
 				232A02A62A5FA35300171E3A /* SpeechRecognizer.swift */,
 				2349A0042A62FF9A00572196 /* TextToSpeech.swift */,
-				6C2817FA2A63B1CC003E9904 /* SignInViewModel.swift */,
 				2324B9302A67C3D8001223AA /* SelfAffirmationViewModel.swift */,
 			);
 			path = ViewModels;
