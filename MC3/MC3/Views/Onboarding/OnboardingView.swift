@@ -12,122 +12,151 @@ struct OnboardingView: View {
     @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
     @EnvironmentObject var pathStore: PathStore
     
+    @State private var onboardingType: OnboardingType = .introduction
+    @State private var mascotText: String = "Hi there, You've come into the right place..."
+    @State private var buttonType: ButtonType = .next
+    
     var body: some View {
         VStack {
             Spacer()
             
             Mascot(
-                text: viewModel.mascotText,
+                text: mascotText,
                 alignment: .vertical
             )
             
-            if (viewModel.currentOnboardingType == .signIn) {
-                TitleText(text: "Welcome to App Name")
-                    .padding()
-                BodyText(text: "Sign in now to embark on your journey and unlock the motivation you've been searching for.")
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                SignInWithAppleButton(.signIn,
-                                      onRequest: viewModel.handleOnSignInRequest,
-                                      onCompletion: viewModel.handleOnSignInCompletion)
-                .signInWithAppleButtonStyle(.whiteOutline)
-                .frame(height: 48)
-                .padding()
-            }
-            
-            if (viewModel.currentOnboardingType == .permission) {
-                SingleTextField(placeholder: "Name...", text: $viewModel.name)
-                
-                Spacer()
-                
-                Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationsPermissionToggled)
-                    .onChange(of: viewModel.isPushNotificationsPermissionToggled, perform: viewModel.handleOnPushNotificationsPermissionToggled)
-                Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionToggled)
-                    .onChange(of: viewModel.isMicrophonePermissionToggled, perform: viewModel.handleOnMicrophonePermissionToggled)
+            switch onboardingType {
+            case .introduction:
+                EmptyView()
+            case .signIn:
+                SignInView(viewModel: viewModel)
+            case .permission:
+                PermissionView(viewModel: viewModel)
             }
             
             Spacer()
             
-            if viewModel.currentOnboardingType == .introduction
-                || viewModel.currentOnboardingType == .permission {
+            if onboardingType == .introduction
+                || onboardingType == .permission {
                 HStack {
                     Spacer()
                     
-                    PrimaryButton(text: viewModel.buttonType.rawValue) {
-                        viewModel.handleOnClicked()
+                    PrimaryButton(text: buttonType.rawValue) {
+                        handleOnClicked()
                     }
                 }
             }
-            
-            if viewModel.isError {
-                Text(viewModel.error)
-            }
         }
         .padding()
+        .navigationBarBackButtonHidden(true)
         .onAppear {
-            print("[OnboardingView][viewModel.userIdentifier]", viewModel.userIdentifier)
-            print("[OnboardingView][viewModel.isOnboardingFinished]", viewModel.isOnboardingFinished)
-            guard !viewModel.isOnboardingFinished else {
+            if viewModel.isOnboardingFinished {
                 guard viewModel.isSignedIn() else {
-                    viewModel.proceedToSignIn()
+                    proceedToSignIn()
                     return
                 }
-                
-                pathStore.path.append(ViewPath.home)
-                return
-            }
-            
-            guard viewModel.isSignedIn() else {
-                print("[OnboardingView][userIdentifier]", viewModel.userIdentifier)
-                guard viewModel.isMicrophonePermissionAllowed else {
-                    print("[viewModel.isMicrophonePermissionAllowed]", viewModel.isMicrophonePermissionAllowed)
-                    viewModel.proceedToPermissionPage()
-                    return
-                }
-                
-                guard viewModel.isPushNotificationsPermissionAllowed else {
-                    print("[viewModel.isPushNotificationsPermissionAllowed]", viewModel.isPushNotificationsPermissionAllowed)
-                    viewModel.proceedToPermissionPage()
-                    return
-                }
-                
-                print("[done]")
-                pathStore.path.append(ViewPath.home)
-                return
+
+                proceedToHome()
             }
         }
-        .onChange(of: viewModel.isOnboardingFinished) { isOnboardingFinished in
-            print("[OnboardingView][isOnboardingFinished]", isOnboardingFinished)
-            if isOnboardingFinished {
-                pathStore.path.append(ViewPath.home)
+        .onChange(of: viewModel.userIdentifier, perform: { userIdentifier in
+            if !userIdentifier.isEmpty {
+                guard viewModel.isPermissionsAllowed() else {
+                    proceedToPermissionPage()
+                    return
+                }
+                
+                proceedToHome()
             }
-        }
-        .onChange(of: viewModel.userIdentifier) { userIdentifier in
-            print("[OnboardingView][userIdentifier]", userIdentifier)
-            guard !userIdentifier.isEmpty else {
-                print("[!userIdentifier.isEmpty]", !userIdentifier.isEmpty)
-                return
+        })
+        .onChange(of: onboardingType, perform: { onboardingType in
+            switch onboardingType {
+            case .introduction:
+                if viewModel.isSignedIn() {
+                    guard viewModel.isPermissionsAllowed() else {
+                        proceedToPermissionPage()
+                        return
+                    }
+                    
+                    proceedToHome()
+                }
+                break
+            case .signIn:
+                if viewModel.isSignedIn() {
+                    guard viewModel.isPermissionsAllowed() else {
+                        proceedToPermissionPage()
+                        return
+                    }
+                    
+                    proceedToHome()
+                }
+                break
+            case .permission:
+                if viewModel.isOnboardingFinished {
+                    proceedToHome()
+                }
+                break
             }
-            
-            guard viewModel.isMicrophonePermissionAllowed else {
-                print("[viewModel.isMicrophonePermissionAllowed]", viewModel.isMicrophonePermissionAllowed)
-                viewModel.proceedToPermissionPage()
-                return
-            }
-            
-            guard viewModel.isPushNotificationsPermissionAllowed else {
-                print("[viewModel.isPushNotificationsPermissionAllowed]", viewModel.isPushNotificationsPermissionAllowed)
-                viewModel.proceedToPermissionPage()
-                return
-            }
-            
-            print("[done]")
-            pathStore.path.append(ViewPath.home)
+        })
+        .alert(isPresented: $viewModel.isError) {
+            Alert(title: Text(viewModel.error))
         }
         .navigationDestination(for: ViewPath.self) { viewPath in
             HomeView()
         }
+    }
+    
+    /// Handles next button clicked
+    private func handleOnClicked() {
+        switch buttonType {
+        case .next:
+            self.handleOnNextClicked()
+        case .getStarted:
+            self.handleOnGetStartedClicked()
+        case .done:
+            self.handleOnDoneClicked()
+        }
+    }
+    
+    private func handleOnDoneClicked() {
+        // Check for permissions
+        guard viewModel.isPermissionsAllowed() else {
+            self.proceedToPermissionPage()
+            return
+        }
+        
+        viewModel.isOnboardingFinished = true
+        proceedToHome()
+    }
+    
+    private func handleOnNextClicked() {
+        withAnimation {
+            buttonType = .getStarted
+            mascotText = "I’m (Lion), your companion to discover the motivation you seek!"
+        }
+    }
+    
+    private func handleOnGetStartedClicked() {
+        proceedToSignIn()
+    }
+    
+    func proceedToSignIn() {
+        withAnimation {
+            onboardingType = .signIn
+            mascotText = ""
+        }
+    }
+    
+    func proceedToPermissionPage() {
+        withAnimation {
+            onboardingType = .permission
+            mascotText = "But before that, I would like you to set up some privacies. In order to make us close, what should I call you?"
+            buttonType = .done
+        }
+    }
+    
+    func proceedToHome() {
+        pathStore.path.append(ViewPath.home)
     }
 }
 

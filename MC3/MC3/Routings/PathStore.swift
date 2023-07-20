@@ -10,4 +10,16 @@ import SwiftUI
 
 class PathStore: ObservableObject {
     @Published var path: NavigationPath = NavigationPath()
+    
+    func popToRoot() {
+        path = NavigationPath()
+    }
+    
+    func proceedToHome() {
+        path.append(ViewPath.home)
+    }
+    
+    func proceedToOnboarding() {
+        path.append(ViewPath.onboarding)
+    }
 }

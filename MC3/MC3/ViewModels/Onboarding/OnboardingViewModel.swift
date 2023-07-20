@@ -84,46 +84,10 @@ class OnboardingViewModel: ObservableObject {
         }
     }
     
-    /// Handles next button clicked
-    func handleOnClicked() {
-        switch buttonType {
-        case .next:
-            self.handleOnNextClicked()
-        case .getStarted:
-            self.handleOnGetStartedClicked()
-        case .done:
-            self.handleOnDoneClicked()
-        }
-    }
-    
-    private func handleOnDoneClicked() {
-        isOnboardingFinished = true
-    }
-    
-    private func handleOnNextClicked() {
-        setButtonType(.getStarted)
-        setMascotText("I’m (Lion), your companion to discover the motivation you seek!")
-    }
-    
-    private func handleOnGetStartedClicked() {
-        proceedToSignIn()
-    }
-    
-    func proceedToSignIn() {
-        setMascotText("")
-        setCurrentOnboardingType(.signIn)
-    }
-    
-    func proceedToPermissionPage() {
-        setCurrentOnboardingType(.permission)
-        setMascotText("But before that, I would like you to set up some privacies. In order to make us close, what should I call you?")
-        setButtonType(.done)
-    }
-    
     /// Checks if the user is signed in.
     /// - Returns: Bool indicating whether the user is signed in.
     func isSignedIn() -> Bool {
-        return !userIdentifier.isEmpty
+        return AuthService().isSignedIn()
     }
     
     /// Configures the sign in request
@@ -198,22 +162,21 @@ class OnboardingViewModel: ObservableObject {
     private func handleSignIn(_ userIdentifier: String) {
         self.userIdentifier = userIdentifier
         print("[handleSignIn][userIdentifier]", userIdentifier)
-        
+    }
+    
+    func isPermissionsAllowed() -> Bool {
         // Check for permissions
         guard isMicrophonePermissionAllowed else {
             print("[isMicrophonePermissionAllowed]", isMicrophonePermissionAllowed)
-            self.proceedToPermissionPage()
-            return
+            return false
         }
         
         guard isPushNotificationsPermissionAllowed else {
             print("[isPushNotificationsPermissionAllowed]", isPushNotificationsPermissionAllowed)
-            self.proceedToPermissionPage()
-            return
+            return false
         }
         
-        print("[handleSignIn][done]")
-        handleOnDoneClicked()
+        return true
     }
     
     /// Handles sign in failure event.
