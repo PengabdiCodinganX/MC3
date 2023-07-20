@@ -19,8 +19,7 @@ struct PrimaryButton: View {
             Text(text)
         }
         .buttonStyle(.borderedProminent)
-        .cornerRadius(16)
-
+        .buttonBorderShape(.capsule)
     }
 }
 

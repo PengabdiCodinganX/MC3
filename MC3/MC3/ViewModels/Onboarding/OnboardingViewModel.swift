@@ -9,15 +9,14 @@ import Foundation
 import CoreData
 import SwiftUI
 import AuthenticationServices
+import AVFoundation
+import UserNotifications
 
 class OnboardingViewModel: ObservableObject {
     private let viewContext = PersistenceController.shared.viewContext
     
     // Unique identifier for the signed in user
-    @AppStorage("isOnboardingIntroductionFinished") var isOnboardingIntroductionFinished: Bool = false
-    
-    // Unique identifier for the signed in user
-    @AppStorage("isOnboardingPermissionFinished") var isOnboardingPermissionFinished: Bool = false
+    @AppStorage("isOnboardingFinished") var isOnboardingFinished: Bool = false
     
     @AppStorage("isPushNotificationsPermissionAllowed") var isPushNotificationsPermissionAllowed: Bool = false
     @AppStorage("isMicrophonePermissionAllowed") var isMicrophonePermissionAllowed: Bool = false
@@ -25,22 +24,65 @@ class OnboardingViewModel: ObservableObject {
     // Unique identifier for the signed in user
     @AppStorage("userIdentifier") var userIdentifier: String = ""
     
+    @Published var isPushNotificationsPermissionToggled: Bool = false
+    @Published var isMicrophonePermissionToggled: Bool = false
+    
     /// Contains the current onboarding being displayed
     @Published var currentOnboardingType: OnboardingType = .introduction
     
     /// Contains the current state of the button
     @Published var buttonType: ButtonType = .next
     
-    /// Contains the current button text
-    @Published var buttonText: String = "Next"
-    
     /// Contains the current mascot text being displayed
     @Published var mascotText: String = "Hi there, You've come into the right place..."
     
     @Published var name: String = ""
     
+    @Published var isError: Bool = false
+    
     // Contains any error message related to sign-in operations
     @Published var error: String = ""
+    
+    func handleOnPushNotificationsPermissionToggled(_ isOn: Bool) {
+        if isOn {
+            // Request permission for push notifications if not yet granted.
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                DispatchQueue.main.async {
+                    if granted {
+                        print("Push notification permission has been granted.")
+                        self.isPushNotificationsPermissionToggled = true
+                        self.isPushNotificationsPermissionAllowed = true
+                    } else {
+                        print("Push notification permission has not been granted.")
+                        self.isPushNotificationsPermissionToggled = false
+                    }
+                }
+            }
+        } else {
+            print("Push notification permission toggle is off.")
+        }
+    }
+    
+    func handleOnMicrophonePermissionToggled(_ isOn: Bool) {
+        if isOn {
+            // Request permission for microphone if not yet granted.
+            AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
+                DispatchQueue.main.async {
+                    if granted {
+                        print("Microphone permission has been granted.")
+                        self.isMicrophonePermissionToggled = true
+                        self.isMicrophonePermissionAllowed = true
+                    } else {
+                        print("Microphone permission has not been granted.")
+                        self.isMicrophonePermissionToggled = false
+                    }
+                }
+            }
+        } else {
+            print("Microphone permission toggle is off.")
+        }
+    }
     
     /// Handles next button clicked
     func handleOnClicked() {
@@ -49,46 +91,33 @@ class OnboardingViewModel: ObservableObject {
             self.handleOnNextClicked()
         case .getStarted:
             self.handleOnGetStartedClicked()
-    case .done:
-        self.handleOnDoneClicked()
+        case .done:
+            self.handleOnDoneClicked()
         }
-
-
     }
-
-private func handleOnDoneClicked() {
-    withAnimation {
-        // TODO
+    
+    private func handleOnDoneClicked() {
+        isOnboardingFinished = true
     }
-}
     
     private func handleOnNextClicked() {
-            withAnimation {
-                setCurrentIntroductionButtonType(.getStarted)
-                setCurrentIntroductionButtonText("Get Started")
-                setMascotText("I’m (Lion), your companion to discover the motivation you seek!")
-            }
+        setButtonType(.getStarted)
+        setMascotText("I’m (Lion), your companion to discover the motivation you seek!")
     }
     
     private func handleOnGetStartedClicked() {
-        withAnimation(.spring()) {
-//            setMascotText("")
-//            setCurrentOnboardingType(.signIn)
-            
-            setCurrentOnboardingType(.permission)
-            setMascotText("But before that, I would like you to set up some privacies. In order to make us close, what should I call you?")
-            setName("test")
-        }
-        
-        isOnboardingIntroductionFinished = true
+        proceedToSignIn()
     }
     
-    private func setCurrentIntroductionButtonText(_ text: String) {
-        self.buttonText = text
+    func proceedToSignIn() {
+        setMascotText("")
+        setCurrentOnboardingType(.signIn)
     }
     
-    private func setCurrentIntroductionButtonType(_ introductionButtonType: ButtonType) {
-        self.buttonType = introductionButtonType
+    func proceedToPermissionPage() {
+        setCurrentOnboardingType(.permission)
+        setMascotText("But before that, I would like you to set up some privacies. In order to make us close, what should I call you?")
+        setButtonType(.done)
     }
     
     /// Checks if the user is signed in.
@@ -127,13 +156,13 @@ private func handleOnDoneClicked() {
         
         // User already exists
         if getUserByUserIdentifier(userIdentifier) != nil {
-            signIn(userIdentifier)
+            handleSignIn(userIdentifier)
             return
         }
         
         guard appleIDCredential.email != nil else {
             // Handle cases where email is not provided. This depends on your specific needs.
-            setError("An email address is required for signing in.")
+            setError(true, "An email address is required for signing in.")
             return
         }
         
@@ -158,31 +187,63 @@ private func handleOnDoneClicked() {
             try viewContext.save()
         } catch {
             // Handle error
-            setError("Failed to save user.")
+            setError(true, "Failed to save user.")
         }
         
-        signIn(userIdentifier)
-        
-
+        setName(name)
+        handleSignIn(userIdentifier)
     }
     
     /// Sets the userIdentifier.
-    private func signIn(_ userIdentifier: String) {
+    private func handleSignIn(_ userIdentifier: String) {
         self.userIdentifier = userIdentifier
+        print("[handleSignIn][userIdentifier]", userIdentifier)
+        
+        // Check for permissions
+        guard isMicrophonePermissionAllowed else {
+            print("[isMicrophonePermissionAllowed]", isMicrophonePermissionAllowed)
+            self.proceedToPermissionPage()
+            return
+        }
+        
+        guard isPushNotificationsPermissionAllowed else {
+            print("[isPushNotificationsPermissionAllowed]", isPushNotificationsPermissionAllowed)
+            self.proceedToPermissionPage()
+            return
+        }
+        
+        print("[handleSignIn][done]")
+        handleOnDoneClicked()
     }
     
     /// Handles sign in failure event.
     /// - Parameter error: The occurred error.
     private func handleOnSignInFailure(error: Error) {
-        self.setError(error.localizedDescription)
+        self.setError(true, error.localizedDescription)
+    }
+    
+    private func setButtonType(_ buttonType: ButtonType) {
+        DispatchQueue.main.async {
+            withAnimation(.spring()) {
+                self.buttonType = buttonType
+            }
+        }
     }
     
     private func setMascotText(_ text: String) {
-        self.mascotText = text
+        DispatchQueue.main.async {
+            withAnimation(.spring()) {
+                self.mascotText = text
+            }
+        }
     }
     
     private func setCurrentOnboardingType(_ onboardingType: OnboardingType) {
-        self.currentOnboardingType = onboardingType
+        DispatchQueue.main.async {
+            withAnimation(.spring()) {
+                self.currentOnboardingType = onboardingType
+            }
+        }
     }
     
     /// Returns a User object matching the given userIdentifier, if any.
@@ -197,15 +258,16 @@ private func handleOnDoneClicked() {
             return fetchedUsers.first
         } catch {
             // Handle error
-            setError("Failed to fetch user.")
+            self.setError(true, "Failed to fetch user.")
             return nil
         }
     }
     
     /// Updates the error message.
     /// - Parameter error: Error message string.
-    private func setError(_ error: String) {
+    func setError(_ isError: Bool, _ error: String) {
         print("[setError][error]", error)
+        self.isError = isError
         self.error = error
     }
     
