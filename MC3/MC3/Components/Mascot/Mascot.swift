@@ -34,38 +34,6 @@ struct Mascot: View {
                 )
             }
         }
-//        switch alignment {
-//        case .horizontal:
-//            HStack {
-//                Image("Mascot")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(minWidth: 128)
-//
-//                if !text.isEmpty {
-//                    BubbleText(
-//                        text: text,
-//                        alignment: alignment
-//                    )
-//                }
-//
-//
-//            }
-//        case .vertical:
-//            VStack {
-//                if !text.isEmpty {
-//                    BubbleText(
-//                        text: text,
-//                        alignment: alignment
-//                    )
-//                }
-//
-//                Image("Mascot")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(minWidth: 256)
-//            }
-//        }
         
     }
 }

@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var pathStore: PathStore
+    
     var body: some View {
-        VStack {
+        NavigationStack(path: $pathStore.path) {
             OnboardingView()
         }
-        .padding()
     }
 }
 

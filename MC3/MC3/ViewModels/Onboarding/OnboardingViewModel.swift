@@ -21,11 +21,11 @@ class OnboardingViewModel: ObservableObject {
     @AppStorage("isPushNotificationsPermissionAllowed") var isPushNotificationsPermissionAllowed: Bool = false
     @AppStorage("isMicrophonePermissionAllowed") var isMicrophonePermissionAllowed: Bool = false
     
-    @Published var isPushNotificationsPermissionToggled: Bool = false
-    @Published var isMicrophonePermissionToggled: Bool = false
-    
     // Unique identifier for the signed in user
     @AppStorage("userIdentifier") var userIdentifier: String = ""
+    
+    @Published var isPushNotificationsPermissionToggled: Bool = false
+    @Published var isMicrophonePermissionToggled: Bool = false
     
     /// Contains the current onboarding being displayed
     @Published var currentOnboardingType: OnboardingType = .introduction
@@ -52,6 +52,7 @@ class OnboardingViewModel: ObservableObject {
                     if granted {
                         print("Push notification permission has been granted.")
                         self.isPushNotificationsPermissionToggled = true
+                        self.isPushNotificationsPermissionAllowed = true
                     } else {
                         print("Push notification permission has not been granted.")
                         self.isPushNotificationsPermissionToggled = false
@@ -71,6 +72,7 @@ class OnboardingViewModel: ObservableObject {
                     if granted {
                         print("Microphone permission has been granted.")
                         self.isMicrophonePermissionToggled = true
+                        self.isMicrophonePermissionAllowed = true
                     } else {
                         print("Microphone permission has not been granted.")
                         self.isMicrophonePermissionToggled = false
@@ -95,7 +97,7 @@ class OnboardingViewModel: ObservableObject {
     }
     
     private func handleOnDoneClicked() {
-        // TODO
+        isOnboardingFinished = true
     }
     
     private func handleOnNextClicked() {
@@ -107,17 +109,15 @@ class OnboardingViewModel: ObservableObject {
         proceedToSignIn()
     }
     
-    private func proceedToSignIn() {
+    func proceedToSignIn() {
         setMascotText("")
         setCurrentOnboardingType(.signIn)
     }
     
-    private func proceedToPermissionPage() {
-        
+    func proceedToPermissionPage() {
         setCurrentOnboardingType(.permission)
         setMascotText("But before that, I would like you to set up some privacies. In order to make us close, what should I call you?")
         setButtonType(.done)
-        
     }
     
     /// Checks if the user is signed in.
@@ -197,9 +197,23 @@ class OnboardingViewModel: ObservableObject {
     /// Sets the userIdentifier.
     private func handleSignIn(_ userIdentifier: String) {
         self.userIdentifier = userIdentifier
+        print("[handleSignIn][userIdentifier]", userIdentifier)
         
         // Check for permissions
-        self.proceedToPermissionPage()
+        guard isMicrophonePermissionAllowed else {
+            print("[isMicrophonePermissionAllowed]", isMicrophonePermissionAllowed)
+            self.proceedToPermissionPage()
+            return
+        }
+        
+        guard isPushNotificationsPermissionAllowed else {
+            print("[isPushNotificationsPermissionAllowed]", isPushNotificationsPermissionAllowed)
+            self.proceedToPermissionPage()
+            return
+        }
+        
+        print("[handleSignIn][done]")
+        handleOnDoneClicked()
     }
     
     /// Handles sign in failure event.
