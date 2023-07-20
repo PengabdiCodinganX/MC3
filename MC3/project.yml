@@ -1,0 +1,13 @@
+name: MC3
+options:
+  bundleIdPrefix: com.Vincent-Gunawan
+  settings:
+    iOS:
+      TARGETED_DEVICE_FAMILY: "1"  # 1 for iPhone, 2 for iPad
+targets:
+  MC3:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.4"
+    sources:
+      - MC3
