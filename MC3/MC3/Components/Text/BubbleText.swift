@@ -19,7 +19,6 @@ struct BubbleText: View {
             .multilineTextAlignment(.center)
             .padding()
             .background(ChatBubble(alignment: alignment).fill(Color.gray)) // Set the bubble color to gray
-            .padding()
             .fixedSize(horizontal: false, vertical: true)
     }
 }
