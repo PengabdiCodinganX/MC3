@@ -1,29 +1,51 @@
 # MC3
 
-## Tutorial
+## Setup
 
-### Step 1: Install Homebrew
+This project uses Xcodegen and has a Git hook set up to run it each time you switch branches. To set up the environment, you need to run a setup script named `setup.sh`.
 
-Homebrew is a package manager for macOS that lets you install free and open-source software.
+### Running the setup script
 
-Open Terminal and run the following command:
+1. Open Terminal.
 
+2. Navigate to the project's root directory:
+
+   ```bash
+   cd /path/to/project/MC3
+   ```
+
+   Replace `/path/to/project/MC3` with the actual path to your cloned MC3 repository.
+
+3. Make the `setup.sh` script executable:
+
+   ```bash
+   chmod +x setup.sh
+   ```
+
+4. Run the `setup.sh` script:
+
+   ```bash
+   ./setup.sh
+   ```
+
+The `setup.sh` script does the following:
+
+- Checks if Homebrew is installed and installs it if not.
+- Checks if Xcodegen is installed and installs it if not.
+- Generates an Xcode project.
+- Sets up Git hooks.
+- Makes the `post-checkout` hook script executable.
+- Copies the `post-checkout` hook script to `.git/hooks`.
+- Runs XcodeGen with cache.
+
+Now, each time you switch branches with `git checkout`, Git will automatically run the `post-checkout` script and execute XcodeGen to generate your Xcode project.
+
+### Special note for SourceTree users
+
+If you are using SourceTree, it is necessary to open the app via the Terminal for the Git hook to work properly. You can do so with this command:
+
+```bash
+open /Applications/SourceTree.app/Contents/MacOS/SourceTree
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
 
-### Step 2: Install Xcodegen
-Xcodegen is a command line tool written in Swift that generates your Xcode project using your folder structure and a project spec.
-
-To install Xcodegen using Homebrew, run the following command in Terminal:
-
-```
-brew install xcodegen
-```
-
-### Step 3: Generate Project
-Now, navigate to your project directory in Terminal and run the following command:
-
-```
-xcodegen generate
-```
+This ensures that SourceTree has access to the necessary command-line tools.
