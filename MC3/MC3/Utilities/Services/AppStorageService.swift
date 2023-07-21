@@ -31,6 +31,10 @@ class AppStorageService {
     }
     
     func signOut() {
-        userIdentifier = ""
+        DispatchQueue.main.async {
+            withAnimation {
+                self.userIdentifier = ""
+            }
+        }
     }
 }
