@@ -11,3 +11,4 @@ targets:
     deploymentTarget: "16.4"
     sources:
       - MC3
+    entitlements: MC3/MC3.entitlements

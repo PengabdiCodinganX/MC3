@@ -9,7 +9,10 @@ import SwiftUI
 import AuthenticationServices
 
 struct SignInView: View {
-    @ObservedObject var viewModel: OnboardingViewModel
+    @StateObject private var viewModel: SignInViewModel = SignInViewModel()
+    
+    @Binding var onboardingType: OnboardingType
+    @Binding var mascotText: String
     
     var body: some View {
         VStack {
@@ -26,11 +29,23 @@ struct SignInView: View {
             .frame(height: 48)
             .padding()
         }
+        .onChange(of: viewModel.isSignedIn) { isSignedIn in
+            guard isSignedIn else {
+                return
+            }
+            
+            onboardingType = .permission
+        }
+        .alert(isPresented: $viewModel.isError) {
+            Alert(title: Text(viewModel.error))
+        }
     }
+    
+
 }
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(viewModel: OnboardingViewModel())
+        SignInView(onboardingType: .constant(.signIn), mascotText: .constant("testasdcfas"))
     }
 }

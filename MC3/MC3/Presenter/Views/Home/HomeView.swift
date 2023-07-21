@@ -13,7 +13,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            Mascot(text: "Good afternoon, \(viewModel.name)! What would you like to do?", alignment: .horizontal)
+            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
             
             MenuButton(
                 text: "Share your story, Find relief!",
