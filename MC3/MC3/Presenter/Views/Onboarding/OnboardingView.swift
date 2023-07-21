@@ -12,7 +12,8 @@ struct OnboardingView: View {
     @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
     @EnvironmentObject var pathStore: PathStore
     
-    @State private var onboardingType: OnboardingType = .introduction
+    @State var onboardingType: OnboardingType
+    
     @State private var mascotText: String = "Hi there, You've come into the right place..."
     @State private var buttonType: ButtonType = .next
     
@@ -49,60 +50,31 @@ struct OnboardingView: View {
         }
         .padding()
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            if viewModel.isOnboardingFinished {
-                guard viewModel.isSignedIn() else {
-                    proceedToSignIn()
-                    return
-                }
-
-                proceedToHome()
-            }
-        }
-        .onChange(of: viewModel.userIdentifier, perform: { userIdentifier in
-            if !userIdentifier.isEmpty {
-                guard viewModel.isPermissionsAllowed() else {
-                    proceedToPermissionPage()
-                    return
-                }
-                
-                proceedToHome()
-            }
-        })
-        .onChange(of: onboardingType, perform: { onboardingType in
-            switch onboardingType {
-            case .introduction:
-                if viewModel.isSignedIn() {
-                    guard viewModel.isPermissionsAllowed() else {
-                        proceedToPermissionPage()
-                        return
-                    }
-                    
-                    proceedToHome()
-                }
-                break
-            case .signIn:
-                if viewModel.isSignedIn() {
-                    guard viewModel.isPermissionsAllowed() else {
-                        proceedToPermissionPage()
-                        return
-                    }
-                    
-                    proceedToHome()
-                }
-                break
-            case .permission:
-                if viewModel.isOnboardingFinished {
-                    proceedToHome()
-                }
-                break
-            }
-        })
         .alert(isPresented: $viewModel.isError) {
             Alert(title: Text(viewModel.error))
         }
-        .navigationDestination(for: ViewPath.self) { viewPath in
-            HomeView()
+        .onAppear {
+            handleOnOnboardingTypeChanges()
+        }
+        .onChange(of: viewModel.authService.userIdentifier, perform: { _ in
+            print("[viewModel.isSignedIn()]", viewModel.isSignedIn())
+            handleOnOnboardingTypeChanges()})
+        .onChange(of: onboardingType, perform: { _ in handleOnOnboardingTypeChanges()})
+    }
+    
+    private func handleOnOnboardingTypeChanges() {
+        guard viewModel.isSignedIn() else {
+            guard viewModel.isOnboardingFinished else {
+                return
+            }
+            
+            proceedToSignIn()
+            return
+        }
+        
+        guard viewModel.isPermissionsAllowed() else {
+            proceedToPermissionPage()
+            return
         }
     }
     
@@ -126,7 +98,6 @@ struct OnboardingView: View {
         }
         
         viewModel.isOnboardingFinished = true
-        proceedToHome()
     }
     
     private func handleOnNextClicked() {
@@ -154,14 +125,10 @@ struct OnboardingView: View {
             buttonType = .done
         }
     }
-    
-    func proceedToHome() {
-        pathStore.path.append(ViewPath.home)
-    }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView()
+        OnboardingView(onboardingType: .introduction)
     }
 }

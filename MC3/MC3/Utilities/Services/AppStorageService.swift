@@ -17,7 +17,20 @@ class AuthService: ObservableObject {
         return !userIdentifier.isEmpty
     }
     
+    func signIn(userIdentifier: String) {
+        DispatchQueue.main.async {
+            withAnimation {
+                self.userIdentifier = userIdentifier
+                print("[AuthService][signIn][self.userIdentifier]", self.userIdentifier)
+            }
+        }
+    }
+    
     func signOut() {
-        userIdentifier = ""
+        DispatchQueue.main.async {
+            withAnimation {
+                self.userIdentifier = ""
+            }
+        }
     }
 }

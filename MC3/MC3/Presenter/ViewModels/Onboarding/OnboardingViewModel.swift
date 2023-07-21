@@ -15,14 +15,10 @@ import UserNotifications
 class OnboardingViewModel: ObservableObject {
     private let viewContext = PersistenceController.shared.viewContext
     
+    @Published var authService: AuthService = AuthService()
+    
     // Unique identifier for the signed in user
     @AppStorage("isOnboardingFinished") var isOnboardingFinished: Bool = false
-    
-    @AppStorage("isPushNotificationsPermissionAllowed") var isPushNotificationsPermissionAllowed: Bool = false
-    @AppStorage("isMicrophonePermissionAllowed") var isMicrophonePermissionAllowed: Bool = false
-    
-    // Unique identifier for the signed in user
-    @AppStorage("userIdentifier") var userIdentifier: String = ""
     
     @Published var isPushNotificationsPermissionToggled: Bool = false
     @Published var isMicrophonePermissionToggled: Bool = false
@@ -52,15 +48,41 @@ class OnboardingViewModel: ObservableObject {
                     if granted {
                         print("Push notification permission has been granted.")
                         self.isPushNotificationsPermissionToggled = true
-                        self.isPushNotificationsPermissionAllowed = true
+//                        self.isPushNotificationsPermissionAllowed = true
+                        self.updatePushNotificationSetting(granted)
                     } else {
                         print("Push notification permission has not been granted.")
                         self.isPushNotificationsPermissionToggled = false
+                        self.updatePushNotificationSetting(granted)
                     }
                 }
             }
         } else {
             print("Push notification permission toggle is off.")
+        }
+    }
+    
+    private func updatePushNotificationSetting(_ state: Bool) {
+        let user = getUserByUserIdentifier(authService.userIdentifier)
+        user?.setting?.pushNotification = state
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Handle error
+            setError(true, "Failed to save user.")
+        }
+    }
+    
+    private func updateMicrophoneSetting(_ state: Bool) {
+        let user = getUserByUserIdentifier(authService.userIdentifier)
+        user?.setting?.microphone = state
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Handle error
+            setError(true, "Failed to save user.")
         }
     }
     
@@ -72,10 +94,11 @@ class OnboardingViewModel: ObservableObject {
                     if granted {
                         print("Microphone permission has been granted.")
                         self.isMicrophonePermissionToggled = true
-                        self.isMicrophonePermissionAllowed = true
+                        self.updatePushNotificationSetting(granted)
                     } else {
                         print("Microphone permission has not been granted.")
                         self.isMicrophonePermissionToggled = false
+                        self.updatePushNotificationSetting(granted)
                     }
                 }
             }
@@ -124,12 +147,6 @@ class OnboardingViewModel: ObservableObject {
             return
         }
         
-        guard appleIDCredential.email != nil else {
-            // Handle cases where email is not provided. This depends on your specific needs.
-            setError(true, "An email address is required for signing in.")
-            return
-        }
-        
         // User doesn't exist
         saveNewUser(appleIDCredential)
     }
@@ -160,19 +177,38 @@ class OnboardingViewModel: ObservableObject {
     
     /// Sets the userIdentifier.
     private func handleSignIn(_ userIdentifier: String) {
-        self.userIdentifier = userIdentifier
-        print("[handleSignIn][userIdentifier]", userIdentifier)
+        DispatchQueue.main.async {
+            self.authService.signIn(userIdentifier: userIdentifier)
+            print("[handleSignIn][userIdentifier]", userIdentifier)
+            
+            print("[handleSignIn][authService.userIdentifier]", self.authService.userIdentifier)
+            print("[handleSignIn][authService.isSignedIn()]", self.authService.isSignedIn())
+        }
+
+        
+        
     }
     
     func isPermissionsAllowed() -> Bool {
-        // Check for permissions
-        guard isMicrophonePermissionAllowed else {
-            print("[isMicrophonePermissionAllowed]", isMicrophonePermissionAllowed)
+        guard isSignedIn() else {
             return false
         }
         
-        guard isPushNotificationsPermissionAllowed else {
-            print("[isPushNotificationsPermissionAllowed]", isPushNotificationsPermissionAllowed)
+        let user: User = getUserByUserIdentifier(authService.userIdentifier)!
+        let userSetting = user.setting
+        
+        guard (userSetting != nil) else {
+            return false
+        }
+        
+        // Check for permissions
+        guard userSetting!.microphone else {
+            print("[userSetting!.microphone]", userSetting!.microphone)
+            return false
+        }
+        
+        guard userSetting!.pushNotification else {
+            print("[userSetting!.pushNotification]", userSetting!.pushNotification)
             return false
         }
         

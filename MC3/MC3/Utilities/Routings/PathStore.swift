@@ -15,11 +15,7 @@ class PathStore: ObservableObject {
         path = NavigationPath()
     }
     
-    func proceedToHome() {
-        path.append(ViewPath.home)
-    }
-    
-    func proceedToOnboarding() {
-        path.append(ViewPath.onboarding)
+    func navigateToView(viewPath: ViewPath) {
+        path.append(viewPath)
     }
 }
