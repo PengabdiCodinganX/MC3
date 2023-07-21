@@ -49,3 +49,21 @@ open /Applications/SourceTree.app/Contents/MacOS/SourceTree
 ```
 
 This ensures that SourceTree has access to the necessary command-line tools.
+
+### Special Note for Developers
+
+When you switch between branches in this project, please remember to manually enable the "Sign in with Apple" and "iCloud" capabilities in Xcode. 
+
+The settings for these capabilities are not tracked by Git and therefore need to be re-enabled every time a branch is switched. 
+
+Here are the steps to enable these capabilities:
+
+1. Open the project in Xcode.
+2. Select the main target of your app.
+3. Navigate to the "Signing & Capabilities" tab.
+4. If the "Sign in with Apple" and "iCloud" capabilities are not listed, click on "+ Capability" to add them.
+5. Find and click on "Sign in with Apple" and "iCloud" in the list.
+
+Failure to perform these steps might result in unexpected behavior or errors during runtime, especially when using related features in your app.
+
+Your understanding and cooperation are highly appreciated. Thank you!
