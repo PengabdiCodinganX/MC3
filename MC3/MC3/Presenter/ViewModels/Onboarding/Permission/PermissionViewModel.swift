@@ -12,7 +12,7 @@ import AVFAudio
 
 @MainActor
 class PermissionViewModel: ObservableObject {
-    private let db: UserUseCase
+    private let coreDataService: CoreDataService
     private let appStorageService: AppStorageService
     
     @Published var isPushNotificationPermissionAllowed: Bool = false
@@ -25,7 +25,7 @@ class PermissionViewModel: ObservableObject {
     @Published var error: String = ""
     
     init() {
-        self.db = Injec().user()
+        self.coreDataService = CoreDataService()
         self.appStorageService = AppStorageService()
         self.getUser()
     }
@@ -36,7 +36,7 @@ class PermissionViewModel: ObservableObject {
             let userIdentifier = self.appStorageService.userIdentifier
             print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
             
-            let result = self.db.getUser(userIdentifier: userIdentifier)
+            let result = self.coreDataService.getUser(userIdentifier: userIdentifier)
             switch result {
             case .success(let user):
                 print("[PermissionViewModel][getUser][user]", user)

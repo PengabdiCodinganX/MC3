@@ -8,36 +8,26 @@
 import Foundation
 import SwiftUI
 
-@MainActor
 class MainViewModel: ObservableObject {
     private let appStorageService: AppStorageService
     
-    @Published var isOnboardingFinished: Bool
-    @Published var isSignedIn: Bool
-    
     init() {
         self.appStorageService = AppStorageService()
-        self.isOnboardingFinished = appStorageService.isOnboardingFinished
-        self.isSignedIn = appStorageService.isSignedIn()
+    }
+    
+    func isOnboardingFinished() -> Bool {
+        return appStorageService.isOnboardingFinished
     }
     
     func setOnboardingFinished(_ state: Bool) {
-        withAnimation(.spring()) {
-            self.isOnboardingFinished = state
-            self.appStorageService.isOnboardingFinished = state
-            
-            self.isSignedIn = appStorageService.isSignedIn()
-        }
+        self.appStorageService.isOnboardingFinished = state
     }
     
-    func setSignedIn(_ state: Bool) {
-        withAnimation {
-            self.isSignedIn = state
-        }
+    func isSignedIn() -> Bool {
+        return appStorageService.isSignedIn()
     }
     
     func signOut() {
         self.appStorageService.signOut()
-        self.isSignedIn = appStorageService.isSignedIn()
     }
 }
