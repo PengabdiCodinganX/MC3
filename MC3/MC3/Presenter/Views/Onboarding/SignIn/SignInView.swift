@@ -11,7 +11,6 @@ import AuthenticationServices
 struct SignInView: View {
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
 
-    
     @Binding var onboardingType: OnboardingType
     @Binding var mascotText: String
     

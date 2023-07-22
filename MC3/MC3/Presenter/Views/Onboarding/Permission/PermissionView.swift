@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct PermissionView: View {
-    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject var viewModel: PermissionViewModel = PermissionViewModel()
     
     @State var buttonType: ButtonType = .done
+    
+    @Binding var isOnboardingFinished: Bool
     
     var body: some View {
         Spacer()
@@ -38,9 +39,6 @@ struct PermissionView: View {
         .alert(isPresented: $viewModel.isError) {
             Alert(title: Text(viewModel.error))
         }
-        .onChange(of: mainViewModel.isOnboardingFinished) { isOnboardingFinished in
-            print("[isOnboardingFinished]", isOnboardingFinished)
-        }
     }
     
     /// Handles next button clicked
@@ -57,12 +55,12 @@ struct PermissionView: View {
             return
         }
         
-        mainViewModel.setOnboardingFinished(true)
+        isOnboardingFinished = true
     }
 }
 
 struct PermissionView_Previews: PreviewProvider {
     static var previews: some View {
-        PermissionView(viewModel: PermissionViewModel())
+        PermissionView(viewModel: PermissionViewModel(), isOnboardingFinished: .constant(false))
     }
 }

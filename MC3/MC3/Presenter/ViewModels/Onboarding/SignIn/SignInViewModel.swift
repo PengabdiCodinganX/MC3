@@ -10,7 +10,7 @@ import SwiftUI
 import AuthenticationServices
 
 class SignInViewModel: ObservableObject {
-    private let db: UserUseCase
+    private let coreDataService: CoreDataService
     private let appStorageService: AppStorageService
     
     @Published var error: String = ""
@@ -19,7 +19,7 @@ class SignInViewModel: ObservableObject {
     @Published var isError: Bool = false
     
     @MainActor init() {
-        self.db = Injec().user()
+        self.coreDataService = CoreDataService()
         self.appStorageService = AppStorageService()
     }
     
@@ -52,7 +52,7 @@ class SignInViewModel: ObservableObject {
         let userIdentifier = appleIDCredential.user
         
         // User exist
-        let user = db.getUser(userIdentifier: userIdentifier)
+        let user = self.coreDataService.getUser(userIdentifier: userIdentifier)
         switch user {
         case .success(_):
             handleSignIn(userIdentifier)
@@ -86,7 +86,7 @@ class SignInViewModel: ObservableObject {
             name: name
         )
         
-        return self.db.saveUser(user: user)
+        return self.coreDataService.saveUser(user: user)
     }
     
     /// Sets the userIdentifier.

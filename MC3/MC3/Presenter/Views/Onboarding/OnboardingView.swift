@@ -9,11 +9,13 @@ import SwiftUI
 import AuthenticationServices
 
 struct OnboardingView: View {
-    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
     
     @State var onboardingType: OnboardingType
     @State private var mascotText: String = "Hi there, You've come into the right place..."
+    
+    @Binding var isOnboardingFinished: Bool
+    @Binding var isSignedIn: Bool
     
     var body: some View {
         VStack {
@@ -30,7 +32,7 @@ struct OnboardingView: View {
             case .signIn:
                 SignInView(onboardingType: $onboardingType, mascotText: $mascotText)
             case .permission:
-                PermissionView()
+                PermissionView(isOnboardingFinished: $isOnboardingFinished)
             }
         }
         .padding()
@@ -50,7 +52,7 @@ struct OnboardingView: View {
         }
         
         guard !viewModel.isOnboardingFinished() else {
-            mainViewModel.isSignedIn = true
+            self.isSignedIn = true
             return
         }
         
@@ -74,6 +76,10 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(onboardingType: .introduction)
+        OnboardingView(
+            onboardingType: .introduction,
+            isOnboardingFinished: .constant(false),
+            isSignedIn: .constant(false)
+        )
     }
 }

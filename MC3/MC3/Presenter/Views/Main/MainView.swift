@@ -11,27 +11,42 @@ struct MainView: View {
     @StateObject private var viewModel: MainViewModel = MainViewModel()
     @StateObject private var pathStore: PathStore = PathStore()
     
+    @State var isOnboardingFinished: Bool = false
+    @State var isSignedIn: Bool = false
+    
     var body: some View {
         VStack {
-            if viewModel.isOnboardingFinished && viewModel.isSignedIn {
+            if isOnboardingFinished && isSignedIn {
                 NavigationStack(path: $pathStore.path) {
-                    HomeView()
+                    HomeView(isSignedIn: $isSignedIn)
                 }
                 .environmentObject(pathStore)
             } else {
-                OnboardingView(onboardingType: viewModel.isOnboardingFinished ? .signIn : .introduction)
+                OnboardingView(
+                    onboardingType: self.getOnboardingType(),
+                    isOnboardingFinished: self.$isOnboardingFinished,
+                    isSignedIn: self.$isSignedIn
+                )
             }
         }
         .environmentObject(viewModel)
-        .onChange(of: viewModel.isOnboardingFinished) { isOnboardingFinished in
-            print("[isOnboardingFinished]", isOnboardingFinished)
-            print("[viewModel.isSignedIn]", viewModel.isSignedIn)
-        }
         .onAppear {
-            Task {
-                try? await ElevenLabsAPIService().fetchTextToSpeech(text: "test whats up", voiceId: )
+            print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
+            print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
+            
+            self.isOnboardingFinished = viewModel.isOnboardingFinished()
+            self.isSignedIn = viewModel.isSignedIn()
+        }
+        .onChange(of: isSignedIn) { isSignedIn in
+            print("[MainView][isSignedIn]", isSignedIn)
+            if !isSignedIn {
+                viewModel.signOut()
             }
         }
+    }
+    
+    func getOnboardingType() -> OnboardingType {
+        return viewModel.isOnboardingFinished() ? .signIn : .introduction
     }
 }
 

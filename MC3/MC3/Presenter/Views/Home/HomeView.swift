@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject private var mainViewModel: MainViewModel
+    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     @EnvironmentObject var pathStore: PathStore
     
-    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
+    @Binding var isSignedIn: Bool
     
     var body: some View {
         VStack {
@@ -53,7 +53,7 @@ struct HomeView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    mainViewModel.signOut()
+                    isSignedIn = false
                 } label: {
                     Image(systemName: "escape")
                 }
@@ -71,6 +71,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(isSignedIn: .constant(false))
     }
 }
