@@ -54,16 +54,9 @@ class ElevenLabsAPIService {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         request.httpBody = jsonData
         
-        apiManager.fetchData(request: <#T##URLRequest#>, completion: <#T##(Result<Data, Error>) -> Void#>)
+        let result = try await APIManager().fetchData(request: request)
+        print("[ElevenLabsAPIService][fetchTextToSpeech][result]", result)
         
-        APIService.shared.fetchData(request: request) { result in
-            switch result {
-            case .success(let data):
-                completion(.success(data))
-            case .failure(let error):
-                print(error)
-                completion(.failure(error))
-            }
-        }
+        
     }
 }

@@ -29,7 +29,7 @@ struct MainView: View {
         }
         .onAppear {
             Task {
-                try? await ElevenLabsAPIService().fetchAPIKey()
+                try? await ElevenLabsAPIService().fetchTextToSpeech(text: "test whats up", voiceId: )
             }
         }
     }
