@@ -27,6 +27,11 @@ struct MainView: View {
             print("[isOnboardingFinished]", isOnboardingFinished)
             print("[viewModel.isSignedIn]", viewModel.isSignedIn)
         }
+        .onAppear {
+            Task {
+                try? await ElevenLabsAPIService().fetchAPIKey()
+            }
+        }
     }
 }
 

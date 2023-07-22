@@ -9,20 +9,6 @@ import Foundation
 import CoreData
 
 class UserCoreDataImpl: UserDataSource {
-//    private let container: NSPersistentCloudKitContainer
-//
-//    init(inMemory: Bool = false) {
-//        container = NSPersistentCloudKitContainer(name: "MC3")
-//        if inMemory {
-//            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-//        }
-//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//            if let error = error as NSError? {
-//                print("Unresolved error \(error), \(error.userInfo)")
-//            }
-//        })
-//        container.viewContext.automaticallyMergesChangesFromParent = true
-//    }
     private let viewContext = PersistenceController.shared.viewContext
 
     func getAllUsers() throws -> [UserModel]{
