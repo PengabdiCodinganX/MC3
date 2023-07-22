@@ -26,7 +26,7 @@ class SelfAffirmationViewModel: ObservableObject{
         }else{
             if(isAnswer && counterWord < 2){
                 self.counterWord += 1
-                withAnimation{
+                withAnimation(.spring()) {
                     selectedWord = affirmationWords[self.counterWord]
                 }
                 isAnswer = false

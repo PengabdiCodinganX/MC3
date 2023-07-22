@@ -10,6 +10,7 @@ import SwiftUI
 import UserNotifications
 import AVFAudio
 
+@MainActor
 class PermissionViewModel: ObservableObject {
     private let db: UserUseCase
     private let appStorageService: AppStorageService
@@ -30,20 +31,21 @@ class PermissionViewModel: ObservableObject {
     }
     
     func getUser() {
-        let userIdentifier = self.appStorageService.userIdentifier
-
-        let result = self.db.getUser(userIdentifier: userIdentifier)
-        switch result {
-        case .success(let user):
-            self.user = user
-            self.name = user.name ?? ""
-        case .failure(let error):
-            setError(error: error.localizedDescription)
+        Task {
+            print("[PermissionViewModel][getUser]")
+            let userIdentifier = self.appStorageService.userIdentifier
+            print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
+            
+            let result = self.db.getUser(userIdentifier: userIdentifier)
+            switch result {
+            case .success(let user):
+                print("[PermissionViewModel][getUser][user]", user)
+                self.user = user
+                self.name = user.name ?? ""
+            case .failure(let error):
+                setError(error: error.localizedDescription)
+            }
         }
-    }
-    
-    func setOnboardingFinished(_ state: Bool) {
-        self.appStorageService.isOnboardingFinished = state
     }
     
     func isPermissionsAllowed() -> Bool {
@@ -69,9 +71,14 @@ class PermissionViewModel: ObservableObject {
             // Request permission for push notifications if not yet granted.
             let center = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-                DispatchQueue.main.async {
+                withAnimation(.spring()) {
                     self.appStorageService.isPushNotificationPermissionAllowed = granted
-                    self.isPushNotificationPermissionAllowed = granted
+                    
+                    Task {
+                        await MainActor.run {
+                            self.isPushNotificationPermissionAllowed = granted
+                        }
+                    }
                 }
             }
         } else {
@@ -83,9 +90,14 @@ class PermissionViewModel: ObservableObject {
         if isOn {
             // Request permission for microphone if not yet granted.
             AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
-                DispatchQueue.main.async {
+                withAnimation(.spring()) {
                     self.appStorageService.isMicrophonePermissionAllowed = granted
-                    self.isMicrophonePermissionAllowed = granted
+                    
+                    Task {
+                        await MainActor.run {
+                            self.isMicrophonePermissionAllowed = granted
+                        }
+                    }
                 }
             }
         } else {

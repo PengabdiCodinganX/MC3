@@ -10,6 +10,7 @@ import AuthenticationServices
 
 struct SignInView: View {
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
+
     
     @Binding var onboardingType: OnboardingType
     @Binding var mascotText: String
@@ -34,14 +35,19 @@ struct SignInView: View {
                 return
             }
             
-            onboardingType = .permission
+            proceedToPermissionPage()
         }
         .alert(isPresented: $viewModel.isError) {
             Alert(title: Text(viewModel.error))
         }
     }
     
-
+    func proceedToPermissionPage() {
+        withAnimation(.spring()) {
+            onboardingType = .permission
+            mascotText = "But before that, I would like you to set up some privacies. In order to make us close, what should I call you?"
+        }
+    }
 }
 
 struct SignInView_Previews: PreviewProvider {

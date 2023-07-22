@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import AuthenticationServices
 
 class SignInViewModel: ObservableObject {
@@ -17,7 +18,7 @@ class SignInViewModel: ObservableObject {
     @Published var isSignedIn: Bool = false
     @Published var isError: Bool = false
     
-    init() {
+    @MainActor init() {
         self.db = Injec().user()
         self.appStorageService = AppStorageService()
     }
@@ -90,8 +91,13 @@ class SignInViewModel: ObservableObject {
     
     /// Sets the userIdentifier.
     private func handleSignIn(_ userIdentifier: String) {
-        self.appStorageService.signIn(userIdentifier: userIdentifier)
-        isSignedIn = true
+        Task {
+            self.appStorageService.signIn(userIdentifier: userIdentifier)
+        }
+        
+        withAnimation(.spring()) {
+            self.isSignedIn = true
+        }
     }
     
     /// Handles sign in failure event.

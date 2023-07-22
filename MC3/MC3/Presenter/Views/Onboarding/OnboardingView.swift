@@ -9,6 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct OnboardingView: View {
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
     
     @State var onboardingType: OnboardingType
@@ -31,8 +32,6 @@ struct OnboardingView: View {
             case .permission:
                 PermissionView()
             }
-            
-            Spacer()
         }
         .padding()
         .navigationBarBackButtonHidden(true)
@@ -50,21 +49,23 @@ struct OnboardingView: View {
             return
         }
         
-        guard viewModel.isPermissionsAllowed() else {
-            proceedToPermissionPage()
+        guard !viewModel.isOnboardingFinished() else {
+            mainViewModel.isSignedIn = true
             return
         }
+        
+        proceedToPermissionPage()
     }
     
     func proceedToSignIn() {
-        withAnimation {
+        withAnimation(.spring()) {
             onboardingType = .signIn
             mascotText = ""
         }
     }
     
     func proceedToPermissionPage() {
-        withAnimation {
+        withAnimation(.spring()) {
             onboardingType = .permission
             mascotText = "But before that, I would like you to set up some privacies. In order to make us close, what should I call you?"
         }

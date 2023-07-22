@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject var pathStore: PathStore
+    
+    @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     
     var body: some View {
         VStack {
@@ -48,6 +50,22 @@ struct HomeView: View {
             }
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    mainViewModel.signOut()
+                } label: {
+                    Image(systemName: "escape")
+                }
+
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Second") {
+                    print("Pressed")
+                }
+            }
+        }
     }
 }
 

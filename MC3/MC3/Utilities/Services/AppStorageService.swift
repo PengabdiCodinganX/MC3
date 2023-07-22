@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class AppStorageService {
+class AppStorageService: ObservableObject {
     @AppStorage("userIdentifier") var userIdentifier: String = ""
     
     @AppStorage("isOnboardingFinished") var isOnboardingFinished: Bool = false
@@ -18,23 +18,20 @@ class AppStorageService {
     /// Checks if the user is signed in.
     /// - Returns: Bool indicating whether the user is signed in.
     func isSignedIn() -> Bool {
+        print("[AppStorageService][signIn][self.userIdentifier]", self.userIdentifier)
         return !userIdentifier.isEmpty
     }
     
     func signIn(userIdentifier: String) {
-        DispatchQueue.main.async {
-            withAnimation {
-                self.userIdentifier = userIdentifier
-                print("[AppStorageService][signIn][self.userIdentifier]", self.userIdentifier)
-            }
+        withAnimation(.spring()) {
+            self.userIdentifier = userIdentifier
+            print("[AppStorageService][signIn][self.userIdentifier]", self.userIdentifier)
         }
     }
     
     func signOut() {
-        DispatchQueue.main.async {
-            withAnimation {
-                self.userIdentifier = ""
-            }
+        withAnimation(.spring()) {
+            self.userIdentifier = ""
         }
     }
 }

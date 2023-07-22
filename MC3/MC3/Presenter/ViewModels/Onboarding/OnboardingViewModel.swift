@@ -12,6 +12,7 @@ import AuthenticationServices
 import AVFoundation
 import UserNotifications
 
+@MainActor
 class OnboardingViewModel: ObservableObject {
     private let appStorageService: AppStorageService
     

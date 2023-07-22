@@ -14,13 +14,15 @@ struct IntroductionView: View {
     @Binding var mascotText: String
     
     var body: some View {
-        HStack {
-            Spacer()
-            
-            PrimaryButton(text: buttonType.rawValue) {
-                handleOnClicked()
+        Spacer()
+        
+        HStack(alignment: .bottom) {
+                Spacer()
+                
+                PrimaryButton(text: buttonType.rawValue) {
+                    handleOnClicked()
+                }
             }
-        }
     }
     
     /// Handles next button clicked
@@ -35,14 +37,16 @@ struct IntroductionView: View {
     }
     
     private func handleOnNextClicked() {
-        withAnimation {
+        withAnimation(.spring()) {
             buttonType = .getStarted
             mascotText = "I’m (Lion), your companion to discover the motivation you seek!"
         }
     }
     
     private func handleOnGetStartedClicked() {
-        onboardingType = .signIn
+        withAnimation(.spring()) {
+            onboardingType = .signIn
+        }
     }
 }
 

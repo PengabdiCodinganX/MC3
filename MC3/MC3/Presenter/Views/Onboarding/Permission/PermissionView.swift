@@ -8,29 +8,38 @@
 import SwiftUI
 
 struct PermissionView: View {
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject var viewModel: PermissionViewModel = PermissionViewModel()
     
     @State var buttonType: ButtonType = .done
     
     var body: some View {
-        VStack {
-            SingleTextField(placeholder: "Name...", text: $viewModel.name)
-            
+        Spacer()
+        
+        SingleTextField(placeholder: "Name...", text: $viewModel.name)
+        
+        Spacer()
+        
+        Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
+            .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
+        Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionAllowed)
+            .onChange(of: viewModel.isMicrophonePermissionAllowed, perform: viewModel.handleOnMicrophonePermissionToggled)
+        
+        Spacer()
+        
+        HStack {
             Spacer()
             
-            Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
-                .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
-            Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionAllowed)
-                .onChange(of: viewModel.isMicrophonePermissionAllowed, perform: viewModel.handleOnMicrophonePermissionToggled)
-            
-            HStack {
-                Spacer()
-                
-                PrimaryButton(text: buttonType.rawValue) {
-                    handleOnClicked()
-                }
-                .disabled(!viewModel.isPermissionsAllowed())
+            PrimaryButton(text: buttonType.rawValue) {
+                handleOnClicked()
             }
+            .disabled(!viewModel.isPermissionsAllowed())
+        }
+        .alert(isPresented: $viewModel.isError) {
+            Alert(title: Text(viewModel.error))
+        }
+        .onChange(of: mainViewModel.isOnboardingFinished) { isOnboardingFinished in
+            print("[isOnboardingFinished]", isOnboardingFinished)
         }
     }
     
@@ -48,7 +57,7 @@ struct PermissionView: View {
             return
         }
         
-        viewModel.setOnboardingFinished(true)
+        mainViewModel.setOnboardingFinished(true)
     }
 }
 

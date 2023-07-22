@@ -12,13 +12,20 @@ struct MainView: View {
     @StateObject private var pathStore: PathStore = PathStore()
     
     var body: some View {
-        if viewModel.isOnboardingFinished() && viewModel.isSignedIn() {
-            NavigationStack(path: $pathStore.path) {
-                HomeView()
+        VStack {
+            if viewModel.isOnboardingFinished && viewModel.isSignedIn {
+                NavigationStack(path: $pathStore.path) {
+                    HomeView()
+                }
+                .environmentObject(pathStore)
+            } else {
+                OnboardingView(onboardingType: viewModel.isOnboardingFinished ? .signIn : .introduction)
             }
-            .environmentObject(pathStore)
-        } else {
-            OnboardingView(onboardingType: viewModel.isOnboardingFinished() ? .signIn : .introduction)
+        }
+        .environmentObject(viewModel)
+        .onChange(of: viewModel.isOnboardingFinished) { isOnboardingFinished in
+            print("[isOnboardingFinished]", isOnboardingFinished)
+            print("[viewModel.isSignedIn]", viewModel.isSignedIn)
         }
     }
 }
