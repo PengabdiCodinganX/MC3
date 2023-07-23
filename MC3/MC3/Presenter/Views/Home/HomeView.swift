@@ -12,81 +12,69 @@ struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     @EnvironmentObject var pathStore: PathStore
     
-    @State private var data: Data?
-    @State private var audioPlayer: AVAudioPlayer?
+    @State private var text: String = ""
     
     @Binding var isSignedIn: Bool
-        
-    
     
     var body: some View {
         VStack {
-            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
+//            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
+//
+//            MenuButton(
+//                text: "Share your story, Find relief!",
+//                menuButtonType: .big
+//            ) {
+//
+//            }
+//
+//            HStack {
+//                MenuButton(
+//                    text: "Share your story, Find relief!",
+//                    menuButtonType: .big
+//                ) {
+//
+//                }
+//
+//                VStack {
+//                    MenuButton(
+//                        text: "Share your story, Find relief!",
+//                        menuButtonType: .small
+//                    ) {
+//
+//                    }
+//
+//                    MenuButton(
+//                        text: "Share your story, Find relief!",
+//                        menuButtonType: .small
+//                    ) {
+//
+//                    }
+//                }
+//            }
             
-            MenuButton(
-                text: "Share your story, Find relief!",
-                menuButtonType: .big
-            ) {
-                print("pressed")
-                
-                do {
-                    
-                    guard audioPlayer != nil else {
-                        print("audioPlayer empty")
-                        return
-                    }
-                    
-                    // Ensure the player is prepared to play
-                    self.audioPlayer!.prepareToPlay()
-                    
-                    // Start playing
-                    self.audioPlayer!.play()
-                    print("pressed play")
-                } catch {
-                    print("Error playing MP3: \(error)")
+            SingleTextField(placeholder: "Input text", text: $text)
+            PrimaryButton(text: "Save") {
+                Task {
+                    try await viewModel.saveSound(text: text)
                 }
             }
             
-            HStack {
-                MenuButton(
-                    text: "Share your story, Find relief!",
-                    menuButtonType: .big
-                ) {
-                    
-                }
-                
-                VStack {
-                    MenuButton(
-                        text: "Share your story, Find relief!",
-                        menuButtonType: .small
-                    ) {
+            if !viewModel.soundList.isEmpty {
+                List(viewModel.soundList, id: \.self) { sound in
+                    Button {
+                        guard sound.sound != nil else {
+                            print("[sound.sound]", sound.sound)
+                            return
+                        }
                         
-                    }
-                    
-                    MenuButton(
-                        text: "Share your story, Find relief!",
-                        menuButtonType: .small
-                    ) {
-                        
+                            playSound(data: sound.sound!)
+                    } label: {
+                        Text(sound.id?.uuidString ?? "")
                     }
                 }
             }
         }
         .padding()
-        .task {
-            do {
-                data = try await ElevenLabsAPIService().fetchTextToSpeech(text: "hey everyone my name", voiceId: "21m00Tcm4TlvDq8ikWAM")
-                
-                guard data != nil else {
-                    print("data empty")
-                    return
-                }
-                
-                audioPlayer = try AVAudioPlayer(data: data!)
-            } catch {
-                print("Test", error)
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -102,6 +90,19 @@ struct HomeView: View {
                     print("Pressed")
                 }
             }
+        }
+    }
+    
+    func playSound(data: Data) {
+        print("[playSound][data]", data)
+        do {
+            let audioPlayer: AVAudioPlayer = try AVAudioPlayer(data: data)
+            print("[playSound][audioPlayer]", audioPlayer)
+            audioPlayer.prepareToPlay()
+            audioPlayer.play()
+            print("[playSound][playing]")
+        } catch {
+            print("[playSound][error]", error)
         }
     }
 }
