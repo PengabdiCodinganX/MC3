@@ -14,8 +14,6 @@ struct SingleTextField: View {
     var body: some View {
             TextField(placeholder, text: $text)
             .textFieldStyle(.roundedBorder)
-                 
-        
     }
 }
 

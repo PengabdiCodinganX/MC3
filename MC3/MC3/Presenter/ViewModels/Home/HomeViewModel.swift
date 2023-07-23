@@ -8,7 +8,13 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
+    private let appStorageService: AppStorageService
+    
     @Published var dailyMotivation: String = ""
+    
+    init() {
+        appStorageService = AppStorageService()
+    }
     
     func getDailyMotivation() {
         //  TODO
