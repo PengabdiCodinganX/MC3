@@ -10,28 +10,17 @@ import CloudKit
 
 @MainActor
 class ElevenLabsAPIService {
-    private let cloudKitService: CloudKitService
-    private let apiManager: APIManager
+    private let apiManager: APIManager = APIManager()
     
     private let baseURL = "https://api.elevenlabs.io/v1/"
     private var apiKey: String = ""
     
     init() async throws {
-        cloudKitService = CloudKitService()
-        apiManager = APIManager()
-        apiKey = try await fetchAPIKey()
-    }
-    
-    private func fetchAPIKey() async throws -> String {
-        print("[ElevenLabsAPIService][fetchAPIKey]")
-        let result = try await cloudKitService.fetchApiKeyData(apiType: .elevenLabs)
-        print("[ElevenLabsAPIService][fetchAPIKey][result]", result)
-        
-        return result
+        apiKey = try await apiManager.fetchAPIKey(apiType: .elevenLabs)
     }
     
     /// /v1/text-to-speech/{voice_id}
-    func fetchTextToSpeech(text: String, voiceId: String) async throws {
+    func fetchTextToSpeech(text: String, voiceId: String) async throws -> Data {
         guard let url = URL(string: baseURL + "text-to-speech/\(voiceId)") else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Base URL not found"])
         }
@@ -53,10 +42,11 @@ class ElevenLabsAPIService {
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         request.httpBody = jsonData
+        print("[ElevenLabsAPIService][fetchTextToSpeech][request]", request)
         
         let result = try await APIManager().fetchData(request: request)
+        
         print("[ElevenLabsAPIService][fetchTextToSpeech][result]", result)
-        
-        
+        return result
     }
 }

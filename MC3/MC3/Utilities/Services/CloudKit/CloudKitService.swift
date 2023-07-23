@@ -36,7 +36,7 @@ class CloudKitService {
         return apiKey
     }
     
-    func fetchData(query: CKQuery, resultsLimit: Int) async -> (matchResults: [(CKRecord.ID, Result<CKRecord, any Error>)], queryCursor: CKQueryOperation.Cursor?) {
+    func fetchData(query: CKQuery, resultsLimit: Int) async throws -> (matchResults: [(CKRecord.ID, Result<CKRecord, any Error>)], queryCursor: CKQueryOperation.Cursor?) {
         print("[CloudKitService][fetchData][query]", query)
         let result = try await database.records(matching: query, inZoneWith: .default, resultsLimit: resultsLimit)
         print("[CloudKitService][fetchData][result]", result)

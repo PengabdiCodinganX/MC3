@@ -33,7 +33,7 @@ struct MainView: View {
         .onAppear {
             print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
             print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
-            
+                
             self.isOnboardingFinished = viewModel.isOnboardingFinished()
             self.isSignedIn = viewModel.isSignedIn()
         }
