@@ -15,10 +15,11 @@ struct BubbleText: View {
         Text(text)
             .font(Font.custom("SF Pro Rounded", size: 16))
             .kerning(1.4)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .multilineTextAlignment(.center)
+            .lineSpacing(8)
             .padding()
-            .background(ChatBubble(alignment: alignment).fill(Color.gray)) // Set the bubble color to gray
+            .background(ChatBubble(alignment: alignment).fill(Color.white)) // Set the bubble color to gray
             .fixedSize(horizontal: false, vertical: true)
     }
 }

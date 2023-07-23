@@ -11,3 +11,8 @@ enum MascotAlignment {
     case horizontal
     case vertical
 }
+
+enum MascotImage {
+    case face
+    case half
+}

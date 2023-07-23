@@ -19,6 +19,7 @@ struct PrimaryButton: View {
             Text(text)
         }
         .buttonStyle(.borderedProminent)
+        .tint(Color("SecondaryColor"))
         .buttonBorderShape(.capsule)
     }
 }
