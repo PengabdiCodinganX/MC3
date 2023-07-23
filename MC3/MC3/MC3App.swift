@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct MC3App: App {
-    @StateObject var pathStore: PathStore = PathStore()
-    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(pathStore)
+            MainView()
         }
     }
 }
