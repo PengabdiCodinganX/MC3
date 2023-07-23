@@ -13,11 +13,11 @@ struct BubbleText: View {
     
     var body: some View {
         Text(text)
-            .font(Font.custom("SF Pro Rounded", size: 16))
+            .font(Font.custom("SF Pro Rounded", size: alignment == .vertical ? 16 : 12))
             .kerning(1.4)
             .foregroundColor(.black)
             .multilineTextAlignment(.center)
-            .lineSpacing(8)
+            .lineSpacing(alignment == .vertical ? 8 : 5)
             .padding()
             .background(ChatBubble(alignment: alignment).fill(Color.white)) // Set the bubble color to gray
             .fixedSize(horizontal: false, vertical: true)

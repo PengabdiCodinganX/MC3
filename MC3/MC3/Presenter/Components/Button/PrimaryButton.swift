@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PrimaryButton: View {
     var text: String
+    var isFull: Bool = false
     
     let onClick: () -> Void
     
@@ -17,6 +18,7 @@ struct PrimaryButton: View {
             onClick()
         } label: {
             Text(text)
+                .frame(maxWidth: isFull ? .infinity : nil)
         }
         .buttonStyle(.borderedProminent)
         .tint(Color("SecondaryColor"))
