@@ -14,7 +14,7 @@ struct SelfAffirmationView: View {
         VStack{
             //TODO: Create view selfAffirmation
             //MARK: chat bubble
-            BubbleText(text: "Say \(selfAffirmationVM.selectedWord.capitalized)", alignment: .horizontal)
+            BubbleText(text: "Say \(selfAffirmationVM.selectedWord.capitalized)", alignment: .vertical)
             //MARK: maskot image
             Image("Mascot")
                 .padding(16)
