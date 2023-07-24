@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StoryRecapView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
     @State private var rating: Int = 0
     var body: some View {
         ZStack{
@@ -37,6 +39,13 @@ struct StoryRecapView: View {
                             .padding(.bottom, 16)
                     }
                 }
+                
+                Button {
+                    proceedToStoryRepeat()
+                } label: {
+                    Text("temporary next nanti ganti")
+                }
+
             }
             .padding()
         }
@@ -61,6 +70,10 @@ struct StoryRecapView: View {
             .background()
             .cornerRadius(12)
         }
+    }
+    
+    func proceedToStoryRepeat() {
+        pathStore.navigateToView(viewPath: .story)
     }
 }
 

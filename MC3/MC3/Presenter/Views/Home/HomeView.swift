@@ -9,8 +9,9 @@ import SwiftUI
 import AVFoundation
 
 struct HomeView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
     @StateObject private var viewModel: HomeViewModel = HomeViewModel()
-    @EnvironmentObject var pathStore: PathStore
     
     @State private var text: String = ""
     @State var audioPlayer: AVAudioPlayer?
@@ -25,7 +26,7 @@ struct HomeView: View {
                 text: "Share your story, Find relief!",
                 menuButtonType: .big
             ) {
-                
+                proceedToProblem()
             }
             
             HStack {
@@ -52,24 +53,33 @@ struct HomeView: View {
                     }
                 }
             }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        isSignedIn = false
-                    } label: {
-                        Image(systemName: "escape")
-                    }
-                    
+        }
+        .padding()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    isSignedIn = false
+                } label: {
+                    Image(systemName: "escape")
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Second") {
-                        print("Pressed")
-                    }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Second") {
+                    print("Pressed")
                 }
             }
         }
+        .navigationDestination(for: ViewPath.self) { viewPath in
+            withAnimation() {
+                viewPath.view
+            }.transition(.opacity)
+        }
+    }
+    
+    func proceedToProblem() {
+        pathStore.navigateToView(viewPath: .problem)
     }
 }
 
