@@ -8,11 +8,7 @@
 import Foundation
 
 class APIManager {
-    private let cloudKitService: CloudKitService
-    
-    init() {
-        cloudKitService = CloudKitService()
-    }
+    private let cloudKitService: CloudKitManager = CloudKitManager()
     
     func fetchAPIKey(apiType: APIType) async throws -> String {
         print("[APIManager][fetchAPIKey]")

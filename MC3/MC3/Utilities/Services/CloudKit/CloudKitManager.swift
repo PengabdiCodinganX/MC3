@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-class CloudKitService {
+class CloudKitManager {
     private let container: CKContainer
     private let database: CKDatabase
 
@@ -36,10 +36,14 @@ class CloudKitService {
         return apiKey
     }
     
-    func fetchData(query: CKQuery, resultsLimit: Int) async throws -> (matchResults: [(CKRecord.ID, Result<CKRecord, any Error>)], queryCursor: CKQueryOperation.Cursor?) {
+    func fetchData(query: CKQuery, resultsLimit: Int = 0) async throws -> (matchResults: [(CKRecord.ID, Result<CKRecord, any Error>)], queryCursor: CKQueryOperation.Cursor?) {
         print("[CloudKitService][fetchData][query]", query)
         let result = try await database.records(matching: query, inZoneWith: .default, resultsLimit: resultsLimit)
         print("[CloudKitService][fetchData][result]", result)
         return result
+    }
+    
+    func saveData(record: CKRecord) async throws -> CKRecord {
+        return try await database.save(record)
     }
 }

@@ -12,15 +12,15 @@ import AVFAudio
 @MainActor
 class HomeViewModel: ObservableObject {
     private let appStorageService: AppStorageService = AppStorageService()
-    private let soundCoreDataService: SoundCoreDataService = SoundCoreDataService()
+    private let soundCloudKitService: SoundCloudKitService = SoundCloudKitService()
     
     @Published var dailyMotivation: String = ""
     
     @Published var soundList: [SoundModel] = []
     
-    init() {
-        self.getAllSound()
-    }
+    init() { Task {
+        try await self.getAllSound()
+    } }
     
     func getDailyMotivation() {
         //  TODO
@@ -30,11 +30,11 @@ class HomeViewModel: ObservableObject {
         let data = try await ElevenLabsAPIService().fetchTextToSpeech(text: text, voiceId: "21m00Tcm4TlvDq8ikWAM")
         
         let sound = SoundModel(
-            id: UUID(),
+            text: text,
             sound: data
         )
         
-        let result = soundCoreDataService.saveSound(sound: sound)
+        let result = await soundCloudKitService.saveSound(sound: sound)
         
         switch result {
         case .success(let success):
@@ -45,11 +45,11 @@ class HomeViewModel: ObservableObject {
             break
         }
         
-        self.getAllSound()
+        await self.getAllSound()
     }
     
-    func getAllSound() {
-        let result = soundCoreDataService.getAllSounds()
+    func getAllSound() async {
+        let result = await soundCloudKitService.getAllSounds()
         
         switch result {
         case .success(let soundList):

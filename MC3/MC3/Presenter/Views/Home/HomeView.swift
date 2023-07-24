@@ -16,6 +16,8 @@ struct HomeView: View {
     
     @Binding var isSignedIn: Bool
     
+    @State var audioPlayer: AVAudioPlayer?
+    
     var body: some View {
         VStack {
 //            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
@@ -69,7 +71,7 @@ struct HomeView: View {
                         
                             playSound(data: sound.sound!)
                     } label: {
-                        Text(sound.id?.uuidString ?? "")
+                        Text(sound.text ?? "")
                     }
                 }
             }
@@ -96,10 +98,10 @@ struct HomeView: View {
     func playSound(data: Data) {
         print("[playSound][data]", data)
         do {
-            let audioPlayer: AVAudioPlayer = try AVAudioPlayer(data: data)
+            audioPlayer = try AVAudioPlayer(data: data)
             print("[playSound][audioPlayer]", audioPlayer)
-            audioPlayer.prepareToPlay()
-            audioPlayer.play()
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
             print("[playSound][playing]")
         } catch {
             print("[playSound][error]", error)
