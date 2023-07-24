@@ -32,7 +32,8 @@ struct Mascot: View {
             if alignment == .horizontal && !text.isEmpty {
                 BubbleText(
                     text: text,
-                    alignment: alignment
+                    alignment: alignment,
+                    textType: .short()
                 )
             }
         }

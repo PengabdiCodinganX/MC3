@@ -7,13 +7,27 @@
 
 import SwiftUI
 
+enum TextType{
+    case big(size: CGFloat = 20)
+    case middle(size: CGFloat = 15)
+    case short(size: CGFloat = 10)
+    
+    var size: CGFloat {
+        switch self {
+        case .big(let size), .middle(let size), .short(let size):
+            return size
+        }
+    }
+}
+
 struct BubbleText: View {
     var text: String
     var alignment: MascotAlignment
+    var textType: TextType = .middle()
     
     var body: some View {
         Text(text)
-            .font(Font.custom("SF Pro Rounded", size: alignment == .vertical ? 16 : 12))
+            .font(Font.custom("SF Pro Rounded", size: textType.size))
             .kerning(1.4)
             .foregroundColor(.black)
             .multilineTextAlignment(.center)

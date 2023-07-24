@@ -16,7 +16,7 @@ struct InputProblemView: View {
             
             VStack{
                 //MARK: Mascot Chat
-                Mascot(text: "If you have problem, you can share it with me.  I want you to know, there's no need to face it alone. I'm right here, ready and willing to lend an ear.", alignment: isTyping ? .horizontal : .vertical, mascotImage: isTyping ? .face : .half)
+                Mascot(text: "If you have problem, you can share it with me.  I want you to know, there's no need to face it alone. I'm right here, ready and willing to lend an ear.", alignment: isTyping ? .horizontal : .vertical,mascotImage: isTyping ? .face : .half)
                     .padding()
                 
                 //MARK: TextEditor
