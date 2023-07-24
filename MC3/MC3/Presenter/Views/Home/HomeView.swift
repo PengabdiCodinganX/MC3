@@ -75,14 +75,15 @@ struct HomeView: View {
                     }
                 }
             }
-        }
-        .padding()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    isSignedIn = false
-                } label: {
-                    Image(systemName: "escape")
+            .padding()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        isSignedIn = false
+                    } label: {
+                        Image(systemName: "escape")
+                    }
+                    
                 }
                 
             }
