@@ -22,13 +22,11 @@ struct ControlButton: View {
             Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
-                .frame(height: imageSize)
-                .tint(color)
                 .padding(16)
+                .frame(width: width, height: height)
+                .background(Color("Bubbles"))
+                .cornerRadius(100)
         }
-        .frame(width: width, height: height)
-        .background(Color("Bubbles"))
-        .cornerRadius(100)
 
     }
 }
