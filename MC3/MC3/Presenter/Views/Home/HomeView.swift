@@ -14,17 +14,12 @@ struct HomeView: View {
     @Binding var isSignedIn: Bool
     
     var body: some View {
-        VStack {
-            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
+        ZStack{
+            Color("AccentColor").edgesIgnoringSafeArea(.all)
             
-            MenuButton(
-                text: "Share your story, Find relief!",
-                menuButtonType: .big
-            ) {
+            VStack {
+                Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
                 
-            }
-            
-            HStack {
                 MenuButton(
                     text: "Share your story, Find relief!",
                     menuButtonType: .big
@@ -32,37 +27,46 @@ struct HomeView: View {
                     
                 }
                 
-                VStack {
+                HStack {
                     MenuButton(
                         text: "Share your story, Find relief!",
-                        menuButtonType: .small
+                        menuButtonType: .big
                     ) {
                         
                     }
                     
-                    MenuButton(
-                        text: "Share your story, Find relief!",
-                        menuButtonType: .small
-                    ) {
+                    VStack {
+                        MenuButton(
+                            text: "Share your story, Find relief!",
+                            menuButtonType: .small
+                        ) {
+                            
+                        }
                         
+                        MenuButton(
+                            text: "Share your story, Find relief!",
+                            menuButtonType: .small
+                        ) {
+                            
+                        }
                     }
                 }
             }
-        }
-        .padding()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    isSignedIn = false
-                } label: {
-                    Image(systemName: "escape")
+            .padding()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        isSignedIn = false
+                    } label: {
+                        Image(systemName: "escape")
+                    }
+                    
                 }
-
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Second") {
-                    print("Pressed")
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Second") {
+                        print("Pressed")
+                    }
                 }
             }
         }
