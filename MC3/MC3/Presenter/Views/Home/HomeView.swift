@@ -6,20 +6,29 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct HomeView: View {
     @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     @EnvironmentObject var pathStore: PathStore
     
+    @State private var text: String = ""
+    @State var audioPlayer: AVAudioPlayer?
+    
     @Binding var isSignedIn: Bool
     
     var body: some View {
-        ZStack{
-            Color("AccentColor").edgesIgnoringSafeArea(.all)
+        VStack {
+            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
             
-            VStack {
-                Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
+            MenuButton(
+                text: "Share your story, Find relief!",
+                menuButtonType: .big
+            ) {
                 
+            }
+            
+            HStack {
                 MenuButton(
                     text: "Share your story, Find relief!",
                     menuButtonType: .big
@@ -27,28 +36,19 @@ struct HomeView: View {
                     
                 }
                 
-                HStack {
+                VStack {
                     MenuButton(
                         text: "Share your story, Find relief!",
-                        menuButtonType: .big
+                        menuButtonType: .small
                     ) {
                         
                     }
                     
-                    VStack {
-                        MenuButton(
-                            text: "Share your story, Find relief!",
-                            menuButtonType: .small
-                        ) {
-                            
-                        }
+                    MenuButton(
+                        text: "Share your story, Find relief!",
+                        menuButtonType: .small
+                    ) {
                         
-                        MenuButton(
-                            text: "Share your story, Find relief!",
-                            menuButtonType: .small
-                        ) {
-                            
-                        }
                     }
                 }
             }
