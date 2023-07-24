@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StoryIntroductionView: View {
+struct ValidateFeelingView: View {
     private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     
     @State private var currentIndex = 0
@@ -62,8 +62,8 @@ struct StoryIntroductionView: View {
     }
 }
 
-struct StoryIntroductionView_Previews: PreviewProvider {
+struct ValidateFeelingView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryIntroductionView()
+        ValidateFeelingView()
     }
 }
