@@ -1,26 +1,14 @@
 //
 //  SoundModel.swift
 //  MC3
-//
-//  Created by Muhammad Afif Maruf on 24/07/23.
+//  Created by Muhammad Adha Fajri Jonison on 23/07/23.
 //
 
 import Foundation
+import CloudKit
 
-enum SoundType{
-    case meditation
-    case motivation
-}
-
-struct SoundModel{
-    let id: UUID = UUID()
-    let soundType: SoundType
-    var track: String {
-        switch soundType {
-        case .meditation:
-            return "meditation"
-        case .motivation:
-            return "motivation"
-        }
-    }
+struct SoundModel: Hashable {
+    var id: CKRecord.ID?
+    var text: String?
+    var sound: Data?
 }

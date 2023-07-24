@@ -12,8 +12,8 @@ import AVFAudio
 
 @MainActor
 class PermissionViewModel: ObservableObject {
-    private let coreDataService: CoreDataService
-    private let appStorageService: AppStorageService
+    private let appStorageService: AppStorageService = AppStorageService()
+    private let userCoreDataService: UserCoreDataService = UserCoreDataService()
     
     @Published var isPushNotificationPermissionAllowed: Bool = false
     @Published var isMicrophonePermissionAllowed: Bool = false
@@ -25,8 +25,6 @@ class PermissionViewModel: ObservableObject {
     @Published var error: String = ""
     
     init() {
-        self.coreDataService = CoreDataService()
-        self.appStorageService = AppStorageService()
         self.getUser()
     }
     
@@ -36,7 +34,7 @@ class PermissionViewModel: ObservableObject {
             let userIdentifier = self.appStorageService.userIdentifier
             print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
             
-            let result = self.coreDataService.getUser(userIdentifier: userIdentifier)
+            let result = self.userCoreDataService.getUser(userIdentifier: userIdentifier)
             switch result {
             case .success(let user):
                 print("[PermissionViewModel][getUser][user]", user)

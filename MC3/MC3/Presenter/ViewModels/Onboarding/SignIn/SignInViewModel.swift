@@ -10,18 +10,13 @@ import SwiftUI
 import AuthenticationServices
 
 class SignInViewModel: ObservableObject {
-    private let coreDataService: CoreDataService
-    private let appStorageService: AppStorageService
+    private let userCoreDataService: UserCoreDataService = UserCoreDataService()
+    private let appStorageService: AppStorageService = AppStorageService()
     
     @Published var error: String = ""
     
     @Published var isSignedIn: Bool = false
     @Published var isError: Bool = false
-    
-    @MainActor init() {
-        self.coreDataService = CoreDataService()
-        self.appStorageService = AppStorageService()
-    }
     
     /// Configures the sign in request
     func handleOnSignInRequest(_ request: ASAuthorizationAppleIDRequest) {
@@ -52,7 +47,7 @@ class SignInViewModel: ObservableObject {
         let userIdentifier = appleIDCredential.user
         
         // User exist
-        let user = self.coreDataService.getUser(userIdentifier: userIdentifier)
+        let user = self.userCoreDataService.getUser(userIdentifier: userIdentifier)
         switch user {
         case .success(_):
             handleSignIn(userIdentifier)
@@ -86,7 +81,7 @@ class SignInViewModel: ObservableObject {
             name: name
         )
         
-        return self.coreDataService.saveUser(user: user)
+        return self.userCoreDataService.saveUser(user: user)
     }
     
     /// Sets the userIdentifier.

@@ -6,17 +6,59 @@
 //
 
 import Foundation
+import SwiftUI
+import AVFAudio
 
+@MainActor
 class HomeViewModel: ObservableObject {
-    private let appStorageService: AppStorageService
+    private let appStorageService: AppStorageService = AppStorageService()
+    private let soundCloudKitService: SoundCloudKitService = SoundCloudKitService()
     
     @Published var dailyMotivation: String = ""
     
-    init() {
-        appStorageService = AppStorageService()
-    }
+    @Published var soundList: [SoundModel] = []
+    
+    init() { Task {
+        try await self.getAllSound()
+    } }
     
     func getDailyMotivation() {
         //  TODO
+    }
+    
+    func saveSound(text: String) async throws {
+        let data = try await ElevenLabsAPIService().fetchTextToSpeech(text: text, voiceId: "21m00Tcm4TlvDq8ikWAM")
+        
+        let sound = SoundModel(
+            text: text,
+            sound: data
+        )
+        
+        let result = await soundCloudKitService.saveSound(sound: sound)
+        
+        switch result {
+        case .success(let success):
+            print("success", success)
+            break
+        case .failure(let failure):
+            print("failure", failure)
+            break
+        }
+        
+        await self.getAllSound()
+    }
+    
+    func getAllSound() async {
+        let result = await soundCloudKitService.getAllSounds()
+        
+        switch result {
+        case .success(let soundList):
+            withAnimation {
+                self.soundList = soundList
+            }
+        case .failure(let failure):
+            print("[getAllSound][failure]", failure)
+            break
+        }
     }
 }

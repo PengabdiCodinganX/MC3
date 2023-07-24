@@ -8,7 +8,7 @@
 import Foundation
 
 class MeditationViewModel: ObservableObject{
-    var meditation: SoundModel = SoundModel(soundType: .meditation)
+    var meditation: MusicModel = MusicModel(musicType: .meditation)
     @Published var audioManager: AudioManager = AudioManager()
     
     @Published private var breathText: String = "Breathe in..."
