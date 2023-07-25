@@ -20,7 +20,7 @@ class ElevenLabsAPIService {
     }
     
     /// /v1/text-to-speech/{voice_id}
-    func fetchTextToSpeech(text: String, voiceId: String) async throws -> Data {
+    func fetchTextToSpeech(text: String, voiceId: String = "2un5A97VFesDPIxhRJeY") async throws -> Data {
         guard let url = URL(string: baseURL + "text-to-speech/\(voiceId)") else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Base URL not found"])
         }

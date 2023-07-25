@@ -11,6 +11,6 @@ import CloudKit
 struct HistoryModel: Identifiable {
     var id: CKRecord.ID?
     var problem: String?
-    var rating: Double?
+    var rating: Int64?
     var feedback: String?
 }
