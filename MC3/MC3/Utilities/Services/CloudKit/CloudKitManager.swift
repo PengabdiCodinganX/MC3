@@ -43,6 +43,13 @@ class CloudKitManager {
         return result
     }
     
+    func fetchData(recordID: CKRecord.ID) async throws -> CKRecord {
+        print("[CloudKitService][fetchData][recordID]", recordID)
+        let result = try await database.record(for: recordID)
+        print("[CloudKitService][fetchData][result]", result)
+        return result
+    }
+    
     func saveData(record: CKRecord) async throws -> CKRecord {
         return try await database.save(record)
     }

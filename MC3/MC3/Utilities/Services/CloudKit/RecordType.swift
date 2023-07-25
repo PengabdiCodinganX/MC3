@@ -8,5 +8,9 @@
 import Foundation
 
 enum RecordType: String {
+    case user = "User"
+    case story = "Story"
     case sound = "Sound"
+    case history = "History"
+
 }

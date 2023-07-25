@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 import AuthenticationServices
 
+@MainActor
 class SignInViewModel: ObservableObject {
-    private let userCoreDataService: UserCoreDataService = UserCoreDataService()
+    private let userCloudKitService: UserCloudKitService = UserCloudKitService()
     private let appStorageService: AppStorageService = AppStorageService()
     
     @Published var error: String = ""
@@ -46,42 +47,43 @@ class SignInViewModel: ObservableObject {
     private func handleOnSignInSuccess(_ appleIDCredential: ASAuthorizationAppleIDCredential) {
         let userIdentifier = appleIDCredential.user
         
-        // User exist
-        let user = self.userCoreDataService.getUser(userIdentifier: userIdentifier)
-        switch user {
-        case .success(_):
-            handleSignIn(userIdentifier)
-            break
-        case .failure(_): break
-        }
-        
-        // User doesn't exist
-        let result = saveNewUser(appleIDCredential)
-        switch result {
-        case .success(_):
-            handleSignIn(userIdentifier)
-            break
-        case .failure(let error):
-            setError(error.localizedDescription)
-            break
+        Task {
+            // User exist
+            let user = await self.userCloudKitService.getUser(userIdentifier: userIdentifier)
+            switch user {
+            case .success(_):
+                handleSignIn(userIdentifier)
+                break
+            case .failure(_): break
+            }
+            
+            // User doesn't exist
+            let result = await saveNewUser(appleIDCredential)
+            switch result {
+            case .success(_):
+                handleSignIn(userIdentifier)
+                break
+            case .failure(let error):
+                setError(error.localizedDescription)
+                break
+            }
         }
     }
     
     /// Saves a new user with given AppleID credentials.
     /// - Parameter appleIDCredential: ASAuthorizationAppleIDCredential object with user details.
-    private func saveNewUser(_ appleIDCredential: ASAuthorizationAppleIDCredential) -> Result<UserModel, Error> {
+    private func saveNewUser(_ appleIDCredential: ASAuthorizationAppleIDCredential) async -> Result<UserModel, Error> {
         let userIdentifier = appleIDCredential.user
         let email = appleIDCredential.email
         let name = "\(appleIDCredential.fullName?.givenName ?? "") \(appleIDCredential.fullName?.familyName ?? "")"
         
         let user: UserModel = UserModel(
-            id: UUID(),
             userIdentifier: userIdentifier,
             email: email,
             name: name
         )
         
-        return self.userCoreDataService.saveUser(user: user)
+        return await self.userCloudKitService.saveUser(user: user)
     }
     
     /// Sets the userIdentifier.

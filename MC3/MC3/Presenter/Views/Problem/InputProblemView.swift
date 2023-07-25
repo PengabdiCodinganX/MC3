@@ -10,6 +10,7 @@ import SwiftUI
 struct InputProblemView: View {
     @EnvironmentObject private var pathStore: PathStore
     
+    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
  
     @State private var problem: String = ""
@@ -43,6 +44,13 @@ struct InputProblemView: View {
                 .cornerRadius(16, corners: [.topLeft, .topRight])
                 .padding(.top, -16)
             }
+        }
+    }
+    
+    func handleOnClicked() {
+        guard !problem.isEmpty else {
+            print("Error")
+            return
         }
     }
     
