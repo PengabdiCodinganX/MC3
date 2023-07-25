@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SelfAffirmationView: View {
     @StateObject var selfAffirmationVM = SelfAffirmationViewModel()
-
+    @State private var didLongPress = false
+    
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.all)
 
             VStack{
+                Spacer()
                 //MARK: chat bubble
                 BubbleText(text: "Say \(selfAffirmationVM.selectedWord.capitalized)", alignment: .vertical)
                 //MARK: maskot image
@@ -22,9 +24,16 @@ struct SelfAffirmationView: View {
                     .padding(16)
                 //MARK: Button speech
                 Button {
-                    selfAffirmationVM.toggleRecording()
+                    if self.didLongPress {
+                        self.didLongPress = false
+                        selfAffirmationVM.ofRecording()
+                        selfAffirmationVM.toggleRecording()
+                        print(selfAffirmationVM.counterWord)
+                    } else {
+                        print("Tap button")
+                    }
                 } label: {
-                    Image(systemName: selfAffirmationVM.isRecording ? "stop.fill" : "mic.fill")
+                    Image(systemName: "mic.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 35)
@@ -32,15 +41,26 @@ struct SelfAffirmationView: View {
                         .padding(16)
                 }
                 .frame(width: 80, height: 80)
-                .background(.black)
+                .background(selfAffirmationVM.isRecording ? Color("SecondaryColor") : .black)
                 .cornerRadius(100)
-
+                .simultaneousGesture(
+                    LongPressGesture().onEnded { _ in self.didLongPress = true
+                        //Active Listening
+                        selfAffirmationVM.onRecording()
+                        selfAffirmationVM.toggleRecording()
+                    }
+                )
+                
+                Spacer()
                 //check answer
                 if (selfAffirmationVM.isAnswer){
-                    Text("You got it broh")
-                        .font(.title)
+                    PrimaryButton(text: "Continue", isFull: true) {
+                        //TODO: Navigate path
+                        print()
+                    }
                 }
             }
+            .padding()
             .onAppear{
                 selfAffirmationVM.getAffirmationWords()
             }

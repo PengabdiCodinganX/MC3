@@ -36,20 +36,27 @@ class SelfAffirmationViewModel: ObservableObject{
     
     // Function to toggle recording state and call speech recognizer methods
     func toggleRecording() {
-        if !isRecording {
+        if isRecording {
             speechRecognizer.transcribe()
         } else {
             speechRecognizer.stopTranscribing()
             checkAnswer()
             getAffirmationWords()
         }
-        isRecording.toggle()
+    }
+    
+    
+    func ofRecording(){
+        isRecording = false
+    }
+    
+    func onRecording(){
+        isRecording = true
     }
     
     // Function to compare answer and transcribe
     func checkAnswer(){
-        print(speechRecognizer.transcript)
-        if(isRecording == true && speechRecognizer.transcript != ""){
+        if(isRecording == false && speechRecognizer.transcript != ""){
             isAnswer = speechRecognizer.transcript.lowercased() == selectedWord.lowercased()
         }
     }
