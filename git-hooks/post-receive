@@ -1,0 +1,4 @@
+#!/bin/sh
+cd MC3
+xcodegen generate --use-cache
+cd ..
