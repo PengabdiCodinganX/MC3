@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import CloudKit
 
-struct StoryCategoryModel {
-    var id: UUID?
+struct CategoryModel {
+    var id: CKRecord.ID
     var category: String?
 }

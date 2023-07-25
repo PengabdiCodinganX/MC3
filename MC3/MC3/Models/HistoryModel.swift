@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import CloudKit
 
-struct StoryFeedbackModel: Identifiable {
-    var id: UUID?
-    var concern: String?
-    var rating: Int16?
+struct HistoryModel: Identifiable {
+    var id: CKRecord.ID?
+    var problem: String?
+    var rating: Double?
     var feedback: String?
-    var user: UserModel?
 }
