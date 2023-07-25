@@ -15,8 +15,27 @@ struct MainView: View {
     @State var isSignedIn: Bool = false
     
     var body: some View {
-        ZStack{
-            Color("AccentColor").edgesIgnoringSafeArea(.all)
+        NavigationStack(path: $pathStore.path) {
+            ZStack{
+                Color("AccentColor").edgesIgnoringSafeArea(.all)
+                
+                if isOnboardingFinished && isSignedIn {
+                    HomeView(isSignedIn: $isSignedIn)
+                } else {
+                    OnboardingView(
+                        onboardingType: self.getOnboardingType(),
+                        isOnboardingFinished: self.$isOnboardingFinished,
+                        isSignedIn: self.$isSignedIn
+                    )
+                }
+                
+            }
+        }
+        .environmentObject(pathStore)
+        .environmentObject(viewModel)
+        .onAppear {
+            print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
+            print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
             
             VStack {
                 if isOnboardingFinished && isSignedIn {
@@ -46,6 +65,9 @@ struct MainView: View {
                     viewModel.signOut()
                 }
             }
+        }
+        .onChange(of: isOnboardingFinished) { isOnboardingFinished in
+            viewModel.setOnboardingFinished(isOnboardingFinished)
         }
     }
     
