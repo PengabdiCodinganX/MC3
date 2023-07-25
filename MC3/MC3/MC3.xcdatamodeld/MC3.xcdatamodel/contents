@@ -9,6 +9,15 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Setting" representedClassName="Setting" syncable="YES" codeGenerationType="class">
+        <attribute name="microphone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="pushNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="setting" inverseEntity="User"/>
+    </entity>
+    <entity name="Sound" representedClassName="Sound" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sound" optional="YES" attributeType="Binary"/>
+    </entity>
     <entity name="Story" representedClassName="Story" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="story" optional="YES" attributeType="String"/>
@@ -34,6 +43,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="userIdentifier" optional="YES" attributeType="String"/>
+        <relationship name="setting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Setting" inverseName="user" inverseEntity="Setting"/>
         <relationship name="storyFeedback" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoryFeedback" inverseName="user" inverseEntity="StoryFeedback"/>
     </entity>
 </model>
