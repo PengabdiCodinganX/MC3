@@ -19,7 +19,7 @@ enum BreatheStatus: String{
         case .hold:
             return "Hold..."
         case .breatheOut:
-            return"Breathe out..."
+            return "Breathe out..."
         }
     }
 }
