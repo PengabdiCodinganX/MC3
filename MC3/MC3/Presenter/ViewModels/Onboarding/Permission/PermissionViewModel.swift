@@ -13,7 +13,7 @@ import AVFAudio
 @MainActor
 class PermissionViewModel: ObservableObject {
     private let appStorageService: AppStorageService = AppStorageService()
-    private let userCoreDataService: UserCoreDataService = UserCoreDataService()
+    private let userCloudKitService: UserCloudKitService = UserCloudKitService()
     
     @Published var isPushNotificationPermissionAllowed: Bool = false
     @Published var isMicrophonePermissionAllowed: Bool = false
@@ -34,7 +34,7 @@ class PermissionViewModel: ObservableObject {
             let userIdentifier = self.appStorageService.userIdentifier
             print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
             
-            let result = self.userCoreDataService.getUser(userIdentifier: userIdentifier)
+            let result = await self.userCloudKitService.getUser(userIdentifier: userIdentifier)
             switch result {
             case .success(let user):
                 print("[PermissionViewModel][getUser][user]", user)

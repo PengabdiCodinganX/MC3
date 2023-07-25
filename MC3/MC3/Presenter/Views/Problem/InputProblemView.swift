@@ -10,6 +10,7 @@ import SwiftUI
 struct InputProblemView: View {
     @EnvironmentObject private var pathStore: PathStore
     
+    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
  
     @State private var problem: String = ""
@@ -24,15 +25,25 @@ struct InputProblemView: View {
                     .padding()
                 
                 //MARK: TextEditor
-                TextArea(placeholder: "Write down your problems here...", text: $problem)
+                TextArea(
+                    placeholder: "Write down your problems here...",
+                    text: $problem
+                )
                 
                 //MARK: Button
                 PrimaryButton(text: "Continue", isFull: true) {
-                    proceedToBreathing()
+                    handleOnClicked()
                 }
                 .padding(.horizontal)
             }
             .padding()
+        }
+    }
+    
+    func handleOnClicked() {
+        guard !problem.isEmpty else {
+            print("Error")
+            return
         }
     }
     
