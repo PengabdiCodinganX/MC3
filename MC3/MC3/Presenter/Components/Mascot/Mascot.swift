@@ -116,6 +116,6 @@ struct Mascot: View {
 
 struct Mascot_Previews: PreviewProvider {
     static var previews: some View {
-        Mascot(textList: Constant().problemDataTwo, alignment: .horizontal)
+        Mascot(textList: Constant().problemDataTwo, alignment: .vertical)
     }
 }
