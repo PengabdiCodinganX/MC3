@@ -29,18 +29,18 @@ struct Mascot: View {
                 }
             }
             
-            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop,contentMode: .scaleAspectFill)
+            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
+                .frame(idealHeight: alignment == .vertical ? 270 : 100)
 
             if alignment == .horizontal && !texts.isEmpty {
                 ForEach(texts.indices, id: \.self){index in
-                    BubbleText(text: texts[index], alignment: .vertical, showPointer: index == texts.count-1, textAlignment: .leading)
+                    BubbleText(text: texts[index], alignment: .horizontal, showPointer: index == texts.count-1, textAlignment: .leading)
                         .opacity(index == texts.count-1 ? 1 : 0.5)
                         .padding(.bottom, 8)
                         .padding()
                 }
             }
         }
-        .background(.black)
         .onAppear {
             withAnimation(.spring()) {
                 texts = []
@@ -116,6 +116,6 @@ struct Mascot: View {
 
 struct Mascot_Previews: PreviewProvider {
     static var previews: some View {
-        Mascot(textList: Constant().problemDataTwo, alignment: .vertical)
+        Mascot(textList: Constant().problemDataTwo, alignment: .horizontal)
     }
 }
