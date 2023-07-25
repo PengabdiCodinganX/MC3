@@ -13,6 +13,7 @@ struct SignInView: View {
 
     @Binding var onboardingType: OnboardingType
     @Binding var mascotText: String
+    @Binding var isSignedIn: Bool
     
     var body: some View {
         VStack {
@@ -30,6 +31,10 @@ struct SignInView: View {
             .padding()
         }
         .onChange(of: viewModel.isSignedIn) { isSignedIn in
+            withAnimation(.spring()) {
+                self.isSignedIn = isSignedIn
+            }
+                
             guard isSignedIn else {
                 return
             }
@@ -51,6 +56,6 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(onboardingType: .constant(.signIn), mascotText: .constant("testasdcfas"))
+        SignInView(onboardingType: .constant(.signIn), mascotText: .constant("testasdcfas"), isSignedIn: .constant(false))
     }
 }
