@@ -9,55 +9,60 @@ import SwiftUI
 
 struct ValidateFeelingView: View {
     @EnvironmentObject private var pathStore: PathStore
-    private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
-    
+    @State var timer: Timer?
     @State private var currentIndex = 0
+    @State private var texts: [String] = [].reversed()
+    
+    
+    private func setupTimer() {
+        withAnimation{
+            
+                texts.append(introduceData[currentIndex])
+        }
+        currentIndex += 1
+        timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
+            withAnimation{
+                texts.append(introduceData[currentIndex])
+                currentIndex += 1
+            }
+            if(currentIndex == introduceData.count){
+                timer?.invalidate() 
+            }
+        }
+    }
     var body: some View {
         ZStack {
             Color("AccentColor").edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                ScrollViewReader { proxy in
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack {
-                            ForEach(introduceData.indices, id: \.self) { index in
-                                BubbleText(text: introduceData[index], alignment: .vertical)
-                                    .padding(.bottom, 12)
-                                    .opacity(currentIndex >= index ? 1: 0)
-                            }
-                        }
-                        .onReceive(timer, perform: { _ in
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                currentIndex += 1
-                                proxy.scrollTo(currentIndex, anchor: .top) // Scroll to the next index
-                            }
-                            
-                            guard currentIndex != 2 else {
-                                timer.upstream.connect().cancel()
-                                return
-                            }
-                        })
-                    }
-                    .frame(height: 320)
+                .onAppear{
+                    setupTimer()
                 }
-                
-                Image("Mascot-Half-Body")
-                    .resizable()
-                    .scaledToFit()
+            VStack(spacing: 0){
                 Spacer()
+                VStack{
+                    ForEach(texts.indices, id: \.self){index in
+                        BubbleText(text: texts[index], alignment: .vertical, showPointer: index == texts.count-1, textAlignment: .leading)
+                            .opacity(index == texts.count-1 ? 1 : 0.5)
+                            .padding(.bottom, 8)
+                          
+                    }
+                    LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
+                        .frame(height: 270)
+                }
+                .padding([.leading, .top, .trailing], 32)
                 HStack{
-                    Button(action: { }){
+                    Button(action: {}){
                         Text("Not now")
-                        .underline().foregroundColor(.black)
+                            .underline().foregroundColor(.black)
                     }
                     Spacer()
-                    PrimaryButton(text: "Continue") {
+                    PrimaryButton(text: " Continue ") {
                         proceedToStoryRecap()
                     }
                 }
-                .padding([.leading, .trailing])
+                .padding(.horizontal, 16)
+                .padding(.vertical, 24)
+                .background(.white)
             }
-            .padding()
         }
     }
     

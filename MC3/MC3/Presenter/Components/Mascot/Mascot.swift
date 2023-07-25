@@ -22,12 +22,14 @@ struct Mascot: View {
                     alignment: alignment
                 )
             }
+            
+            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop,contentMode: .scaleAspectFill)
 
-            Image(mascotImage == .face ? "Mascot" : "Mascot-Half-Body")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(minWidth: alignment == .horizontal ? 128 : 256)
-                .padding()
+//            Image(mascotImage == .face ? "Mascot" : "Mascot-Half-Body")
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .frame(minWidth: alignment == .horizontal ? 128 : 256)
+//                .padding()
 
             if alignment == .horizontal && !text.isEmpty {
                 BubbleText(

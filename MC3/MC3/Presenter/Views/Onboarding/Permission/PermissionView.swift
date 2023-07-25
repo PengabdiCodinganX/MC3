@@ -50,8 +50,10 @@ struct PermissionView: View {
     }
     
     private func handleOnDoneClicked() {
+        print("[handleOnDoneClicked]")
         // Check for permissions
         guard viewModel.isPermissionsAllowed() else {
+            print("[handleOnDoneClicked][isPermissionsAllowed]", false)
             return
         }
         

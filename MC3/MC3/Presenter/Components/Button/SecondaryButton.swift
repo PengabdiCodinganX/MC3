@@ -1,13 +1,13 @@
 //
-//  PrimaryButton.swift
+//  SecondaryButton.swift
 //  MC3
 //
-//  Created by Muhammad Adha Fajri Jonison on 18/07/23.
+//  Created by Muhammad Rezky on 25/07/23.
 //
 
 import SwiftUI
 
-struct PrimaryButton: View {
+struct SecondaryButton: View {
     var text: String
     var isFull: Bool = false
     
@@ -18,18 +18,20 @@ struct PrimaryButton: View {
             onClick()
         } label: {
             Text(text)
+                .foregroundColor(Color("SecondaryColor"))
                 .font(.headline)
                 .fontWeight(.bold)
-                .frame(maxWidth: isFull ? .infinity : nil, minHeight: 44)
+                .frame(maxWidth: isFull ? .infinity : nil, maxHeight: 44)
         }
         .buttonStyle(.borderedProminent)
-        .tint(Color("SecondaryColor"))
+        .tint(Color("AccentColor"))
         .buttonBorderShape(.capsule)
     }
 }
 
-struct PrimaryButton_Previews: PreviewProvider {
+
+struct SecondaryButton_Previews: PreviewProvider {
     static var previews: some View {
-        PrimaryButton(text: "text") {}
+        SecondaryButton(text: "text") {}
     }
 }

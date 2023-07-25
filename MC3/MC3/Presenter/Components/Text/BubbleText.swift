@@ -24,17 +24,57 @@ struct BubbleText: View {
     var text: String
     var alignment: MascotAlignment
     var textType: TextType = .middle()
+    var showPointer: Bool = true
+    var expand: Bool = false
+    var textAlignment: TextAlignment = .center
     
     var body: some View {
-        Text(text)
-            .font(Font.custom("SF Pro Rounded", size: textType.size))
-            .kerning(1.4)
-            .foregroundColor(.black)
-            .multilineTextAlignment(.center)
-            .lineSpacing(alignment == .vertical ? 8 : 5)
-            .padding()
-            .background(ChatBubble(alignment: alignment).fill(Color.white)) // Set the bubble color to gray
-            .fixedSize(horizontal: false, vertical: true)
+        
+        if alignment == .vertical {
+            VStack(spacing: 0){
+                if expand {
+                    Text(text)
+                        .font(Font.custom("SF Pro Rounded", size: textType.size))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(textAlignment)
+                        .lineSpacing(alignment == .vertical ? 8 : 5)
+                        .padding()
+                        .background(.white)
+                        .cornerRadius(16)
+                } else {
+                    Text(text)
+                        .font(Font.custom("SF Pro Rounded", size: textType.size))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(textAlignment)
+                        .lineSpacing(alignment == .vertical ? 8 : 5)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: (textAlignment == .leading) ? .leading : .center)
+                        .background(.white)
+                        .cornerRadius(16)
+                }
+                if showPointer {
+                    Image("triangle-vertical")
+                }
+            }
+        } else {
+            HStack(spacing: 0){
+                if showPointer {
+                    Image("triangle-horizontal")
+                }
+                Text(text)
+                    .font(Font.custom("SF Pro Rounded", size: textType.size))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(textAlignment)
+                    .lineSpacing(alignment == .vertical ? 8 : 5)
+                    .padding()
+                    .background(.white)
+                    .cornerRadius(16)
+                
+            }
+        }
+        
+        //            .background(ChatBubble(alignment: alignment).fill(Color.white)) // Set the bubble color to gray
+        //            .fixedSize(horizontal: false, vertical: true)
     }
 }
 

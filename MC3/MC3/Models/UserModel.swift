@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import CloudKit
 
 struct UserModel: Identifiable {
-    var id: UUID?
+    var id: CKRecord.ID?
     var userIdentifier: String?
     var email: String?
     var name: String?
