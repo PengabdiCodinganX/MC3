@@ -9,10 +9,9 @@ import SwiftUI
 
 @main
 struct MC3App: App {
-    @StateObject var audioManager = AudioManager()
     var body: some Scene {
         WindowGroup {
-            MeditationView()
+            MainView()
         }
     }
 }
