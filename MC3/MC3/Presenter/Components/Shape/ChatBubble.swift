@@ -8,10 +8,14 @@
 import Foundation
 import SwiftUI
 
+
+
 struct ChatBubble: Shape {
     var alignment: MascotAlignment
+    var expanded: Bool = false
     
     func path(in rect: CGRect) -> Path {
+        
         switch alignment {
         case .horizontal:
             return HorizontalChatBubble(rect)
