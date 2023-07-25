@@ -18,7 +18,9 @@ struct PrimaryButton: View {
             onClick()
         } label: {
             Text(text)
-                .frame(maxWidth: isFull ? .infinity : nil)
+                .font(.headline)
+                .fontWeight(.bold)
+                .frame(maxWidth: isFull ? .infinity : nil, minHeight: 44)
         }
         .buttonStyle(.borderedProminent)
         .tint(Color("SecondaryColor"))

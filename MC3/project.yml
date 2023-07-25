@@ -4,6 +4,10 @@ options:
   settings:
     iOS:
       TARGETED_DEVICE_FAMILY: "1"  # 1 for iPhone, 2 for iPad
+packages:
+  Lottie:
+    url: https://github.com/airbnb/lottie-spm.git
+    minorVersion: 4.2.0
 targets:
   MC3:
     type: application
@@ -14,3 +18,6 @@ targets:
     settings:
           base:
             CODE_SIGN_ENTITLEMENTS: MC3/MC3.entitlements
+    dependencies:
+      - package: Lottie
+

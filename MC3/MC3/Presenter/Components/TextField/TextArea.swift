@@ -11,21 +11,32 @@ import SwiftUI
 struct TextArea: View {
     var placeholder: String
     @Binding var text: String
+    @FocusState private var focused: Bool
+
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             //MARK: TextEditor
             TextEditor(text: $text)
+                .padding(16)
+                .scrollContentBackground(.hidden)
+                .background(Color("EditorColor"))
                 .cornerRadius(16)
-                .padding()
+                .focused($focused)
+
+            
             
             if text.isEmpty {
-                Text(placeholder)                    .padding(.top, 24)
-                    .padding(.leading, 20)
+                Text(placeholder)
+                    .padding(24)
                     .foregroundColor(.gray)
+                    .onTapGesture {
+                        focused = true
+                    }
             }
+            
         }
-        .frame(height: 200)
+        .frame(height: 180)
     }
 }
 
