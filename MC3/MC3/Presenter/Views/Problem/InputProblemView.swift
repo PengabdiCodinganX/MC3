@@ -45,8 +45,6 @@ struct InputProblemView: View {
             print("Error")
             return
         }
-        
-        viewModel.on()
     }
     
     func proceedToBreathing() {
