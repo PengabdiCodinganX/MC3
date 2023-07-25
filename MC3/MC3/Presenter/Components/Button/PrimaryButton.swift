@@ -20,7 +20,7 @@ struct PrimaryButton: View {
             Text(text)
                 .font(.headline)
                 .fontWeight(.bold)
-                .frame(maxWidth: isFull ? .infinity : nil, maxHeight: 44)
+                .frame(maxWidth: isFull ? .infinity : nil, minHeight: 44)
         }
         .buttonStyle(.borderedProminent)
         .tint(Color("SecondaryColor"))
