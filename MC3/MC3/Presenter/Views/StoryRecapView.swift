@@ -30,14 +30,14 @@ struct StoryRecapView: View {
                 
                 //MARK: Scroll Story View
                 ScrollView(showsIndicators: false){
-                    ForEach(storyData , id: \.self) { story in
-                        Text(story)
-                            .lineSpacing(5)
-                            .padding()
-                            .background(.white)
-                            .cornerRadius(12)
-                            .padding(.bottom, 16)
-                    }
+//                    ForEach(storyData , id: \.self) { story in
+//                        Text(story)
+//                            .lineSpacing(5)
+//                            .padding()
+//                            .background(.white)
+//                            .cornerRadius(12)
+//                            .padding(.bottom, 16)
+//                    }
                 }
                 
                 Button {

@@ -10,6 +10,7 @@ import SwiftUI
 struct InputProblemView: View {
     @EnvironmentObject private var pathStore: PathStore
     
+    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
  
     @State private var problem: String = ""
@@ -18,7 +19,7 @@ struct InputProblemView: View {
         ZStack {
             
             VStack(spacing: 0){
-                Mascot(text: "If you have problem, you can share it with me.  I want you to know, there's no need to face it alone. I'm right here, ready and willing to lend an ear.", alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
+                Mascot(textList: Constant().problemData, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
                     .padding([.leading, .top, .trailing])
                     .onTapGesture {
                         hideKeyboard()
@@ -29,6 +30,7 @@ struct InputProblemView: View {
                 Rectangle()
                     .frame(height: 16)
                     .foregroundColor(Color("AccentColor"))
+                
                 VStack{
                     TextArea(placeholder: "Write down your problems here...", text: $problem)
                         .padding(.bottom, 16)
@@ -43,6 +45,13 @@ struct InputProblemView: View {
                 .cornerRadius(16, corners: [.topLeft, .topRight])
                 .padding(.top, -16)
             }
+        }
+    }
+    
+    func handleOnClicked() {
+        guard !problem.isEmpty else {
+            print("Error")
+            return
         }
     }
     

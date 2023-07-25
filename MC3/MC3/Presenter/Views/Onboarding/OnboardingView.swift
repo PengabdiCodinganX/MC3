@@ -22,7 +22,7 @@ struct OnboardingView: View {
             Spacer()
             
             Mascot(
-                text: mascotText,
+                textList: Constant().introductionData,
                 alignment: .vertical
             )
             
@@ -30,7 +30,7 @@ struct OnboardingView: View {
             case .introduction:
                 IntroductionView(onboardingType: $onboardingType, mascotText: $mascotText)
             case .signIn:
-                SignInView(onboardingType: $onboardingType, mascotText: $mascotText)
+                SignInView(onboardingType: $onboardingType, mascotText: $mascotText, isSignedIn: $isSignedIn)
             case .permission:
                 PermissionView(isOnboardingFinished: $isOnboardingFinished)
             }
@@ -42,7 +42,9 @@ struct OnboardingView: View {
     }
     
     private func handleOnOnboardingTypeChanges() {
+        print("[handleOnOnboardingTypeChanges][viewModel.isSignedIn()", viewModel.isSignedIn())
         guard viewModel.isSignedIn() else {
+            print("[handleOnOnboardingTypeChanges][viewModel.isOnboardingFinished()", viewModel.isOnboardingFinished())
             guard viewModel.isOnboardingFinished() else {
                 return
             }
@@ -52,7 +54,6 @@ struct OnboardingView: View {
         }
         
         guard !viewModel.isOnboardingFinished() else {
-            self.isSignedIn = true
             return
         }
         

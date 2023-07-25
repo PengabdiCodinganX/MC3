@@ -15,15 +15,12 @@ struct MainView: View {
     @State var isSignedIn: Bool = false
     
     var body: some View {
-        ZStack{
-            Color("AccentColor").edgesIgnoringSafeArea(.all)
-            
-            VStack {
+        NavigationStack(path: $pathStore.path) {
+            ZStack{
+                Color("AccentColor").edgesIgnoringSafeArea(.all)
+                
                 if isOnboardingFinished && isSignedIn {
-                    NavigationStack(path: $pathStore.path) {
-                        HomeView(isSignedIn: $isSignedIn)
-                    }
-                    .environmentObject(pathStore)
+                    HomeView(isSignedIn: $isSignedIn)
                 } else {
                     OnboardingView(
                         onboardingType: self.getOnboardingType(),
@@ -32,19 +29,23 @@ struct MainView: View {
                     )
                 }
             }
-            .environmentObject(viewModel)
-            .onAppear {
-                print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
-                print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
-                
-                self.isOnboardingFinished = viewModel.isOnboardingFinished()
-                self.isSignedIn = viewModel.isSignedIn()
-            }
-            .onChange(of: isSignedIn) { isSignedIn in
-                print("[MainView][isSignedIn]", isSignedIn)
-                if !isSignedIn {
-                    viewModel.signOut()
-                }
+        }
+        .environmentObject(pathStore)
+        .environmentObject(viewModel)
+        .onAppear {
+            print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
+            print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
+            
+            self.isOnboardingFinished = viewModel.isOnboardingFinished()
+            self.isSignedIn = viewModel.isSignedIn()
+        }
+        .onChange(of: isOnboardingFinished) { isOnboardingFinished in
+            viewModel.setOnboardingFinished(isOnboardingFinished)
+        }
+        .onChange(of: isSignedIn) { isSignedIn in
+            print("[MainView][isSignedIn]", isSignedIn)
+            if !isSignedIn {
+                viewModel.signOut()
             }
         }
     }

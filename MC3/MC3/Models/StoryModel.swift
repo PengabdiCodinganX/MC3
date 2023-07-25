@@ -6,16 +6,18 @@
 //
 
 import Foundation
+import CloudKit
 
 struct StoryModel: Codable{
-    var id: UUID = UUID()
-    let title, problemCategory: String
+    var id: CKRecord.ID?
+    let problemCategory: [String]
     let story: StoryDetail
+    let rating: Int64
     
     enum CodingKeys: String, CodingKey {
-        case title
         case problemCategory = "problem_category"
         case story
+        case rating
     }
 }
 

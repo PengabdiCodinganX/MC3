@@ -11,42 +11,18 @@ struct ValidateFeelingView: View {
     @EnvironmentObject private var pathStore: PathStore
     @State var timer: Timer?
     @State private var currentIndex = 0
-    @State private var texts: [String] = [].reversed()
+//    @State private var texts: [String] = [].reversed()
     
-    
-    private func setupTimer() {
-        withAnimation{
-            
-                texts.append(introduceData[currentIndex])
-        }
-        currentIndex += 1
-        timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
-            withAnimation{
-                texts.append(introduceData[currentIndex])
-                currentIndex += 1
-            }
-            if(currentIndex == introduceData.count){
-                timer?.invalidate() 
-            }
-        }
-    }
     var body: some View {
         ZStack {
             Color("AccentColor").edgesIgnoringSafeArea(.all)
                 .onAppear{
-                    setupTimer()
+//                    setupTimer()
                 }
             VStack(spacing: 0){
                 Spacer()
                 VStack{
-                    ForEach(texts.indices, id: \.self){index in
-                        BubbleText(text: texts[index], alignment: .vertical, showPointer: index == texts.count-1, textAlignment: .leading)
-                            .opacity(index == texts.count-1 ? 1 : 0.5)
-                            .padding(.bottom, 8)
-                          
-                    }
-                    LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
-                        .frame(height: 270)
+                    Mascot(textList: Constant().problemDataTwo, alignment: .vertical)
                 }
                 .padding([.leading, .top, .trailing], 32)
                 HStack{

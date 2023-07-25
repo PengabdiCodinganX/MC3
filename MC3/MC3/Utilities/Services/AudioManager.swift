@@ -8,7 +8,7 @@
 import Foundation
 import AVKit
 
-class AudioManager: ObservableObject{
+class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var player: AVAudioPlayer?
     @Published private(set) var isPlaying: Bool = false {
         didSet{
@@ -27,6 +27,7 @@ class AudioManager: ObservableObject{
             try AVAudioSession.sharedInstance().setActive(true)
             
             player = try AVAudioPlayer(contentsOf: url)
+            player?.delegate = self
             
             if isPreview{
                 player?.prepareToPlay()
@@ -65,5 +66,12 @@ class AudioManager: ObservableObject{
             player.currentTime = 0
             isPlaying = false
         }
+    }
+
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        // Perform any additional checks or actions you want here
+        print("[audioPlayerDidFinishPlaying][flag]", flag)
+        isPlaying = !flag
     }
 }

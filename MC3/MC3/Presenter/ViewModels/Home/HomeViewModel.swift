@@ -12,53 +12,41 @@ import AVFAudio
 @MainActor
 class HomeViewModel: ObservableObject {
     private let appStorageService: AppStorageService = AppStorageService()
-    private let soundCloudKitService: SoundCloudKitService = SoundCloudKitService()
+    private let userCloudKitService: UserCloudKitService = UserCloudKitService()
     
+    @Published var user: UserModel = UserModel()
     @Published var dailyMotivation: String = ""
     
-    @Published var soundList: [SoundModel] = []
+    @Published var isError: Bool = false
+    @Published var error: String = ""
     
-    init() { Task {
-        try await self.getAllSound()
-    } }
+    init() {
+        self.getUser()
+    }
+    
+    func getUser() {
+        Task {
+            print("[PermissionViewModel][getUser]")
+            let userIdentifier = self.appStorageService.userIdentifier
+            print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
+            
+            let result = await self.userCloudKitService.getUser(userIdentifier: userIdentifier)
+            switch result {
+            case .success(let user):
+                print("[PermissionViewModel][getUser][user]", user)
+                self.user = user
+            case .failure(let error):
+                setError(error: error.localizedDescription)
+            }
+        }
+    }
+    
+    func setError(error: String) {
+        self.error = error
+        self.isError = true
+    }
     
     func getDailyMotivation() {
         //  TODO
-    }
-    
-    func saveSound(text: String) async throws {
-        let data = try await ElevenLabsAPIService().fetchTextToSpeech(text: text, voiceId: "21m00Tcm4TlvDq8ikWAM")
-        
-        let sound = SoundModel(
-            text: text,
-            sound: data
-        )
-        
-        let result = await soundCloudKitService.saveSound(sound: sound)
-        
-        switch result {
-        case .success(let success):
-            print("success", success)
-            break
-        case .failure(let failure):
-            print("failure", failure)
-            break
-        }
-        
-        await self.getAllSound()
-    }
-    
-    func getAllSound() async {
-        let result = await soundCloudKitService.getAllSounds()
-        
-        switch result {
-        case .success(let soundList):
-            withAnimation {
-                self.soundList = soundList
-            }
-        case .failure(let failure):
-            print("[getAllSound][failure]", failure)
-            break
-        }
     }
 }
