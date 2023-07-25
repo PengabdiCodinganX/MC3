@@ -28,7 +28,6 @@ struct BubbleText: View {
     var body: some View {
         Text(text)
             .font(Font.custom("SF Pro Rounded", size: textType.size))
-            .kerning(1.4)
             .foregroundColor(.black)
             .multilineTextAlignment(.center)
             .lineSpacing(alignment == .vertical ? 8 : 5)
