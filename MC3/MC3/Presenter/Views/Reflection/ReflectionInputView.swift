@@ -8,8 +8,34 @@
 import SwiftUI
 
 struct ReflectionInputView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    @StateObject private var keyboardService: KeyboardService = KeyboardService()
+    
+    @State private var feedback: String = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            Color("AccentColor").edgesIgnoringSafeArea(.all)
+            
+            VStack{
+                //MARK: Mascot Chat
+                Mascot(text: "Reflect on the inspiring story and create an action plan for your next steps.", alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
+                    .padding()
+                
+                VStack{
+                    //MARK: TextEditor
+                    TextArea(placeholder: "Write down your reflection here", text: $feedback)
+                        
+                    
+                    //MARK: Button
+                    PrimaryButton(text: "Next", isFull: true) {
+                        print()
+                    }
+                    .padding(.horizontal)
+                }
+                .background(.white)
+            }
+        }
     }
 }
 

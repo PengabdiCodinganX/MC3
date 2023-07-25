@@ -16,11 +16,14 @@ struct TextArea: View {
         ZStack(alignment: .topLeading) {
             //MARK: TextEditor
             TextEditor(text: $text)
+                .scrollContentBackground(.hidden)
+                .background(Color("EditorColor"))
                 .cornerRadius(16)
                 .padding()
             
             if text.isEmpty {
-                Text(placeholder)                    .padding(.top, 24)
+                Text(placeholder)
+                    .padding(.top, 24)
                     .padding(.leading, 20)
                     .foregroundColor(.gray)
             }

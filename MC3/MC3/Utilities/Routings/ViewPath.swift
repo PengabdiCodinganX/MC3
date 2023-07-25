@@ -26,7 +26,7 @@ enum ViewPath: Hashable {
             case .breathing:
                 EmptyView()
             case .story:
-                StoryIntroductionView()
+                ValidateFeelingView()
             case .storyRecap:
                 StoryRecapView()
             case .storyRepeat:

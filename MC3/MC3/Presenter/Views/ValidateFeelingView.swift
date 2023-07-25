@@ -22,8 +22,8 @@ struct ValidateFeelingView: View {
                         LazyVStack {
                             ForEach(introduceData.indices, id: \.self) { index in
                                 BubbleText(text: introduceData[index], alignment: .vertical)
-                                    .padding(.bottom)
-                                    .opacity(index == currentIndex ? 1: 0)
+                                    .padding(.bottom, 12)
+                                    .opacity(currentIndex >= index ? 1: 0)
                             }
                         }
                         .onReceive(timer, perform: { _ in
@@ -38,7 +38,7 @@ struct ValidateFeelingView: View {
                             }
                         })
                     }
-                    .frame(height: 250)
+                    .frame(height: 320)
                 }
                 
                 Image("Mascot-Half-Body")
