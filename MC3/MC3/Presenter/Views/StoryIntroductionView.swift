@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StoryIntroductionView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
     private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     
     @State private var currentIndex = 0
@@ -23,7 +25,6 @@ struct StoryIntroductionView: View {
                                 BubbleText(text: introduceData[index], alignment: .vertical)
                                     .padding(.bottom)
                                     .opacity(index == currentIndex ? 1: 0)
-                                
                             }
                         }
                         .onReceive(timer, perform: { _ in
@@ -52,13 +53,17 @@ struct StoryIntroductionView: View {
                     }
                     Spacer()
                     PrimaryButton(text: "Continue") {
-                        print("")
+                        proceedToStoryRecap()
                     }
                 }
                 .padding([.leading, .trailing])
             }
             .padding()
         }
+    }
+    
+    func proceedToStoryRecap() {
+        pathStore.navigateToView(viewPath: .storyRecap)
     }
 }
 
