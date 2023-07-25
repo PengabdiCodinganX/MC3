@@ -10,6 +10,7 @@ import SwiftUI
 struct Mascot: View {
     var text: String
     var alignment: MascotAlignment
+    var mascotImage: MascotImage = .face
     
     var body: some View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
@@ -22,10 +23,11 @@ struct Mascot: View {
                 )
             }
 
-            Image("Mascot")
+            Image(mascotImage == .face ? "Mascot" : "Mascot-Half-Body")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(minWidth: alignment == .horizontal ? 128 : 256)
+                .padding()
 
             if alignment == .horizontal && !text.isEmpty {
                 BubbleText(
@@ -40,6 +42,6 @@ struct Mascot: View {
 
 struct Mascot_Previews: PreviewProvider {
     static var previews: some View {
-        Mascot(text: "dffwq ewqe qweqw eq deqweqw eqwekjl bnqwekljwqbne kljqwnel kqwn lenqwle nwqklen qwlken qwlk enlqwn eqww rdfqnwek jqwbne", alignment: .horizontal)
+        Mascot(text: "dffwq ewqe qweqw eq deqweqw eqwekjl bnqwekljwqbne kljqwnel kqwn lenqwle nwqklen qwlken qwlk enlqwn eqww rdfqnwek jqwbne", alignment: .vertical)
     }
 }

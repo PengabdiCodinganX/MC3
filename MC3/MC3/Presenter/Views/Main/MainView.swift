@@ -37,13 +37,33 @@ struct MainView: View {
             print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
             print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
             
-            self.isOnboardingFinished = viewModel.isOnboardingFinished()
-            self.isSignedIn = viewModel.isSignedIn()
-        }
-        .onChange(of: isSignedIn) { isSignedIn in
-            print("[MainView][isSignedIn]", isSignedIn)
-            if !isSignedIn {
-                viewModel.signOut()
+            VStack {
+                if isOnboardingFinished && isSignedIn {
+                    NavigationStack(path: $pathStore.path) {
+                        HomeView(isSignedIn: $isSignedIn)
+                    }
+                    .environmentObject(pathStore)
+                } else {
+                    OnboardingView(
+                        onboardingType: self.getOnboardingType(),
+                        isOnboardingFinished: self.$isOnboardingFinished,
+                        isSignedIn: self.$isSignedIn
+                    )
+                }
+            }
+            .environmentObject(viewModel)
+            .onAppear {
+                print("[MainView][viewModel.isOnboardingFinished()]", viewModel.isOnboardingFinished())
+                print("[MainView][viewModel.isSignedIn()]", viewModel.isSignedIn())
+                
+                self.isOnboardingFinished = viewModel.isOnboardingFinished()
+                self.isSignedIn = viewModel.isSignedIn()
+            }
+            .onChange(of: isSignedIn) { isSignedIn in
+                print("[MainView][isSignedIn]", isSignedIn)
+                if !isSignedIn {
+                    viewModel.signOut()
+                }
             }
         }
         .onChange(of: isOnboardingFinished) { isOnboardingFinished in

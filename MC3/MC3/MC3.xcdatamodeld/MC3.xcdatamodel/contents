@@ -14,6 +14,10 @@
         <attribute name="pushNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="user" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="setting" inverseEntity="User"/>
     </entity>
+    <entity name="Sound" representedClassName="Sound" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sound" optional="YES" attributeType="Binary"/>
+    </entity>
     <entity name="Story" representedClassName="Story" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="story" optional="YES" attributeType="String"/>

@@ -6,8 +6,37 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ViewPath: Hashable {
-    case onboarding
-    case home
+    case problem
+    case breathing
+    case story
+    case storyRecap
+    case storyRepeat
+    case storyReflection
+    case selfAffirmation
+    case storyLog
+        
+        @ViewBuilder
+        var view: some View {
+            switch self {
+            case .problem:
+                InputProblemView()
+            case .breathing:
+                EmptyView()
+            case .story:
+                StoryIntroductionView()
+            case .storyRecap:
+                StoryRecapView()
+            case .storyRepeat:
+                EmptyView()
+            case .storyReflection:
+                EmptyView()
+            case .selfAffirmation:
+                SelfAffirmationView()
+            case .storyLog:
+                EmptyView()
+            }
+        }
 }
