@@ -5,8 +5,8 @@
 //  Created by Muhammad Afif Maruf on 24/07/23.
 //
 
-import Foundation
 import AVKit
+import SwiftUI
 
 class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var player: AVAudioPlayer?
@@ -29,11 +29,13 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             player = try AVAudioPlayer(contentsOf: url)
             player?.delegate = self
             
-            if isPreview{
-                player?.prepareToPlay()
-            }else{
-                player?.play()
-                isPlaying = true
+            withAnimation{
+                if isPreview{
+                    player?.prepareToPlay()
+                }else{
+                    player?.play()
+                    isPlaying = true
+                }
             }
         } catch  {
             print("Fail to initialize player", error)
@@ -46,12 +48,14 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             return
         }
         
-        if player.isPlaying{
-            player.pause()
-            isPlaying = false
-        }else{
-            player.play()
-            isPlaying = true
+        withAnimation{
+            if player.isPlaying{
+                player.pause()
+                isPlaying = false
+            }else{
+                player.play()
+                isPlaying = true
+            }
         }
     }
     
@@ -61,10 +65,12 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             return
         }
         
-        if player.isPlaying{
-            player.stop()
-            player.currentTime = 0
-            isPlaying = false
+        withAnimation{
+            if player.isPlaying{
+                player.stop()
+                player.currentTime = 0
+                isPlaying = false
+            }
         }
     }
 

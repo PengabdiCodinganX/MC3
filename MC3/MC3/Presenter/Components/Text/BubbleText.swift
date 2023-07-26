@@ -39,6 +39,7 @@ struct BubbleText: View {
                         .multilineTextAlignment(textAlignment)
                         .lineSpacing(alignment == .vertical ? 8 : 5)
                         .padding()
+                        .frame(maxWidth: .infinity, alignment: (textAlignment == .leading) ? .leading : .center)
                         .background(.white)
                         .cornerRadius(16)
                 } else {
@@ -48,7 +49,6 @@ struct BubbleText: View {
                         .multilineTextAlignment(textAlignment)
                         .lineSpacing(alignment == .vertical ? 8 : 5)
                         .padding()
-                        .frame(maxWidth: .infinity, alignment: (textAlignment == .leading) ? .leading : .center)
                         .background(.white)
                         .cornerRadius(16)
                 }
@@ -61,14 +61,27 @@ struct BubbleText: View {
                 if showPointer {
                     Image("triangle-horizontal")
                 }
-                Text(text)
-                    .font(Font.custom("SF Pro Rounded", size: textType.size))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(textAlignment)
-                    .lineSpacing(alignment == .vertical ? 8 : 5)
-                    .padding()
-                    .background(.white)
-                    .cornerRadius(16)
+                if expand {
+                    Text(text)
+                        .font(Font.custom("SF Pro Rounded", size: textType.size))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(textAlignment)
+                        .lineSpacing(alignment == .vertical ? 8 : 5)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: (textAlignment == .leading) ? .leading : .center)
+                        .background(.white)
+                        .cornerRadius(16)
+                } else {
+                    
+                        Text(text)
+                            .font(Font.custom("SF Pro Rounded", size: textType.size))
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(textAlignment)
+                            .lineSpacing(alignment == .vertical ? 8 : 5)
+                            .padding()
+                            .background(.white)
+                            .cornerRadius(16)
+                }
                 
             }
         }

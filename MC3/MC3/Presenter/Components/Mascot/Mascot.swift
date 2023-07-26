@@ -18,6 +18,7 @@ struct Mascot: View {
     var textList: [TextTrack]
     var alignment: MascotAlignment
     var mascotImage: MascotImage = .face
+    var mascotContentMode: UIView.ContentMode = .scaleAspectFill
     
     @State private var texts: [String] = []
     @State private var currentIndex = 0
@@ -28,6 +29,7 @@ struct Mascot: View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 
         return layout {
+            
             if alignment == .vertical && !texts.isEmpty {
                 ForEach(texts.indices, id: \.self){index in
                     BubbleText(text: texts[index], alignment: .vertical, showPointer: index == texts.count-1, textAlignment: .leading)
@@ -36,12 +38,18 @@ struct Mascot: View {
                 }
             }
             
-            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
-                .frame(maxHeight: alignment == .vertical ? 270 : 180)
-
+            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
+            
             if alignment == .horizontal && !texts.isEmpty {
                 ForEach(texts.indices, id: \.self){index in
-                    BubbleText(text: texts[index], alignment: .horizontal, showPointer: index == texts.count-1, textAlignment: .leading)
+                    BubbleText(
+                        text: texts[index],
+                        alignment: .horizontal,
+                        showPointer: index == texts.count-1,
+                        expand: true,
+                        textAlignment: .leading
+                    )
+                    
                         .opacity(index == texts.count-1 ? 1 : 0.5)
                         .padding(.bottom, 8)
                         .padding()

@@ -28,7 +28,8 @@ struct OnboardingView: View {
                 
                 Mascot(
                     textList: textList,
-                    alignment: .vertical
+                    alignment: .vertical,
+                    mascotContentMode: .scaleAspectFit
                 )
                 
                 switch onboardingType {

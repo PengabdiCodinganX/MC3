@@ -35,7 +35,7 @@ struct InputProblemView: View {
             print("Error")
             return
         }
-        
+        hideKeyboard()
         withAnimation(.spring()) {
             storyProblemType = .validateFeeling
         }

@@ -16,15 +16,15 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack(path: $pathStore.path) {
-            if isOnboardingFinished && isSignedIn {
+//            if isOnboardingFinished && isSignedIn {
                 HomeView(isSignedIn: $isSignedIn)
-            } else {
-                OnboardingView(
-                    onboardingType: self.getOnboardingType(),
-                    isOnboardingFinished: self.$isOnboardingFinished,
-                    isSignedIn: self.$isSignedIn
-                )
-            }
+//            } else {
+//                OnboardingView(
+//                    onboardingType: self.getOnboardingType(),
+//                    isOnboardingFinished: self.$isOnboardingFinished,
+//                    isSignedIn: self.$isSignedIn
+//                )
+//            }
         }
         .environmentObject(pathStore)
         .environmentObject(viewModel)

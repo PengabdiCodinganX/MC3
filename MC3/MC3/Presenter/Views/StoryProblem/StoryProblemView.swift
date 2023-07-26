@@ -17,18 +17,21 @@ struct StoryProblemView: View {
     @State private var storyProblemType: StoryProblemType = .inputProblem
     @State private var textList: [TextTrack] = []
     
+    
+    
     var body: some View {
         ZStack {
-            Color("AccentColor").edgesIgnoringSafeArea(.all)
+            
             
             VStack(spacing: 0){
-                Spacer()
-                
-                Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
-                    .padding([.leading, .top, .trailing])
-                    .onTapGesture {
-                        hideKeyboard()
-                    }
+                Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
+                        .padding([.leading, .trailing])
+                        .onTapGesture {
+                            hideKeyboard()
+                        }
+                    
+     
+                .background(Color("AccentColor"))
                 VStack{
                     switch storyProblemType {
                     case .inputProblem:
