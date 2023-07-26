@@ -8,11 +8,33 @@
 import Foundation
 import AVKit
 
-class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
+class AudioManager: ObservableObject {
     @Published var player: AVAudioPlayer?
     @Published private(set) var isPlaying: Bool = false {
         didSet{
             print("isPlaying", isPlaying)
+        }
+    }
+    
+    func delegatePlayer(delegate: any AVAudioPlayerDelegate) {
+        player?.delegate = delegate
+    }
+    
+    func startPlayer(data: Data, isPreview: Bool = false){
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            player = try AVAudioPlayer(data: data)
+            
+            if isPreview{
+                player?.prepareToPlay()
+            }else{
+                player?.play()
+                isPlaying = true
+            }
+        } catch  {
+            print("Fail to initialize player", error)
         }
     }
     
@@ -27,7 +49,6 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             try AVAudioSession.sharedInstance().setActive(true)
             
             player = try AVAudioPlayer(contentsOf: url)
-            player?.delegate = self
             
             if isPreview{
                 player?.prepareToPlay()
@@ -66,12 +87,5 @@ class AudioManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             player.currentTime = 0
             isPlaying = false
         }
-    }
-
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        // Perform any additional checks or actions you want here
-        print("[audioPlayerDidFinishPlaying][flag]", flag)
-        isPlaying = !flag
     }
 }

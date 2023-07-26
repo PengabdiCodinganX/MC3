@@ -11,18 +11,21 @@ import NaturalLanguage
 class NLPService {
     private let tagger = NLTagger(tagSchemes: [.lexicalClass, .sentimentScore])
     
-    func findAdjAndVerb(in paragraph: String) -> [String] {
-        return findWords(by: [.adjective, .verb], in: paragraph)
-    }
+//    func findAdjAndVerb(in paragraph: String) -> [String] {
+//        return findWords(by: [.adjective, .verb], in: paragraph)
+//    }
     
-    func generateSummary(for strings: [String], numberOfKeywords: Int = 5) -> String {
-        let allText = strings.joined(separator: " ")
-        let keywordsFrequency = findWordFrequency(by: [.noun, .verb], in: allText)
-
+    func generateSummary(for paragraph: String, numberOfKeywords: Int = 3) -> [String] {
+//        let allText = strings.joined(separator: " ")
+        let keywordsFrequency = findWords(by: [.noun, .verb], in: paragraph)
+        print("[generateSummary][keywordsFrequency]", keywordsFrequency)
+        
         let sortedKeywords = keywordsFrequency.sorted { $0.value > $1.value }
         let topKeywords = Array(sortedKeywords.prefix(numberOfKeywords)).map { $0.key }
-
-        return topKeywords.joined(separator: " ")
+        print("[generateSummary][sortedKeywords]", sortedKeywords)
+        print("[generateSummary][topKeywords]", topKeywords)
+        
+        return topKeywords
     }
     
     func generateSummaryUsingTagger(from paragraphs: [String], numberOfSentences: Int = 2) -> String {
@@ -44,13 +47,14 @@ class NLPService {
         return negativeSentences
     }
 
-    private func findWords(by tags: [NLTag], in text: String) -> [String] {
-        var words = [String]()
+    private func findWords(by tags: [NLTag], in text: String) -> [String: Int] {
+        var words = [String: Int]()
         
         tagger.string = text
         tagger.enumerateTags(in: text.startIndex..<text.endIndex, unit: .word, scheme: .lexicalClass, options: .omitPunctuation) { tag, tokenRange in
             if let tag = tag, tags.contains(tag) {
-                words.append(String(text[tokenRange]))
+                let keyword = String(text[tokenRange])
+                words[keyword, default: 0] += 1
             }
             return true
         }

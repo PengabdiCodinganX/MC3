@@ -11,6 +11,7 @@ struct LoadingView: View {
     var body: some View {
 
             Color("AccentColor").edgesIgnoringSafeArea(.all)
+        Text("Loading...")
 
     }
 }
