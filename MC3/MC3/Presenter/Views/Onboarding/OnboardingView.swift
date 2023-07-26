@@ -12,36 +12,54 @@ struct OnboardingView: View {
     @StateObject private var viewModel: OnboardingViewModel = OnboardingViewModel()
     
     @State var onboardingType: OnboardingType
-    @State private var mascotText: String = "Hi there, You've come into the right place..."
+    @State private var textList: [TextTrack] = []
     
     @Binding var isOnboardingFinished: Bool
     @Binding var isSignedIn: Bool
     
     var body: some View {
-        VStack {
-            Spacer()
+        print("render ulang")
+        
+        return ZStack{
+            Color("AccentColor").edgesIgnoringSafeArea(.all)
             
-            Mascot(
-                text: mascotText,
-                alignment: .vertical
-            )
-            
-            switch onboardingType {
-            case .introduction:
-                IntroductionView(onboardingType: $onboardingType, mascotText: $mascotText)
-            case .signIn:
-                SignInView(onboardingType: $onboardingType, mascotText: $mascotText, isSignedIn: $isSignedIn)
-            case .permission:
-                PermissionView(isOnboardingFinished: $isOnboardingFinished)
+            VStack {
+                Spacer()
+                
+                Mascot(
+                    textList: textList,
+                    alignment: .vertical,
+                    mascotContentMode: .scaleAspectFit
+                )
+                
+                switch onboardingType {
+                case .introduction:
+                    IntroductionView(onboardingType: $onboardingType, textList: $textList)
+                case .signIn:
+                    SignInView(onboardingType: $onboardingType, isSignedIn: $isSignedIn, textList: $textList)
+                case .permission:
+                    PermissionView(isOnboardingFinished: $isOnboardingFinished)
+                }
             }
+            .padding()
         }
-        .padding()
         .navigationBarBackButtonHidden(true)
         .onAppear {handleOnOnboardingTypeChanges()}
-        .onChange(of: onboardingType, perform: { _ in handleOnOnboardingTypeChanges()})
+        .onChange(of: onboardingType, perform: { onboardingType in
+            handleOnOnboardingTypeChanges()
+        })
     }
     
     private func handleOnOnboardingTypeChanges() {
+        switch onboardingType {
+        case .introduction:
+            textList = introductionData
+        case .signIn:
+            textList = []
+        case .permission:
+            textList = permissionData
+        }
+        
         print("[handleOnOnboardingTypeChanges][viewModel.isSignedIn()", viewModel.isSignedIn())
         guard viewModel.isSignedIn() else {
             print("[handleOnOnboardingTypeChanges][viewModel.isOnboardingFinished()", viewModel.isOnboardingFinished())
@@ -63,14 +81,12 @@ struct OnboardingView: View {
     func proceedToSignIn() {
         withAnimation(.spring()) {
             onboardingType = .signIn
-            mascotText = ""
         }
     }
     
     func proceedToPermissionPage() {
         withAnimation(.spring()) {
             onboardingType = .permission
-            mascotText = "But before that, I would like you to set up some privacies. In order to make us close, what should I call you?"
         }
     }
 }

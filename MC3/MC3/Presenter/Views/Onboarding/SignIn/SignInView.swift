@@ -12,8 +12,8 @@ struct SignInView: View {
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
 
     @Binding var onboardingType: OnboardingType
-    @Binding var mascotText: String
     @Binding var isSignedIn: Bool
+    @Binding var textList: [TextTrack]
     
     var body: some View {
         VStack {
@@ -49,13 +49,12 @@ struct SignInView: View {
     func proceedToPermissionPage() {
         withAnimation(.spring()) {
             onboardingType = .permission
-            mascotText = "But before that, I would like you to set up some privacies. In order to make us close, what should I call you?"
         }
     }
 }
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView(onboardingType: .constant(.signIn), mascotText: .constant("testasdcfas"), isSignedIn: .constant(false))
+        SignInView(onboardingType: .constant(.signIn), isSignedIn: .constant(false), textList: .constant([]))
     }
 }

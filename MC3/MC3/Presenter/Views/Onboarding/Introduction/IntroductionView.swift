@@ -11,7 +11,8 @@ struct IntroductionView: View {
     @State private var buttonType: ButtonType = .next
     
     @Binding var onboardingType: OnboardingType
-    @Binding var mascotText: String
+    @Binding var textList: [TextTrack]
+    
     
     var body: some View {
         Spacer()
@@ -39,7 +40,6 @@ struct IntroductionView: View {
     private func handleOnNextClicked() {
         withAnimation(.spring()) {
             buttonType = .getStarted
-            mascotText = "I’m (Lion), your companion to discover the motivation you seek!"
         }
     }
     
@@ -52,6 +52,6 @@ struct IntroductionView: View {
 
 struct IntroductionView_Previews: PreviewProvider {
     static var previews: some View {
-        IntroductionView(onboardingType: .constant(.introduction), mascotText: .constant("test"))
+        IntroductionView(onboardingType: .constant(.introduction), textList: .constant([]))
     }
 }

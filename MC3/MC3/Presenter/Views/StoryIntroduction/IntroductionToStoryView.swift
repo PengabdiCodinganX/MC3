@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct IntroductionToStoryView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
+    var userProblem: String
+    
     var body: some View {
         VStack{
             ZStack(alignment: .top){
@@ -24,14 +28,19 @@ struct IntroductionToStoryView: View {
             
             //MARK: Continue Button
             PrimaryButton(text: "Continue", isFull: true) {
+                proceedToStory()
             }
             .padding(.horizontal, 16)
         }
+    }
+    
+    func proceedToStory() {
+        pathStore.path.append(ViewPath.story(userProblem))
     }
 }
 
 struct IntroductionToStoryView_Previews: PreviewProvider {
     static var previews: some View {
-        IntroductionToStoryView()
+        IntroductionToStoryView(userProblem: "")
     }
 }
