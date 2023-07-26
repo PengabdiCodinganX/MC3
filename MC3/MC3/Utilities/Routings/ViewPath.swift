@@ -10,8 +10,9 @@ import SwiftUI
 
 enum ViewPath: Hashable {
     case problem
-    case breathing
-    case story
+    case breathing(String)
+    case storyIntro(String)
+    case story(String)
     case storyRecap
     case storyRepeat
     case storyReflection
@@ -22,11 +23,13 @@ enum ViewPath: Hashable {
         var view: some View {
             switch self {
             case .problem:
-                InputProblemView()
-            case .breathing:
-                EmptyView()
-            case .story:
-                ValidateFeelingView()
+                StoryProblemView()
+            case .breathing(let userProblem):
+                BreathingView(userProblem: userProblem)
+            case .storyIntro(let userProblem):
+                IntroductionToStoryView(userProblem: userProblem)
+            case .story(let userProblem):
+                StoryView(userProblem: userProblem)
             case .storyRecap:
                 StoryRecapView()
             case .storyRepeat:

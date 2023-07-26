@@ -25,7 +25,7 @@ class StoryCloudKitService {
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
                     let storyDetail = StoryDetail(introduction: $0["introduction"] as! String, problem: $0["problem"] as! String, resolution: $0["resolution"] as! String)
-                    return StoryModel(id: $0.recordID, problemCategory: $0["categories"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
+                    return StoryModel(id: $0.recordID, keywords: $0["keywords"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
                 }
             
             return .success(data)
@@ -34,12 +34,12 @@ class StoryCloudKitService {
         }
     }
     
-    func getStoryByCategories(categories: [String]) async -> Result<StoryModel, Error> {
+    func getStoryByKeywords(keywords: [String]) async -> Result<StoryModel, Error> {
         do {
-            print("[getStoryByCategory][categories]", categories)
+            print("[getStoryByCategory][keywords]", keywords)
             
             // Create predicates for each reference
-            let predicate = NSPredicate(format: "ANY %K IN %@", "categories", categories)
+            let predicate = NSPredicate(format: "ANY %K IN %@", "keywords", keywords)
             
             let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
             
@@ -50,7 +50,7 @@ class StoryCloudKitService {
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
                     let storyDetail = StoryDetail(introduction: $0["introduction"] as! String, problem: $0["problem"] as! String, resolution: $0["resolution"] as! String)
-                    return StoryModel(id: $0.recordID, problemCategory: $0["categories"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
+                    return StoryModel(id: $0.recordID, keywords: $0["keywords"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
                 }
                 .sorted { $0.rating > $1.rating } // Descending by rating
             
@@ -77,7 +77,7 @@ class StoryCloudKitService {
                 .compactMap { _, result in try? result.get() }
                 .compactMap {
                     let storyDetail = StoryDetail(introduction: $0["introduction"] as! String, problem: $0["problem"] as! String, resolution: $0["resolution"] as! String)
-                    return StoryModel(id: $0.recordID, problemCategory: $0["categories"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
+                    return StoryModel(id: $0.recordID, keywords: $0["keywords"] as! [String], story: storyDetail, rating: $0["storyRating"] as! Int64)
                 }
             
             guard let story = data.first else {
@@ -90,24 +90,17 @@ class StoryCloudKitService {
         }
     }
     
-    func saveStory(story: StoryModel) async -> Result<StoryModel, Error> {
+    func saveStory(story: StoryModel) async throws -> StoryModel {
         let record = CKRecord(recordType: recordType.rawValue)
-        record["categories"] = story.problemCategory
+        record["keywords"] = story.keywords
         record["introduction"] = story.story.introduction
         record["problem"] = story.story.problem
         record["resolution"] = story.story.resolution
         record["storyRating"] = story.rating
         
-        do {
             let result = try await cloudKitManager.saveData(record: record)
-            
             let storyDetail = StoryDetail(introduction: story.story.introduction, problem: story.story.problem , resolution: story.story.resolution )
-            return .success(
-                StoryModel(id: result.recordID, problemCategory: story.problemCategory, story: storyDetail, rating: story.rating)
-            )
-        } catch {
-            return .failure(error)
-        }
+            return StoryModel(id: result.recordID, keywords: story.keywords, story: storyDetail, rating: story.rating)
     }
     
     func updateStory(story: StoryModel) async -> Result<StoryModel, Error> {
@@ -117,7 +110,7 @@ class StoryCloudKitService {
             }
             
             let record = try await cloudKitManager.fetchData(recordID: recordID)
-            record["categories"] = story.problemCategory
+            record["keywords"] = story.keywords
             record["introduction"] = story.story.introduction
             record["problem"] = story.story.problem
             record["resolution"] = story.story.resolution
@@ -127,7 +120,7 @@ class StoryCloudKitService {
             
             let storyDetail = StoryDetail(introduction: story.story.introduction, problem: story.story.problem, resolution: story.story.resolution )
             return .success(
-                StoryModel(id: result.recordID, problemCategory: story.problemCategory, story: storyDetail, rating: story.rating)
+                StoryModel(id: result.recordID, keywords: story.keywords, story: storyDetail, rating: story.rating)
             )
         } catch {
             return .failure(error)

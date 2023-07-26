@@ -24,13 +24,15 @@ enum BreatheStatus: String{
     }
 }
 
-struct MeditationView: View {
-    @StateObject var meditationVM: MeditationViewModel = MeditationViewModel()
+struct BreathingView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    @StateObject var meditationVM: BreathingViewModel = BreathingViewModel()
     @State private var breathText: String = "Breathe in..."
     
     @State var status: BreatheStatus = BreatheStatus.breatheIn
-    
     @State var timer: Timer?
+    
+    var userProblem: String
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
@@ -123,6 +125,8 @@ struct MeditationView: View {
                     meditationVM.stopMusic()
                     invalidateTimer()
                     //TODO: Navigate to another path
+                    
+                    proceedToStoryIntro()
                 }
             }
             .padding(.horizontal, 16)
@@ -142,11 +146,15 @@ struct MeditationView: View {
             meditationVM.changeCurrentTimePlayerReceive()
         }
     }
+    
+    func proceedToStoryIntro() {
+        pathStore.path.append(ViewPath.storyIntro(userProblem))
+    }
 }
 
 
 struct MeditationView_Previews: PreviewProvider {
     static var previews: some View {
-        MeditationView()
+        BreathingView(userProblem: "")
     }
 }

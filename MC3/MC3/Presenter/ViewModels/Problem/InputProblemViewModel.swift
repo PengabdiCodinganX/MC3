@@ -29,7 +29,7 @@ class InputProblemViewModel: ObservableObject {
         
         let categories = ["exam"]
         
-        let result = await storyCloudKitService.getStoryByCategories(categories: categories)
+        let result = await storyCloudKitService.getStoryByKeywords(keywords: categories)
         
         switch result {
         case .success(let story):

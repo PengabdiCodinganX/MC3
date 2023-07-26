@@ -10,12 +10,12 @@ import CloudKit
 
 struct StoryModel: Codable{
     var id: CKRecord.ID?
-    let problemCategory: [String]
+    let keywords: [String]
     let story: StoryDetail
     let rating: Int64
     
     enum CodingKeys: String, CodingKey {
-        case problemCategory = "problem_category"
+        case keywords
         case story
         case rating
     }

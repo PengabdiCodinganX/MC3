@@ -19,7 +19,7 @@ struct ReflectionInputView: View {
             
             VStack{
                 //MARK: Mascot Chat
-                Mascot(text: "Reflect on the inspiring story and create an action plan for your next steps.", alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
+                Mascot(textList: reflectionData, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
                     .padding()
                 
                 VStack{

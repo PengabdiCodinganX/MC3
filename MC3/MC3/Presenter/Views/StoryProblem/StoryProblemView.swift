@@ -1,0 +1,69 @@
+//
+//  StoryIntroduction.swift
+//  MC3
+//
+//  Created by Muhammad Adha Fajri Jonison on 26/07/23.
+//
+
+import SwiftUI
+
+struct StoryProblemView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
+    @StateObject private var viewModel: StoryIntroductionViewModel = StoryIntroductionViewModel()
+    @StateObject private var keyboardService: KeyboardService = KeyboardService()
+    
+    @State private var userProblem: String = ""
+    @State private var storyProblemType: StoryProblemType = .inputProblem
+    @State private var textList: [TextTrack] = []
+    
+    var body: some View {
+        ZStack {
+            Color("AccentColor").edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 0){
+                Spacer()
+                
+                Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half)
+                    .padding([.leading, .top, .trailing])
+                    .onTapGesture {
+                        hideKeyboard()
+                    }
+                VStack{
+                    switch storyProblemType {
+                    case .inputProblem:
+                        InputProblemView(userProblem: $userProblem, storyProblemType: $storyProblemType)
+                    case .validateFeeling:
+                        ValidateProblemView(userProblem: userProblem)
+                    }
+                }
+                .padding([.leading, .trailing, .bottom], 16)
+                .padding(.top, 24)
+                .background(.white)
+                .cornerRadius(16, corners: [.topLeft, .topRight])
+                .padding(.top, -16)
+            }
+        }
+        .onAppear {
+            handleOnStoryProblemTypeChanges()
+        }
+        .onChange(of: storyProblemType) { storyProblemType in
+            handleOnStoryProblemTypeChanges()
+        }
+    }
+    
+    func handleOnStoryProblemTypeChanges() {
+        switch storyProblemType {
+        case .inputProblem:
+            textList = problemData
+        case .validateFeeling:
+            textList = problemTwoData
+        }
+    }
+}
+
+struct StoryIntroduction_Previews: PreviewProvider {
+    static var previews: some View {
+        StoryProblemView()
+    }
+}

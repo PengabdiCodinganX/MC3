@@ -19,42 +19,46 @@ struct HomeView: View {
     @Binding var isSignedIn: Bool
     
     var body: some View {
-        VStack {
-            Mascot(text: "Good afternoon, dwq! What would you like to do?", alignment: .horizontal)
+        ZStack{
+            Color("AccentColor").edgesIgnoringSafeArea(.all)
             
-            MenuButton(
-                text: "Share your story, Find relief!",
-                menuButtonType: .big
-            ) {
-                proceedToProblem()
-            }
-            
-            HStack {
+            VStack {
+                Mascot(textList: [TextTrack(text: "Good afternoon, \(viewModel.user.name ?? "")! What would you like to do?", track: "")], alignment: .horizontal)
+                
                 MenuButton(
                     text: "Share your story, Find relief!",
                     menuButtonType: .big
                 ) {
-                    
+                    proceedToProblem()
                 }
                 
-                VStack {
+                HStack {
                     MenuButton(
                         text: "Share your story, Find relief!",
-                        menuButtonType: .small
+                        menuButtonType: .big
                     ) {
                         
                     }
                     
-                    MenuButton(
-                        text: "Share your story, Find relief!",
-                        menuButtonType: .small
-                    ) {
+                    VStack {
+                        MenuButton(
+                            text: "Share your story, Find relief!",
+                            menuButtonType: .small
+                        ) {
+                            
+                        }
                         
+                        MenuButton(
+                            text: "Share your story, Find relief!",
+                            menuButtonType: .small
+                        ) {
+                            
+                        }
                     }
                 }
             }
+            .padding()
         }
-        .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {

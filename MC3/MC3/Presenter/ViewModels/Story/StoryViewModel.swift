@@ -8,8 +8,83 @@
 import Foundation
 import CoreData
 
+@MainActor
 class StoryViewModel: ObservableObject {
-    private let viewContext = PersistenceController.shared.viewContext
+    private let cloudKitService: StoryCloudKitService = StoryCloudKitService()
+    private var chatCPTService: ChatGPTService?
+    private let nlpService: NLPService = NLPService()
+    
+    @Published var stageScene: [StageScene] = []
+    @Published var storyType: StoryType = .loading
+    
+    init() { Task {
+        chatCPTService = try await ChatGPTService()
+    } }
+    
+    func getKeywordByText(text: String) -> [String] {
+        return nlpService.findAdjAndVerb(in: text)
+    }
+    
+    func getStageScenes(story: StoryModel) -> [StageScene] {
+        let introduction = story.story.introduction.split(separator: ".").map(String.init)
+        let problem = story.story.problem.split(separator: ".").map(String.init)
+        let resolution = story.story.resolution.split(separator: ".").map(String.init)
+        
+        return [
+            StageScene(name: "a-scene-1", text: introduction),
+            StageScene(name: "a-scene-2", text: problem),
+            StageScene(name: "a-scene-3", text: resolution)
+        ]
+    }
+    
+    func getStory(userProblem: String) async throws -> StoryModel? {
+        setLoading()
+        
+        print("[getStory][userProblem]", userProblem)
+        let keywords = getKeywordByText(text: userProblem)
+        print("[getStory][keywords]", keywords)
+        
+        let result = await cloudKitService.getStoryByKeywords(keywords: keywords)
+        switch result {
+        case .success(let success):
+            return StoryModel(keywords: keywords, story: success.story, rating: success.rating)
+        case .failure(let failure):
+            print("[getStoryByKeyword][failure]", failure)
+            guard let data = try await getStoryByChatGPT(keywords: keywords, userProblem: userProblem) else {
+                return nil
+            }
+            
+            return data
+        }
+    }
+    
+    func getStoryByChatGPT(keywords: [String], userProblem: String) async throws -> StoryModel? {
+        let result = try await chatCPTService?.fetchMotivatinStoryFromProblem(problem: userProblem)
+        
+        switch result {
+        case .success(let success):
+            return try await cloudKitService.saveStory(story: success)
+        case .failure(let failure):
+            print("[getStoryByChatGPT][failure]", failure)
+            return nil
+        case .none:
+            return nil
+        }
+    }
+    
+    func setLoading() {
+        setStoryType(storyType: .loading)
+    }
+    
+    func setScene() {
+        setStoryType(storyType: .scene)
+    }
+    
+    private func setStoryType(storyType: StoryType) {
+        self.storyType = storyType
+    }
+    
+//    private let viewContext = PersistenceController.shared.viewContext
 //    @Published var storyFeedback: StoryFeedbackModel?
 //    @Published var storyFeedbacks: [StoryFeedbackModel] = []
 //    

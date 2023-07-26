@@ -7,44 +7,148 @@
 
 import SwiftUI
 
+struct TextTrack: Equatable {
+    let text: String
+    let track: String?
+}
+
 struct Mascot: View {
-    var text: String
+    @StateObject var audioManager: AudioManager = AudioManager()
+    
+    var textList: [TextTrack]
     var alignment: MascotAlignment
     var mascotImage: MascotImage = .face
     
+    @State private var texts: [String] = []
+    @State private var currentIndex = 0
+    
     var body: some View {
+        print("tupdaste")
+        
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 
-        layout {
-            if alignment == .vertical && !text.isEmpty {
-                BubbleText(
-                    text: text,
-                    alignment: alignment
-                )
+        return layout {
+            if alignment == .vertical && !texts.isEmpty {
+                ForEach(texts.indices, id: \.self){index in
+                    BubbleText(text: texts[index], alignment: .vertical, showPointer: index == texts.count-1, textAlignment: .leading)
+                        .opacity(index == texts.count-1 ? 1 : 0.5)
+                        .padding(.bottom, 8)
+                }
             }
             
-            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop,contentMode: .scaleAspectFill)
+            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
+                .frame(maxHeight: alignment == .vertical ? 270 : 180)
 
-//            Image(mascotImage == .face ? "Mascot" : "Mascot-Half-Body")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(minWidth: alignment == .horizontal ? 128 : 256)
-//                .padding()
-
-            if alignment == .horizontal && !text.isEmpty {
-                BubbleText(
-                    text: text,
-                    alignment: alignment,
-                    textType: .short()
-                )
+            if alignment == .horizontal && !texts.isEmpty {
+                ForEach(texts.indices, id: \.self){index in
+                    BubbleText(text: texts[index], alignment: .horizontal, showPointer: index == texts.count-1, textAlignment: .leading)
+                        .opacity(index == texts.count-1 ? 1 : 0.5)
+                        .padding(.bottom, 8)
+                        .padding()
+                }
             }
         }
+        .onAppear {
+            print("[onAppear][textList]", textList)
+            
+            withAnimation(.spring()) {
+                texts = []
+                currentIndex = 0
+            }
+            
+            guard !textList.isEmpty else {
+                return
+            }
+            
+            print("[onAppear][currentIndex]", currentIndex)
+            print("[onAppear][textList.count]", textList.count)
+            guard currentIndex < textList.count else {
+                return
+            }
+            
+
+            showText(textList: textList)
+            playAudio(textList: textList)
+        }
+        .onChange(of: textList, perform: { textList in
+            print("[onChange][textList]", textList)
+            
+            withAnimation(.spring()) {
+                texts = []
+                currentIndex = 0
+            }
+            
+            guard !textList.isEmpty else {
+                return
+            }
+            
+            print("[onChange][currentIndex]", currentIndex)
+            print("[onChange.textList.count]", textList.count)
+            guard currentIndex < textList.count else {
+                return
+            }
+
+            showText(textList: textList)
+            playAudio(textList: textList)
+        })
+        .onChange(of: audioManager.isPlaying) { isPlaying in
+            print("[audioManager.isPlaying]", isPlaying)
+            guard !isPlaying else {
+                return
+            }
+            
+            guard currentIndex < textList.count - 1 else {
+                return
+            }
+            
+            withAnimation(.spring()) {
+                currentIndex += 1
+            }
+            
+            showText(textList: textList)
+            playAudio(textList: textList)
+        }
+        .onDisappear {
+            audioManager.stop()
+        }
+    }
+    
+    private func showText(textList: [TextTrack]) {
+        print("[showText][textList]", textList)
+        print("[showText][currentIndex]", currentIndex)
+        guard !textList.isEmpty else {
+            return
+        }
+        print("[showText][Array(textList.keys)[currentIndex]", textList[currentIndex].text)
         
+        let text: String = textList[currentIndex].text
+        print("[showText][text]", text)
+        
+        withAnimation(.spring()) {
+            texts.append(text)
+        }
+    }
+    
+    private func playAudio(textList: [TextTrack]) {
+        guard !textList.isEmpty else {
+            return
+        }
+        
+        guard let track: String = textList[currentIndex].track else {
+            return
+        }
+        
+        guard !track.isEmpty else {
+            return
+        }
+        print("[playAudio][track]", track)
+        
+        audioManager.startPlayer(track: track)
     }
 }
 
 struct Mascot_Previews: PreviewProvider {
     static var previews: some View {
-        Mascot(text: "dffwq ewqe qweqw eq deqweqw eqwekjl bnqwekljwqbne kljqwnel kqwn lenqwle nwqklen qwlken qwlk enlqwn eqww rdfqnwek jqwbne", alignment: .vertical)
+        Mascot(textList: [TextTrack(text: "test", track: "")], alignment: .vertical)
     }
 }

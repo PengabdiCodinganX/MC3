@@ -8,7 +8,7 @@
 import Foundation
 //import Combine
 
-class MeditationViewModel: ObservableObject{
+class BreathingViewModel: ObservableObject{
     @Published var audioManager: AudioManager = AudioManager()
     @Published var value: Double = 0.0
     @Published private var isEditing: Bool = false
