@@ -35,11 +35,17 @@ struct Mascot: View {
                         .opacity(index == texts.count-1 ? 1 : 0.5)
                         .padding(.bottom, 8)
                 }
+                
+                LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
             }
             
-            LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
             
             if alignment == .horizontal && !texts.isEmpty {
+                
+                    LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
+                        .frame(width: 100, height: 160)
+                
+                
                 ForEach(texts.indices, id: \.self){index in
                     BubbleText(
                         text: texts[index],
