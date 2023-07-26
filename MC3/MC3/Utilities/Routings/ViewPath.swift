@@ -16,6 +16,7 @@ enum ViewPath: Hashable {
     case storyRecap
     case storyRepeat
     case storyReflection
+    case storyReflectionDetail(String)
     case selfAffirmation
     case storyLog
         
@@ -36,6 +37,8 @@ enum ViewPath: Hashable {
                 EmptyView()
             case .storyReflection:
                 EmptyView()
+            case .storyReflectionDetail(let userReflection):
+                ReflectionDetailView(reflection: userReflection)
             case .selfAffirmation:
                 SelfAffirmationView()
             case .storyLog:

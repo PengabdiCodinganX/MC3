@@ -8,38 +8,27 @@
 import SwiftUI
 
 struct InputProblemView: View {
-    @EnvironmentObject private var pathStore: PathStore
-    
-    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
+//    @EnvironmentObject private var pathStore: PathStore
+//    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
+    //    @State private var textList: [TextTrack] = problemData
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
-    
-    @Binding var userProblem: String
-    @State private var textList: [TextTrack] = problemData
-    
-    @Binding var storyProblemType: StoryProblemType
+    @Binding var userInput: String
+   var userInputType: UserInputType
+    var onSubmit: () -> Void
     
     var body: some View {
         
-            TextArea(placeholder: "Write down your problems here...", text: $userProblem)
+        TextArea(placeholder: "Write down your \(userInputType.rawValue) here...", text: $userInput)
                 .padding(.bottom, 16)
             //MARK: Button
             PrimaryButton(text: "Continue", isFull: true) {
-                handleOnClicked()
+                onSubmit()
             }
 
         
     }
     
-    func handleOnClicked() {
-        guard !userProblem.isEmpty else {
-            print("Error")
-            return
-        }
-        hideKeyboard()
-        withAnimation(.spring()) {
-            storyProblemType = .validateFeeling
-        }
-    }
+    
 }
 
 extension View {
@@ -51,6 +40,6 @@ extension View {
 
 struct InputProblemView_Previews: PreviewProvider {
     static var previews: some View {
-        InputProblemView(userProblem: .constant("test"), storyProblemType: .constant(.inputProblem))
+        InputProblemView(userInput: .constant("aaa"), userInputType: .problem, onSubmit: {})
     }
 }

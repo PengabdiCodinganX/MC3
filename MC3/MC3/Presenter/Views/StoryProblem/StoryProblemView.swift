@@ -35,7 +35,9 @@ struct StoryProblemView: View {
                 VStack{
                     switch storyProblemType {
                     case .inputProblem:
-                        InputProblemView(userProblem: $userProblem, storyProblemType: $storyProblemType)
+                        InputProblemView(userInput: $userProblem, userInputType: .problem , onSubmit: {
+                            handleOnClicked()
+                        })
                     case .validateFeeling:
                         ValidateProblemView(userProblem: userProblem)
                     }
@@ -52,6 +54,17 @@ struct StoryProblemView: View {
         }
         .onChange(of: storyProblemType) { storyProblemType in
             handleOnStoryProblemTypeChanges()
+        }
+    }
+    
+    func handleOnClicked() {
+        guard !userProblem.isEmpty else {
+            print("Error")
+            return
+        }
+        hideKeyboard()
+        withAnimation(.spring()) {
+            storyProblemType = .validateFeeling
         }
     }
     
