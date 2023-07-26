@@ -11,7 +11,7 @@ struct ChatGPTService{
     private let apiManager: APIManager = APIManager()
     
     private let baseURL = URL(string: "https://api.openai.com/v1/completions")!
-    private let maxTokens = 500
+    private let maxTokens = 3000
     private let temperature = 0.3
     
     private var apiKey: String = ""
@@ -40,32 +40,41 @@ struct ChatGPTService{
         return (data,response)
     }
     
-    func fetchMotivatinStoryFromProblem(problem: String) async throws -> Result<StoryModel, Error> {
-        let prompt = """
+    func fetchMotivatinStoryFromProblem(problem: String) async -> Result<ChatGPTStoryModel, Error> {
+        print("[fetchMotivatinStoryFromProblem][problem]", problem)
+        
+        do {
+            let prompt = """
        \(problem)
        
-       From the text above, write a story about a famous person who relates to text above so that I will be more motivated. That have title,  problem_category and story in object: Introduction, Problem, Resolution. Each structure has one paragraphs in JSON format
+       From the text above, give me a famous public figure/person related story that can motivate me in a JSON format that have "introduction", "problem", and "resolution"
        """
-        
-        let (data, _)  = try await fetchChatGptApi(prompt: prompt)
-        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-           let choices = json["choices"] as? [[String: Any]],
-           let text = choices.first?["text"] as? String {
-            let decoder = JSONDecoder()
-            if let completedData = text.data(using: .utf8) {
-                
-                print("completed Data: ", text)
-                let featureData = try decoder.decode(StoryModel.self, from: completedData)
-                print("Feature Data: ", featureData)
-                return .success(featureData)
-            } else {
-                let error = NSError(domain: "StoryModel Decoding", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert completed text to data"])
-                print(error)
-                return .failure(error)
+            print("[fetchMotivatinStoryFromProblem][prompt]", prompt)
+            
+            let (data, _)  = try await fetchChatGptApi(prompt: prompt)
+            print("[fetchMotivatinStoryFromProblem][data]", data)
+            
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+               let choices = json["choices"] as? [[String: Any]],
+               let text = choices.first?["text"] as? String {
+                let decoder = JSONDecoder()
+                if let completedData = text.data(using: .utf8) {
+                    print("completed Data: ", text)
+                    let featureData = try decoder.decode(ChatGPTStoryModel.self, from: completedData)
+                    print("Feature Data: ", featureData)
+                    return .success(featureData)
+                } else {
+                    let error = NSError(domain: "StoryModel Decoding", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert completed text to data"])
+                    print(error)
+                    return .failure(error)
+                }
             }
+            
+            let error = NSError(domain: "StoryModel Decoding", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert completed text to data"])
+            return .failure(error)
+        } catch {
+            print(error)
+            return .failure(error)
         }
-        
-        let error = NSError(domain: "StoryModel Decoding", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to convert completed text to data"])
-        return .failure(error)
     }
 }

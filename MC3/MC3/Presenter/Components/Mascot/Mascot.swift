@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct TextTrack: Equatable {
     let text: String
@@ -13,7 +14,7 @@ struct TextTrack: Equatable {
 }
 
 struct Mascot: View {
-    @StateObject var audioManager: AudioManager = AudioManager()
+    @StateObject private var viewModel: MascotViewModel = MascotViewModel()
     
     var textList: [TextTrack]
     var alignment: MascotAlignment
@@ -24,8 +25,6 @@ struct Mascot: View {
     @State private var currentIndex = 0
     
     var body: some View {
-        print("tupdaste")
-        
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 
         return layout {
@@ -99,8 +98,8 @@ struct Mascot: View {
             showText(textList: textList)
             playAudio(textList: textList)
         })
-        .onChange(of: audioManager.isPlaying) { isPlaying in
-            print("[audioManager.isPlaying]", isPlaying)
+        .onChange(of: viewModel.isPlaying) { isPlaying in
+            print("[viewModel.isPlaying]", isPlaying)
             guard !isPlaying else {
                 return
             }
@@ -117,7 +116,7 @@ struct Mascot: View {
             playAudio(textList: textList)
         }
         .onDisappear {
-            audioManager.stop()
+            viewModel.stopAudio()
         }
     }
     
@@ -151,7 +150,7 @@ struct Mascot: View {
         }
         print("[playAudio][track]", track)
         
-        audioManager.startPlayer(track: track)
+        viewModel.playAudio(track: track)
     }
 }
 
