@@ -31,6 +31,7 @@ struct StoryView: View {
             
             let musicModel = MusicModel(musicType: .motivation)
             viewModel.playAudio(track: musicModel.track)
+            viewModel.setVolume(0.5)
         }
         .onDisappear {
             viewModel.stopAudio()

@@ -94,4 +94,15 @@ class AudioManager: ObservableObject {
             }
         }
     }
+    
+    func setVolume(_ volume: Float) {
+        guard let player = player else{
+            print("Instance of audio player not found")
+            return
+        }
+        
+        // Ensure volume is between 0.0 and 1.0
+        let adjustedVolume = max(0.0, min(volume, 1.0))
+        player.volume = adjustedVolume
+    }
 }

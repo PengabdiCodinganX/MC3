@@ -21,6 +21,10 @@ class StoryViewModel: ObservableObject {
         audioManager.stop()
     }
     
+    func setVolume(_ volume: Float) {
+        audioManager.setVolume(volume)
+    }
+    
     func getStageScenes(story: StoryModel) -> [StageScene] {
         return [
             StageScene(name: "a-scene-1", text: story.introduction, soundList: story.introductionSound),

@@ -38,7 +38,7 @@ struct PlayTextView: View {
         self.onCompletion = onCompletion
     }
     
-    @State private var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    @State private var timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     @State private var isTimer: Bool = true
     
     @State var highlightedText = 0
@@ -56,6 +56,14 @@ struct PlayTextView: View {
                     soundList.remove(atOffsets: IndexSet(integer: 0))
                 }
             }
+            
+            if playedText.count == 2 && playedText.count == soundList.count {
+                withAnimation{
+                    playedText.remove(atOffsets: IndexSet(integer: 0))
+                    soundList.remove(atOffsets: IndexSet(integer: 0))
+                }
+            }
+            
             withAnimation{
                 highlightedText = playedText.count == 1 ? 0 : 1
             }
@@ -123,12 +131,11 @@ struct PlayTextView: View {
     private func playAudio() {
         print("[playAudio]", soundList)
 
-        guard highlightedText < soundList.count - 1 else {
+        guard highlightedText < soundList.count else {
             guard playedText.isEmpty else {
                 print("[playAudio][playedText]", playedText)
 
                 showNextText()
-                viewModel.playAudio(data: soundList[highlightedText])
                 return
             }
             
@@ -147,8 +154,6 @@ struct PlayTextView: View {
             return
         }
         
-        
-
         viewModel.playAudio(data: soundList[highlightedText])
     }
 
@@ -210,11 +215,11 @@ struct SceneView: View {
             }
         }
         .onChange(of: index) { newIndex in
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeInOut(duration: 0.5)) {
                 isAnimationVisible = false
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeInOut(duration: 0.3)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.easeInOut(duration: 0.5)) {
                     isAnimationVisible = true
                 }
             }
