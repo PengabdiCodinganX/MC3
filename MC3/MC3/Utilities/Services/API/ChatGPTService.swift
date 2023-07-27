@@ -11,8 +11,8 @@ struct ChatGPTService{
     private let apiManager: APIManager = APIManager()
     
     private let baseURL = URL(string: "https://api.openai.com/v1/completions")!
-    private let maxTokens = 3000
-    private let temperature = 0.3
+    private let maxTokens = 500
+    private let temperature = 1.0
     
     private var apiKey: String = ""
     
@@ -47,7 +47,7 @@ struct ChatGPTService{
             let prompt = """
        \(problem)
        
-       From the text above, give me a famous public figure/person related story that can motivate me in a JSON format that have "introduction", "problem", and "resolution"
+       From the text above give me a story from famous public figure related the problem so that I will be more motivated in a JSON format that have "introduction", "problem", and "resolution". Each structure has two paragraph and minimum five sentences."
        """
             print("[fetchMotivatinStoryFromProblem][prompt]", prompt)
             
