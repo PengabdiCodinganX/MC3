@@ -15,27 +15,29 @@ struct PermissionView: View {
     @Binding var isOnboardingFinished: Bool
     
     var body: some View {
-        Spacer()
-        
-        SingleTextField(placeholder: "Name...", text: $viewModel.name)
-        
-        Spacer()
-        
-        Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
-            .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
-        Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionAllowed)
-            .onChange(of: viewModel.isMicrophonePermissionAllowed, perform: viewModel.handleOnMicrophonePermissionToggled)
-        
-        Spacer()
-        
-        HStack {
-            Spacer()
+//        Spacer()
+//
+//        SingleTextField(placeholder: "Name...", text: $viewModel.name)
+//
+//        Spacer()
+        VStack(spacing: 24){
             
-            PrimaryButton(text: buttonType.rawValue) {
-                handleOnClicked()
-            }
-            .disabled(!viewModel.isPermissionsAllowed())
+            Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
+                .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
+            Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionAllowed)
+                .onChange(of: viewModel.isMicrophonePermissionAllowed, perform: viewModel.handleOnMicrophonePermissionToggled)
+            
         }
+//        Spacer()
+        
+//        HStack {
+//            Spacer()
+//
+//            PrimaryButton(text: buttonType.rawValue) {
+//                handleOnClicked()
+//            }
+//            .disabled(!viewModel.isPermissionsAllowed())
+//        }
         .alert(isPresented: $viewModel.isError) {
             Alert(title: Text(viewModel.error))
         }
