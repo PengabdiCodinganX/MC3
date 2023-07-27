@@ -36,7 +36,7 @@ struct HomeView: View {
                         text: "Share your story, Find relief!",
                         menuButtonType: .big
                     ) {
-                        
+                        proceedToHistory()
                     }
                     
                     VStack {
@@ -88,6 +88,10 @@ struct HomeView: View {
     
     func proceedToProblem() {
         pathStore.navigateToView(viewPath: .problem)
+    }
+    
+    func proceedToHistory() {
+        pathStore.navigateToView(viewPath: .storyLog)
     }
 }
 
