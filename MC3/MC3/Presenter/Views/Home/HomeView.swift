@@ -167,6 +167,10 @@ struct HomeView: View {
         pathStore.navigateToView(viewPath: .problem)
     }
     
+    func proceedToHistory() {
+        pathStore.navigateToView(viewPath: .storyLog)
+    }
+    
     func proceedToDev() {
 //        pathStore.navigateToView(viewPath: .developer)
     }

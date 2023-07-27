@@ -46,7 +46,7 @@ enum ViewPath: Hashable {
             case .selfAffirmation:
                 SelfAffirmationView()
             case .storyLog:
-                EmptyView()
+                MyReflectionView()
 //            case .developer:
 //                DeveloperView()
             }

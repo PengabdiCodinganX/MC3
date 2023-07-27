@@ -15,4 +15,5 @@ struct HistoryModel: Identifiable, Hashable {
     var user: CKRecord.Reference?
     var story: CKRecord.Reference?
     var rating: CKRecord.Reference?
+    var createdTimestamp: Date?
 }

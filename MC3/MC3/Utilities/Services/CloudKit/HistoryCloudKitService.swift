@@ -12,13 +12,13 @@ class HistoryCloudKitService {
     private let cloudKitManager: CloudKitManager = CloudKitManager()
     private  let recordType: RecordType = .history
     
-    func getAllHistoryByUserId(userId: String) async -> Result<[HistoryModel], Error> {
-        let predicate = NSPredicate(format: "userId == %@", userId)
+    func getAllHistoryByUser(user: CKRecord.Reference) async -> Result<[HistoryModel], Error> {
+        let predicate = NSPredicate(format: "user == %@", user)
         let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
         
         do {
             let result = try await cloudKitManager.fetchData(query: query)
-            print("[CloudKitService][fetchApiKeyData][result]", result)
+            print("[CloudKitService][getAllHistoryByUser][result]", result)
             
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
@@ -29,7 +29,8 @@ class HistoryCloudKitService {
                         reflection: $0["reflection"],
                         user: $0["user"],
                         story: $0["story"],
-                        rating: $0["rating"]
+                        rating: $0["rating"],
+                        createdTimestamp: $0.creationDate
                     )
                 }
             
@@ -78,7 +79,8 @@ class HistoryCloudKitService {
                     reflection: data["reflection"],
                     user: data["user"],
                     story: data["story"],
-                    rating: data["rating"]
+                    rating: data["rating"],
+                    createdTimestamp: data["createdTimestamp"]
                 )
             )
         } catch {
