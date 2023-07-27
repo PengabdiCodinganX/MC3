@@ -19,11 +19,18 @@ struct MainView: View {
             if isOnboardingFinished && isSignedIn {
                 HomeView(isSignedIn: $isSignedIn)
             } else {
-                OnboardingView(
-                    onboardingType: self.getOnboardingType(),
-                    isOnboardingFinished: self.$isOnboardingFinished,
-                    isSignedIn: self.$isSignedIn
+                OnboardingFirstView(
+                    
+                    isSignedIn: $isSignedIn,
+                    isOnboardingFinished: $isOnboardingFinished
+                    //                    isOnboardingFinished: self.$isOnboardingFinished,
+                    //                    isSignedIn: self.$isSignedIn
                 )
+//                OnboardingView(
+//                    onboardingType: self.getOnboardingType(),
+//                    isOnboardingFinished: self.$isOnboardingFinished,
+//                    isSignedIn: self.$isSignedIn
+//                )
             }
         }
         .environmentObject(pathStore)
