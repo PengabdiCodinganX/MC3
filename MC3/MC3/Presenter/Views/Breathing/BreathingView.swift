@@ -34,6 +34,8 @@ struct BreathingView: View {
     
     var history: HistoryModel
     
+    @StateObject var animationController = LottieController()
+    
     private func setupTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
             withAnimation{
@@ -63,6 +65,7 @@ struct BreathingView: View {
             ZStack(alignment: .top){
                 //MARK: Animation
                 LottieView(
+                    controller: animationController,
                     lottieFile: "breathing-lottie",
                     loopMode: .loop,
                     contentMode: .scaleAspectFill

@@ -11,33 +11,34 @@ struct StoryIntroductionView: View {
     @EnvironmentObject private var pathStore: PathStore
     @StateObject private var viewModel: StoryIntroductionViewModel = StoryIntroductionViewModel()
     
+    @StateObject var animationController = LottieController()
+    @StateObject var mouthAnimationController = LottieController()
+    
     @State private var story: StoryModel?
     @State var history: HistoryModel
     
     @State private var isLoading: Bool = false
-    
     var body: some View {
-        VStack {
-            ZStack(alignment: .top) {
-                LottieView(lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
-                    .ignoresSafeArea()
-                    .padding(.top, -200)
+        VStack{
+            ZStack(alignment: .top){
+                    LottieView(controller: animationController, lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
+                        .ignoresSafeArea()
+                        .padding(.top, -200)
+                    LottieView(controller: mouthAnimationController, lottieFile: "introduction-story-mouth-lottie", loopMode: .autoReverse, contentMode: .scaleAspectFit)
+                        .ignoresSafeArea()
+                        .padding(.top, -200)
+                    Mascot(mascotText: storyIntroductionData, alignment: .vertical, mascotImage: .hide)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 100)
                 
-                Mascot(mascotText: storyIntroductionData, alignment: .vertical, mascotImage: .hide)
-                    .padding(16)
-                    .padding(.top, 64)
             }
             Spacer()
             
-            if isLoading {
-                Text("Loading...")
-            } else {
-                //MARK: Continue Button
-                PrimaryButton(text: "Continue", isFull: true) {
-                    proceedToStory()
-                }
-                .padding(.horizontal, 16)
+            //MARK: Continue Button
+            PrimaryButton(text: "Continue", isFull: true) {
+                proceedToStory()
             }
+            .padding(.horizontal, 16)
         }
         .task {
             do {
@@ -78,7 +79,7 @@ struct StoryIntroductionView: View {
     }
 }
 
-struct IntroductionToStoryView_Previews: PreviewProvider {
+struct StoryIntroductionView_Previews: PreviewProvider {
     static var previews: some View {
         StoryIntroductionView(history: HistoryModel())
     }

@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct MoreStoryView: View {
+    @StateObject var animationController = LottieController()
+
     var body: some View {
         VStack{
             ZStack(alignment: .top){
                 
-                LottieView(lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
+                LottieView(controller: animationController, lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
                     .ignoresSafeArea()
                     .padding(.top, -200)
                 BubbleText(text: "You've come far, from stress to motivation and plans. Believe in yourself. Let's do self-affirmation—it boosts confidence!", alignment: .vertical)

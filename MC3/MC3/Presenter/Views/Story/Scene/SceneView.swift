@@ -132,12 +132,14 @@ struct SceneView: View {
     
     @State var index = 0
     @State var isAnimationVisible = true
+    @StateObject var animationController = LottieController()
+
     
     let onCompletion: () -> Void
     
     var body: some View {
         ZStack (alignment: .center){
-            LottieView(lottieFile: scenes[index].name ?? "", loopMode: .loop)
+            LottieView(controller: animationController,lottieFile: scenes[index].name ?? "", loopMode: .loop)
                 .ignoresSafeArea(.all)
                 .edgesIgnoringSafeArea(.all)
                 .animation(.spring(), value: index)

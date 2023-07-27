@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct StoryProblemView: View {
     @EnvironmentObject private var pathStore: PathStore
     
@@ -27,9 +29,9 @@ struct StoryProblemView: View {
                         .padding([.leading, .trailing])
                         .onTapGesture {
                             hideKeyboard()
-                        }
+                    }
                 .background(Color("AccentColor"))
-                VStack{
+                VStack{ 
                     switch storyProblemType {
                     case .inputProblem:
                         InputProblemView(userInput: $userProblem, userInputType: .problem , onSubmit: {
@@ -51,9 +53,16 @@ struct StoryProblemView: View {
                 .padding(.top, -16)
             }
         }
-        .onAppear { handleOnStoryProblemTypeChanges() }
-        .onChange(of: storyProblemType) { _ in handleOnStoryProblemTypeChanges() }
+        .onAppear { 
+            handleOnStoryProblemTypeChanges()
+        }
+        .onChange(of: storyProblemType) { storyProblemType in
+            handleOnStoryProblemTypeChanges()
+        }
+        .navigationBarItems(leading: customBackButton)
+        .navigationBarBackButtonHidden(true)
     }
+    
     
     func handleOnClicked() {
         guard !userProblem.isEmpty else {
@@ -94,6 +103,21 @@ struct StoryProblemView: View {
         }
     }
     
+    var customBackButton: some View {
+        Button(action: {
+            switch storyProblemType {
+            case .inputProblem:
+                pathStore.popToRoot()
+            case .validateFeeling:
+                storyProblemType = .inputProblem
+            }
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Back")
+            }
+        }
+    }
         func proceedToBreathing() {
             guard history != nil else {
                 print("history not found")
