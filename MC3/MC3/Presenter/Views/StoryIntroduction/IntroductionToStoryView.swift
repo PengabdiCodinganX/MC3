@@ -11,14 +11,20 @@ struct IntroductionToStoryView: View {
     @EnvironmentObject private var pathStore: PathStore
     
     var userProblem: String
-    
+    @StateObject var animationController = LottieController()
+    @StateObject var mouthAnimationController = LottieController()
     var body: some View {
         VStack{
             ZStack(alignment: .top){
                 
-                LottieView(lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
-                    .ignoresSafeArea()
-                    .padding(.top, -200)
+                ZStack{
+                    LottieView(controller: animationController, lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
+                        .ignoresSafeArea()
+                        .padding(.top, -200)
+                    LottieView(controller: mouthAnimationController, lottieFile: "introduction-story-mouth-lottie", loopMode: .autoReverse, contentMode: .scaleAspectFit)
+                        .ignoresSafeArea()
+                        .padding(.top, -200)
+                }
                 BubbleText(text: "Now I'd want to tell you a story. I believe that this narrative will benefit you in some way. Pay close attention, listen, and see if you can relate.", alignment: .vertical)
                     .padding(.horizontal, 24)
                     .padding(.top, 32)

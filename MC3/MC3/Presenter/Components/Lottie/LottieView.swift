@@ -8,6 +8,7 @@ import SwiftUI
 import Lottie
 
 struct LottieView: UIViewRepresentable {
+    @ObservedObject var controller: LottieController
     var lottieFile:  String
     var loopMode: LottieLoopMode = .playOnce
     var contentMode: UIView.ContentMode = .scaleToFill
@@ -32,6 +33,9 @@ struct LottieView: UIViewRepresentable {
         animationView.contentMode = contentMode
         animationView.loopMode = loopMode
         animationView.play()
+        
+        // Update controller
+         controller.animationView = animationView
     }
 }
 

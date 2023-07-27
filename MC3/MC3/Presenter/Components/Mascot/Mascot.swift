@@ -24,6 +24,11 @@ struct Mascot: View {
     @State private var texts: [String] = []
     @State private var currentIndex = 0
     
+    
+    
+    @StateObject var mouthLottieController = LottieController()
+    @StateObject var charachterLottieController = LottieController()
+    
     var body: some View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
 
@@ -36,14 +41,20 @@ struct Mascot: View {
                         .padding(.bottom, 8)
                 }
                 
-                LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
-            }
+                ZStack{
+                    LottieView(controller: charachterLottieController, lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
+                    LottieView(controller: mouthLottieController, lottieFile: "mouth-animation-lottie", loopMode: .loop, contentMode: .scaleToFill)
+                }
+            } 
             
             
             if alignment == .horizontal && !texts.isEmpty {
-                
-                    LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
+                ZStack{
+                    LottieView(controller: charachterLottieController, lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
                         .frame(width: 100, height: 160)
+                    LottieView(controller: mouthLottieController, lottieFile: "mouth-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFill)
+                        .frame(width: 100, height: 160)
+                }
                 
                 
                 ForEach(texts.indices, id: \.self){index in
@@ -111,6 +122,8 @@ struct Mascot: View {
             }
             
             guard currentIndex < textList.count - 1 else {
+                
+                    mouthLottieController.pause()
                 return
             }
             
