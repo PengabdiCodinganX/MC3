@@ -25,8 +25,15 @@ struct StoryView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             scenes = viewModel.getStageScenes(story: story)
+            
+            let musicModel = MusicModel(musicType: .motivation)
+            viewModel.playAudio(track: musicModel.track)
+        }
+        .onDisappear {
+            viewModel.stopAudio()
         }
     }
     

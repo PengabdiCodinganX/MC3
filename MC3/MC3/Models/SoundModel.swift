@@ -7,8 +7,8 @@
 import Foundation
 import CloudKit
 
-//struct SoundModel: Hashable {
-//    var id: CKRecord.ID?
-//    var text: String?
-//    var sound: Data?
-//}
+struct SoundModel: Hashable {
+    var id: UUID?
+    var text: String?
+    var sound: Data?
+}

@@ -35,6 +35,7 @@ struct PlayTextView: View {
         self.scenes = scenes
     }
     
+    @State private var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     @State var highlightedText = 0
     @State var playedTime: Int = 0
     
@@ -54,7 +55,6 @@ struct PlayTextView: View {
             playedTime = 0
         }
     }
-    
     
     var body: some View {
         VStack(spacing: 32){
@@ -77,6 +77,14 @@ struct PlayTextView: View {
         .onChange(of: viewModel.isPlaying, perform: { isPlaying in
             print("[onChange][isPlaying]", isPlaying)
             if !isPlaying {
+                showNextText()
+                playAudio()
+            }
+        })
+        .onReceive(timer, perform: { timer in
+            print("[onReceive][timer]", timer)
+            print("[onReceive][viewModel.isPlaying]", viewModel.isPlaying)
+            if !viewModel.isPlaying {
                 showNextText()
                 playAudio()
             }

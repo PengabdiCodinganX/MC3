@@ -69,18 +69,9 @@ struct HomeView: View {
             }.transition(.opacity)
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    isSignedIn = false
-                } label: {
-                    Image(systemName: "escape")
-                }
-                
-            }
-            
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Second") {
-                    print("Pressed")
+                    proceedToDev()
                 }
             }
         }
@@ -88,6 +79,10 @@ struct HomeView: View {
     
     func proceedToProblem() {
         pathStore.navigateToView(viewPath: .problem)
+    }
+    
+    func proceedToDev() {
+        pathStore.navigateToView(viewPath: .developer)
     }
 }
 
