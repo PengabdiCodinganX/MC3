@@ -36,6 +36,26 @@ struct PlayTextView: View {
     }
     
     @State var highlightedText = 0
+    @State var playedTime: Int = 0
+    
+    func changeHighlightedText(){
+        if !playedText.isEmpty {
+            if(playedTime >= 1){
+                withAnimation{
+                    playedText.remove(atOffsets: IndexSet(integer: 0))
+                    soundList.remove(atOffsets: IndexSet(integer: 0))
+                }
+            }
+            withAnimation{
+                highlightedText = 1
+            }
+            playedTime += 1
+        } else {
+            playedTime = 0
+        }
+    }
+    
+    
     var body: some View {
         VStack(spacing: 32){
             ForEach(playedText.prefix(3), id: \.self){text in
@@ -61,11 +81,17 @@ struct PlayTextView: View {
             }
         })
         .onChange(of: index){_ in
-            playedText = scenes[index].text ?? []
-            soundList = scenes[index].soundList ?? []
-            playAudio()
+            changeScene()
         }
         .padding(.horizontal, 32)
+    }
+    
+    func changeScene() {
+        highlightedText = 0
+        playedTime = 0
+        playedText = scenes[index].text ?? []
+        soundList = scenes[index].soundList ?? []
+        playAudio()
     }
     
     private func playAudio() {
@@ -74,14 +100,22 @@ struct PlayTextView: View {
             return
         }
         
+        guard highlightedText < soundList.count else {
+            if(index < scenes.count-1){
+                withAnimation(.spring()) {
+                    index += 1
+                }
+            }
+            
+            changeScene()
+            return
+        }
+        
         viewModel.playAudio(data: soundList[highlightedText])
     }
     
     private func showNextText() {
-        withAnimation {
-            playedText.remove(atOffsets: IndexSet(integer: 0))
-            soundList.remove(atOffsets: IndexSet(integer: 0))
-        }
+        changeHighlightedText()
     }
 }
 
