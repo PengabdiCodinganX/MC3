@@ -46,6 +46,8 @@ class RatingCloudKitService {
     func saveRating(rating: RatingModel) async -> Result<RatingModel, Error> {
         let record = CKRecord(recordType: recordType.rawValue)
         record["rating"] = rating.rating
+        record["user"] = rating.user
+        record["story"] = rating.story
         
         do {
             let result = try await cloudKitManager.saveData(record: record)

@@ -7,14 +7,16 @@
 
 import Foundation
 import NaturalLanguage
+import CloudKit
 
 @MainActor
 class StoryIntroductionViewModel: ObservableObject {
     private let storyCloudKitService: StoryCloudKitService = StoryCloudKitService()
+    private let historyCloudKitService: HistoryCloudKitService = HistoryCloudKitService()
+    
     private var elevenLabsAPIService: ElevenLabsAPIService?
     private var chatCPTService: ChatGPTService?
     private let nlpService: NLPService = NLPService()
-    @Published var isLoading: Bool = false
     
     func initializeService() async throws {
         chatCPTService = try await ChatGPTService()
@@ -26,8 +28,6 @@ class StoryIntroductionViewModel: ObservableObject {
     }
     
     func getStory(userProblem: String) async throws -> StoryModel? {
-        isLoading = true
-        
         print("[getStory][userProblem]", userProblem)
         let keywords = getKeywordByText(text: userProblem)
         print("[getStory][keywords]", keywords)
@@ -37,19 +37,15 @@ class StoryIntroductionViewModel: ObservableObject {
         switch result {
         case .success(let success):
             print("[getStory][success]", success)
-            
-            isLoading = false
             return success
         case .failure(let failure):
             print("[getStoryByKeyword][failure]", failure)
             try await self.initializeService()
             
             guard let data = try await getStoryByChatGPT(keywords: keywords, userProblem: userProblem) else {
-                isLoading = false
                 return nil
             }
             
-            isLoading = false
             return data
         }
     }
@@ -85,11 +81,43 @@ class StoryIntroductionViewModel: ObservableObject {
             story.problemSound = problemSound
             story.resolutionSound = resolutionSound
             
-            return try await storyCloudKitService.saveStory(story: story)
+            let result = try await saveStory(story: story)
+            
+            return result
         case .failure(let failure):
             print("[getStoryByChatGPT][failure]", failure)
             return nil
         case .none:
+            return nil
+        }
+    }
+    
+    func saveStory(story: StoryModel) async throws -> StoryModel {
+        return try await storyCloudKitService.saveStory(story: story)
+    }
+    
+    func updateHistory(history: HistoryModel, story: StoryModel) async throws -> HistoryModel? {
+        print("[updateHistory][history]", history)
+        print("[updateHistory][story]", story)
+        
+        guard let storyRecordID = story.id else {
+            print("user record not found.")
+            // handle case when user id is nil
+            return nil
+        }
+        
+        let storyReference = CKRecord.Reference(recordID: storyRecordID, action: .none)
+
+        var historyUpdate = history
+        historyUpdate.story = storyReference
+        
+        let result = await historyCloudKitService.updateHistory(history: historyUpdate)
+        
+        switch result {
+        case .success(let success):
+            return success
+        case .failure(let failure):
+            print("failure", failure)
             return nil
         }
     }

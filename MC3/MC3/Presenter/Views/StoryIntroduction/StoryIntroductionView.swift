@@ -12,8 +12,9 @@ struct StoryIntroductionView: View {
     @StateObject private var viewModel: StoryIntroductionViewModel = StoryIntroductionViewModel()
     
     @State private var story: StoryModel?
+    @State var history: HistoryModel
     
-    var userProblem: String
+    @State private var isLoading: Bool = false
     
     var body: some View {
         VStack{
@@ -28,19 +29,40 @@ struct StoryIntroductionView: View {
             }
             Spacer()
             
-            if (story != nil) {
+            if isLoading {
+                Text("Loading...")
+            } else {
                 //MARK: Continue Button
                 PrimaryButton(text: "Continue", isFull: true) {
                     proceedToStory()
                 }
                 .padding(.horizontal, 16)
-            } else {
-                Text("Loading...")
             }
         }
         .task {
             do {
-                self.story = try await viewModel.getStory(userProblem: self.userProblem)
+                self.isLoading = true
+                
+                guard let problem = history.problem else {
+                    self.isLoading = false
+                    return
+                }
+                
+                guard let story = try await viewModel.getStory(userProblem: problem) else {
+                    self.isLoading = false
+                print("[story not found]")
+                    return
+                }
+                
+                self.story = story
+                
+                guard let history = try await viewModel.updateHistory(history: self.history, story: story) else {
+                    self.isLoading = false
+                    return
+                }
+                
+                self.history = history
+                self.isLoading = false
             } catch {
                 print("error", error)
             }
@@ -52,12 +74,12 @@ struct StoryIntroductionView: View {
             return
         }
         
-        pathStore.path.append(ViewPath.story(userProblem, story!))
+        pathStore.path.append(ViewPath.story(history, story!))
     }
 }
 
 struct IntroductionToStoryView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryIntroductionView(userProblem: "")
+        StoryIntroductionView(history: HistoryModel())
     }
 }

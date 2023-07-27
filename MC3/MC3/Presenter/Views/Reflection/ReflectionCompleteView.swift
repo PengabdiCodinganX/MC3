@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ReflectionCompleteView: View {
     @EnvironmentObject private var pathStore: PathStore
+    
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
+    
     @State private var textList: [TextTrack] = [TextTrack(text: "Believe in yourself, self-affirmation boosts confidence!", track: nil)]
     @State private var feedback: String = ""
     
     var body: some View {
         ZStack{
+            Color("AccentColor").edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 0){
-                Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
+                Mascot(mascotText: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
                     .padding([.leading, .trailing])
                     .onTapGesture {
                         hideKeyboard()
@@ -26,11 +29,11 @@ struct ReflectionCompleteView: View {
                 
                 VStack(spacing: 20){
                     PrimaryButton(text: " Let’s do it! ", isFull: true) {
-                        
+                        proceedToSelfAffirmation()
                     }
                     
                     SecondaryButton(text: "Maybe next time...", isFull: true) {
-                        //
+                        proceedToHome()
                     }
                     
                 }
@@ -41,6 +44,14 @@ struct ReflectionCompleteView: View {
                 .padding(.top, -16)
             }
         }
+    }
+    
+    private func proceedToSelfAffirmation() {
+        pathStore.navigateToView(viewPath: .selfAffirmation)
+    }
+    
+    private func proceedToHome() {
+        pathStore.popToRoot()
     }
 }
 

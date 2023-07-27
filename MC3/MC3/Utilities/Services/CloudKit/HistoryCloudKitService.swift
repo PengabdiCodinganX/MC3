@@ -26,7 +26,7 @@ class HistoryCloudKitService {
                     HistoryModel(
                         id: $0.recordID,
                         problem: $0["problem"],
-                        actionPlan: $0["actionPlan"],
+                        reflection: $0["reflection"],
                         user: $0["user"],
                         story: $0["story"],
                         rating: $0["rating"]
@@ -53,7 +53,7 @@ class HistoryCloudKitService {
                     HistoryModel(
                         id: $0.recordID,
                         problem: $0["problem"],
-                        actionPlan: $0["actionPlan"],
+                        reflection: $0["reflection"],
                         user: $0["user"],
                         story: $0["story"],
                         rating: $0["rating"]
@@ -75,7 +75,7 @@ class HistoryCloudKitService {
                 HistoryModel(
                     id: data.recordID,
                     problem: data["problem"],
-                    actionPlan: data["actionPlan"],
+                    reflection: data["reflection"],
                     user: data["user"],
                     story: data["story"],
                     rating: data["rating"]
@@ -86,11 +86,22 @@ class HistoryCloudKitService {
         }
     }
     
+    func getHistoryRecord(id: CKRecord.ID) async -> Result<CKRecord, Error> {
+        do {
+            let data = try await cloudKitManager.fetchData(recordID: id)
+            print("[CloudKitService][fetchApiKeyData][result]", data)
+            
+            return .success(data)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     func saveHistory(history: HistoryModel) async -> Result<HistoryModel, Error> {
         let record = CKRecord(recordType: recordType.rawValue)
         record["problem"] = history.problem
         record["rating"] = history.rating
-        record["actionPlan"] = history.actionPlan
+        record["reflection"] = history.reflection
         record["user"] = history.user
         record["story"] = history.story
         record["rating"] = history.rating
@@ -102,7 +113,7 @@ class HistoryCloudKitService {
                 HistoryModel(
                     id: result.recordID,
                     problem: history.problem,
-                    actionPlan: history.actionPlan,
+                    reflection: history.reflection,
                     user: history.user,
                     story: history.story,
                     rating: history.rating
@@ -118,29 +129,35 @@ class HistoryCloudKitService {
             return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Record ID not found."]))
         }
         
-        let record = CKRecord(recordType: recordType.rawValue, recordID: recordID)
-        record["problem"] = history.problem
-        record["rating"] = history.rating
-        record["actionPlan"] = history.actionPlan
-        record["user"] = history.user
-        record["story"] = history.story
-        record["rating"] = history.rating
- 
-        do {
-            let result = try await cloudKitManager.saveData(record: record)
-            
-            return .success(
-                HistoryModel(
-                    id: result.recordID,
-                    problem: history.problem,
-                    actionPlan: history.actionPlan,
-                    user: history.user,
-                    story: history.story,
-                    rating: history.rating
+        let result = await getHistoryRecord(id: recordID)
+        switch result {
+        case .success(let record):
+            record["problem"] = history.problem
+            record["rating"] = history.rating
+            record["reflection"] = history.reflection
+            record["user"] = history.user
+            record["story"] = history.story
+            record["rating"] = history.rating
+     
+            do {
+                let result = try await cloudKitManager.saveData(record: record)
+                
+                return .success(
+                    HistoryModel(
+                        id: result.recordID,
+                        problem: history.problem,
+                        reflection: history.reflection,
+                        user: history.user,
+                        story: history.story,
+                        rating: history.rating
+                    )
                 )
-            )
-        } catch {
-            return .failure(error)
+            } catch {
+                return .failure(error)
+            }
+        case .failure(let failure):
+            print("failure", failure)
+            return .failure(failure)
         }
     }
 }

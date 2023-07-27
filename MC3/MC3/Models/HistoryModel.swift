@@ -8,10 +8,10 @@
 import Foundation
 import CloudKit
 
-struct HistoryModel: Identifiable {
+struct HistoryModel: Identifiable, Hashable {
     var id: CKRecord.ID?
     var problem: String?
-    var actionPlan: String?
+    var reflection: String?
     var user: CKRecord.Reference?
     var story: CKRecord.Reference?
     var rating: CKRecord.Reference?

@@ -12,7 +12,7 @@ struct StoryView: View {
     @StateObject private var viewModel: StoryViewModel = StoryViewModel()
     @State private var scenes: [StageScene] = []
     
-    var userProblem: String
+    var history: HistoryModel
     var story: StoryModel
     
     var body: some View {
@@ -31,12 +31,12 @@ struct StoryView: View {
     }
     
     func proceedToStoryRecap() {
-        pathStore.navigateToView(viewPath: .storyRecap(userProblem, story))
+        pathStore.navigateToView(viewPath: .storyRecap(history, story))
     }
 }
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryView(userProblem: "", story: StoryModel(keywords: [], introduction: [], problem: [], resolution: []))
+        StoryView(history: HistoryModel(), story: StoryModel(keywords: [], introduction: [], problem: [], resolution: []))
     }
 }

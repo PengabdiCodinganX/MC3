@@ -70,6 +70,7 @@ struct PlayTextView: View {
                     .animation(.default, value: text)
             }
         }
+        .padding(.horizontal, 32)
         .onAppear{
             playAudio()
         }
@@ -83,7 +84,13 @@ struct PlayTextView: View {
         .onChange(of: index){_ in
             changeScene()
         }
-        .padding(.horizontal, 32)
+        .onDisappear {
+            stopAudio()
+        }
+    }
+    
+    private func stopAudio() {
+        viewModel.stopAudio()
     }
     
     func changeScene() {

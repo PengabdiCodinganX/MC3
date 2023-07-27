@@ -11,4 +11,6 @@ import CloudKit
 struct RatingModel {
     var id: CKRecord.ID?
     var rating: Int64?
+    var user: CKRecord.Reference?
+    var story: CKRecord.Reference?
 }
