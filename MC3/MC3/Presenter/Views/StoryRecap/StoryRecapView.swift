@@ -81,6 +81,7 @@ struct StoryRecapView: View {
             Spacer()
             
             Button {
+                storyAudioIndex = 0
                 playAudio()
             } label: {
                 Image(systemName: "speaker.wave.2.bubble.left.fill")

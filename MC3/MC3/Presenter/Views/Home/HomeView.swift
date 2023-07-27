@@ -154,10 +154,21 @@ struct HomeView: View {
                 viewPath.view
             }.transition(.opacity)
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Second") {
+                    proceedToDev()
+                }
+            }
+        }
     }
     
     func proceedToProblem() {
         pathStore.navigateToView(viewPath: .problem)
+    }
+    
+    func proceedToDev() {
+//        pathStore.navigateToView(viewPath: .developer)
     }
 }
 

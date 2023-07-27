@@ -15,7 +15,7 @@ class PlayTextViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func playAudio(data: Data) {
         audioManager.startPlayer(data: data)
         audioManager.delegatePlayer(delegate: self)
-        isPlaying = true
+        isPlaying = audioManager.isPlaying
     }
     
     func stopAudio() {
