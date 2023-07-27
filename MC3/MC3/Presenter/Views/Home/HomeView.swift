@@ -13,8 +13,7 @@ struct HomeView: View {
     
     @StateObject private var viewModel: HomeViewModel = HomeViewModel()
     
-    @State private var text: String = ""
-    @State var audioPlayer: AVAudioPlayer?
+    @State private var user: UserModel?
     
     @Binding var isSignedIn: Bool
     
@@ -23,7 +22,7 @@ struct HomeView: View {
             Color("AccentColor").edgesIgnoringSafeArea(.all)
             
             VStack {
-                Mascot(mascotText: [TextTrack(text: "Good afternoon, \(viewModel.user.name ?? "")! What would you like to do?", track: "")], alignment: .horizontal)
+                Mascot(mascotText: [TextTrack(text: "Good afternoon, \(user?.name ?? "")! What would you like to do?", track: "")], alignment: .horizontal)
                 
                 MenuButton(
                     text: "Share your story, Find relief!",
@@ -60,6 +59,10 @@ struct HomeView: View {
             }
             .padding()
         }
+        .task {
+            user = await viewModel.getUser()
+            print("[user]", user)
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -75,11 +78,6 @@ struct HomeView: View {
                     print("Pressed")
                 }
             }
-        }
-        .navigationDestination(for: ViewPath.self) { viewPath in
-            withAnimation() {
-                viewPath.view
-            }.transition(.opacity)
         }
     }
     
