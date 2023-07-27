@@ -17,13 +17,15 @@ struct StoryIntroductionView: View {
     @State private var isLoading: Bool = false
     
     var body: some View {
-        VStack{
+        VStack {
             ZStack(alignment: .top) {
                 LottieView(lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
                     .ignoresSafeArea()
                     .padding(.top, -200)
-                Mascot(mascotText: storyIntroductionData, alignment: .horizontal, mascotImage: .gone)
                 
+                Mascot(mascotText: storyIntroductionData, alignment: .vertical, mascotImage: .hide)
+                    .padding(16)
+                    .padding(.top, 64)
             }
             Spacer()
             
@@ -48,7 +50,7 @@ struct StoryIntroductionView: View {
                 
                 guard let story = try await viewModel.getStory(userProblem: problem) else {
                     self.isLoading = false
-                print("[story not found]")
+                    print("[story not found]")
                     return
                 }
                 

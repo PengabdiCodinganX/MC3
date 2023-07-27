@@ -20,7 +20,7 @@ struct ReflectionCompleteView: View {
             Color("AccentColor").edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 0){
-                Mascot(mascotText: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotContentMode: .scaleAspectFit)
+                Mascot(mascotText: reflectionTwoData, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotContentMode: .scaleAspectFit)
                     .padding([.leading, .trailing])
                     .onTapGesture {
                         hideKeyboard()

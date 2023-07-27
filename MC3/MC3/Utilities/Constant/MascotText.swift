@@ -29,7 +29,7 @@ let problemTwoData: [TextTrack] = [
 ]
 
 let storyIntroductionData: [TextTrack] = [
-    TextTrack(text: "Now I'd want to tell you a story. I believe that this narrative will benefit you in some way. Pay close attention, listen, and see if you can relate.", track: "storyIntroduction1")
+    TextTrack(text: "Let me share a story with you. Pay attention and see if you relate.", track: "storyIntroduction1")
 ]
 
 let reflectionData: [TextTrack] = [
@@ -37,7 +37,7 @@ let reflectionData: [TextTrack] = [
 ]
 
 let reflectionTwoData: [TextTrack] = [
-    TextTrack(text: "Reflect on the inspiring story and create an action plan for your next steps.", track: "storyReflection2")
+    TextTrack(text: "Believe in yourself, self-affirmation boosts confidence! Do self-affirmation?", track: "storyReflection2")
 ]
 //}
 
