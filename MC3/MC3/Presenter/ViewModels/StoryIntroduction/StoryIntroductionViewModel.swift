@@ -6,8 +6,103 @@
 //
 
 import Foundation
+import NaturalLanguage
 
+@MainActor
 class StoryIntroductionViewModel: ObservableObject {
-    @Published var textList: [(String, String?)] = []
+    private let storyCloudKitService: StoryCloudKitService = StoryCloudKitService()
+    private var elevenLabsAPIService: ElevenLabsAPIService?
+    private var chatCPTService: ChatGPTService?
+    private let nlpService: NLPService = NLPService()
+    @Published var isLoading: Bool = false
     
+    func initializeService() async throws {
+        chatCPTService = try await ChatGPTService()
+        elevenLabsAPIService = try await ElevenLabsAPIService()
+    }
+    
+    func getKeywordByText(text: String) -> [String] {
+        return nlpService.generateSummary(for: text)
+    }
+    
+    func getStory(userProblem: String) async throws -> StoryModel? {
+        isLoading = true
+        
+        print("[getStory][userProblem]", userProblem)
+        let keywords = getKeywordByText(text: userProblem)
+        print("[getStory][keywords]", keywords)
+        
+        let result = await storyCloudKitService.getStoryByKeywords(keywords: keywords)
+        
+        switch result {
+        case .success(let success):
+            print("[getStory][success]", success)
+            
+            isLoading = false
+            return success
+        case .failure(let failure):
+            print("[getStoryByKeyword][failure]", failure)
+            try await self.initializeService()
+            
+            guard let data = try await getStoryByChatGPT(keywords: keywords, userProblem: userProblem) else {
+                isLoading = false
+                return nil
+            }
+            
+            isLoading = false
+            return data
+        }
+    }
+    
+    func tokenizeSentences(text: String) -> [String] {
+        let tokenizer = NLTokenizer(unit: .sentence)
+        tokenizer.string = text
+        return tokenizer.tokens(for: text.startIndex..<text.endIndex).map {String(text[$0])}
+    }
+    
+    func getStoryByChatGPT(keywords: [String], userProblem: String) async throws -> StoryModel? {
+        try await self.initializeService()
+        
+        let result = await chatCPTService?.fetchMotivatinStoryFromProblem(problem: userProblem)
+        print("[getStoryByChatGPT][keywords]", keywords)
+        print("[getStoryByChatGPT][userProblem]", userProblem)
+        print("[getStoryByChatGPT][result]", result as Any)
+        
+        switch result {
+        case .success(let data):
+            var story = StoryModel(
+                keywords: keywords,
+                introduction: tokenizeSentences(text: data.introduction),
+                problem: tokenizeSentences(text: data.problem),
+                resolution: tokenizeSentences(text: data.resolution)
+            )
+            
+            let introductionSound = try await getSoundByTextList(textList: story.introduction)
+            let problemSound = try await getSoundByTextList(textList: story.problem)
+            let resolutionSound = try await getSoundByTextList(textList: story.resolution)
+            
+            story.introductionSound = introductionSound
+            story.problemSound = problemSound
+            story.resolutionSound = resolutionSound
+            
+            return try await storyCloudKitService.saveStory(story: story)
+        case .failure(let failure):
+            print("[getStoryByChatGPT][failure]", failure)
+            return nil
+        case .none:
+            return nil
+        }
+    }
+    
+    func getSoundByTextList(textList: [String]) async throws -> [Data] {
+        var data: [Data] = []
+        
+        for text in textList {
+            guard let result = try await elevenLabsAPIService?.fetchTextToSpeech(text: text) else { return data
+            }
+            data.append(result)
+        }
+        
+        return data
+    }
 }

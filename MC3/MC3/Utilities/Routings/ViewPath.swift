@@ -12,8 +12,8 @@ enum ViewPath: Hashable {
     case problem
     case breathing(String)
     case storyIntro(String)
-    case story(String)
-    case storyRecap
+    case story(String, StoryModel)
+    case storyRecap(String, StoryModel)
     case storyRepeat
     case storyReflection
     case storyReflectionDetail(String)
@@ -28,15 +28,15 @@ enum ViewPath: Hashable {
             case .breathing(let userProblem):
                 BreathingView(userProblem: userProblem)
             case .storyIntro(let userProblem):
-                IntroductionToStoryView(userProblem: userProblem)
-            case .story(let userProblem):
-                StoryView(userProblem: userProblem)
-            case .storyRecap:
-                StoryRecapView()
+                StoryIntroductionView(userProblem: userProblem)
+            case .story(let userProblem, let story):
+                StoryView(userProblem: userProblem, story: story)
+            case .storyRecap(let userProblem, let story):
+                StoryRecapView(userProblem: userProblem, story: story)
             case .storyRepeat:
                 EmptyView()
             case .storyReflection:
-                EmptyView()
+                ReflectionInputView()
             case .storyReflectionDetail(let userReflection):
                 ReflectionDetailView(reflection: userReflection)
             case .selfAffirmation:

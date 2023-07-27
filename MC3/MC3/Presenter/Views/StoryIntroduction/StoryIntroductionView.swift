@@ -7,15 +7,17 @@
 
 import SwiftUI
 
-struct IntroductionToStoryView: View {
+struct StoryIntroductionView: View {
     @EnvironmentObject private var pathStore: PathStore
+    @StateObject private var viewModel: StoryIntroductionViewModel = StoryIntroductionViewModel()
+    
+    @State private var story: StoryModel?
     
     var userProblem: String
     
     var body: some View {
         VStack{
-            ZStack(alignment: .top){
-                
+            ZStack(alignment: .top) {
                 LottieView(lottieFile: "introduction-story-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
                     .ignoresSafeArea()
                     .padding(.top, -200)
@@ -26,21 +28,36 @@ struct IntroductionToStoryView: View {
             }
             Spacer()
             
-            //MARK: Continue Button
-            PrimaryButton(text: "Continue", isFull: true) {
-                proceedToStory()
+            if (story != nil) {
+                //MARK: Continue Button
+                PrimaryButton(text: "Continue", isFull: true) {
+                    proceedToStory()
+                }
+                .padding(.horizontal, 16)
+            } else {
+                Text("Loading...")
             }
-            .padding(.horizontal, 16)
+        }
+        .task {
+            do {
+                self.story = try await viewModel.getStory(userProblem: self.userProblem)
+            } catch {
+                print("error", error)
+            }
         }
     }
     
     func proceedToStory() {
-        pathStore.path.append(ViewPath.story(userProblem))
+        guard story != nil else {
+            return
+        }
+        
+        pathStore.path.append(ViewPath.story(userProblem, story!))
     }
 }
 
 struct IntroductionToStoryView_Previews: PreviewProvider {
     static var previews: some View {
-        IntroductionToStoryView(userProblem: "")
+        StoryIntroductionView(userProblem: "")
     }
 }

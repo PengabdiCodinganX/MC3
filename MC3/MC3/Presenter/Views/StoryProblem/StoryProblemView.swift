@@ -21,8 +21,6 @@ struct StoryProblemView: View {
     
     var body: some View {
         ZStack {
-            
-            
             VStack(spacing: 0){
                 Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
                         .padding([.leading, .trailing])

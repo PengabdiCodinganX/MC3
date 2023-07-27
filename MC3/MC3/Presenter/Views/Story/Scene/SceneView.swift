@@ -92,6 +92,8 @@ struct SceneView: View {
     @State var index = 0
     @State var isAnimationVisible = true
     
+    let onCompletion: () -> Void
+    
     var body: some View {
         ZStack (alignment: .center){
             LottieView(lottieFile: scenes[index].name ?? "", loopMode: .loop)
@@ -117,9 +119,7 @@ struct SceneView: View {
                                 index += 1
                             }
                         } else {
-                            withAnimation(.spring()){
-                                index = 0
-                            }
+                            onCompletion()
                         }
                     } label: {
                         HStack{
@@ -151,6 +151,6 @@ struct SceneView_Previews: PreviewProvider {
             StageScene(name: "a-scene-1", text: ["John doe john jode ndeodjn djknwqeqwe", "d kqwoineklwqnelk qwnelkqwnmjdpoc nso ifbeoiqwehwqoejqwojfdpsfmds"]),
             StageScene(name: "a-scene-2", text: ["test"]),
             StageScene(name: "a-scene-3", text: ["test"])
-        ])
+        ], onCompletion: {})
     }
 }

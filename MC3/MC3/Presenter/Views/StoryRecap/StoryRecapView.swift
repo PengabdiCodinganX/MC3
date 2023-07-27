@@ -10,7 +10,13 @@ import SwiftUI
 struct StoryRecapView: View {
     @EnvironmentObject private var pathStore: PathStore
     
+    @StateObject private var viewModel: StoryRecapViewModel = StoryRecapViewModel()
+
     @State private var rating: Int = 0
+    
+    var userProblem: String
+    var story: StoryModel
+    
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.all)
@@ -20,7 +26,7 @@ struct StoryRecapView: View {
                 header()
                 
                 //MARK: Rate the story star
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Text("Rate the story")
                         .font(.title2)
                     
@@ -40,10 +46,8 @@ struct StoryRecapView: View {
 //                    }
                 }
                 
-                Button {
-                    proceedToStoryRepeat()
-                } label: {
-                    Text("temporary next nanti ganti")
+                PrimaryButton(text: "Continue", isFull: true) {
+                    // move to next screen
                 }
 
             }
@@ -72,8 +76,8 @@ struct StoryRecapView: View {
         }
     }
     
-    func proceedToStoryRepeat() {
-//        pathStore.path.append(ViewPath.)
+    func proceedToStoryReflection() {
+        pathStore.path.append(ViewPath.storyReflection)
     }
 }
 
@@ -81,6 +85,6 @@ struct StoryRecapView: View {
 
 struct StoryRecapView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryRecapView()
+        StoryRecapView(userProblem: "", story: StoryModel(keywords: [], introduction: [], problem: [], resolution: []))
     }
 }

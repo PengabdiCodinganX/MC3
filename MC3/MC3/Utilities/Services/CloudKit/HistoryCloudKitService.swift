@@ -23,7 +23,14 @@ class HistoryCloudKitService {
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
-                    HistoryModel(id: $0.recordID, problem: $0["problem"], rating: $0["rating"], feedback: $0["feedback"])
+                    HistoryModel(
+                        id: $0.recordID,
+                        problem: $0["problem"],
+                        actionPlan: $0["actionPlan"],
+                        user: $0["user"],
+                        story: $0["story"],
+                        rating: $0["rating"]
+                    )
                 }
             
             return .success(data)
@@ -43,7 +50,14 @@ class HistoryCloudKitService {
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
-                    HistoryModel(id: $0.recordID, problem: $0["problem"], rating: $0["rating"], feedback: $0["feedback"])
+                    HistoryModel(
+                        id: $0.recordID,
+                        problem: $0["problem"],
+                        actionPlan: $0["actionPlan"],
+                        user: $0["user"],
+                        story: $0["story"],
+                        rating: $0["rating"]
+                    )
                 }
             
             return .success(data)
@@ -53,24 +67,20 @@ class HistoryCloudKitService {
     }
     
     func getHistory(id: CKRecord.ID) async -> Result<HistoryModel, Error> {
-        let predicate = NSPredicate(format: "id == %@", id)
-        let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
-        
         do {
-            let result = try await cloudKitManager.fetchData(query: query, resultsLimit: 1)
-            print("[CloudKitService][fetchApiKeyData][result]", result)
+            let data = try await cloudKitManager.fetchData(recordID: id)
+            print("[CloudKitService][fetchApiKeyData][result]", data)
             
-            let data = result.matchResults
-                .compactMap { _, result in try? result.get() }
-                .compactMap{
-                    HistoryModel(id: $0.recordID, problem: $0["problem"], rating: $0["rating"], feedback: $0["feedback"])
-                }
-            
-            guard let history = data.first else {
-                throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Sound not found"])
-            }
-            
-            return .success(history)
+            return .success(
+                HistoryModel(
+                    id: data.recordID,
+                    problem: data["problem"],
+                    actionPlan: data["actionPlan"],
+                    user: data["user"],
+                    story: data["story"],
+                    rating: data["rating"]
+                )
+            )
         } catch {
             return .failure(error)
         }
@@ -80,13 +90,54 @@ class HistoryCloudKitService {
         let record = CKRecord(recordType: recordType.rawValue)
         record["problem"] = history.problem
         record["rating"] = history.rating
-        record["feedback"] = history.feedback
+        record["actionPlan"] = history.actionPlan
+        record["user"] = history.user
+        record["story"] = history.story
+        record["rating"] = history.rating
         
         do {
             let result = try await cloudKitManager.saveData(record: record)
             
             return .success(
-                HistoryModel(id: result.recordID, problem: history.problem, rating: history.rating, feedback: history.feedback)
+                HistoryModel(
+                    id: result.recordID,
+                    problem: history.problem,
+                    actionPlan: history.actionPlan,
+                    user: history.user,
+                    story: history.story,
+                    rating: history.rating
+                )
+            )
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func updateHistory(history: HistoryModel) async -> Result<HistoryModel, Error> {
+        guard let recordID = history.id else {
+            return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Record ID not found."]))
+        }
+        
+        let record = CKRecord(recordType: recordType.rawValue, recordID: recordID)
+        record["problem"] = history.problem
+        record["rating"] = history.rating
+        record["actionPlan"] = history.actionPlan
+        record["user"] = history.user
+        record["story"] = history.story
+        record["rating"] = history.rating
+ 
+        do {
+            let result = try await cloudKitManager.saveData(record: record)
+            
+            return .success(
+                HistoryModel(
+                    id: result.recordID,
+                    problem: history.problem,
+                    actionPlan: history.actionPlan,
+                    user: history.user,
+                    story: history.story,
+                    rating: history.rating
+                )
             )
         } catch {
             return .failure(error)
