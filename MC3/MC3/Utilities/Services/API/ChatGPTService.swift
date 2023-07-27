@@ -47,7 +47,14 @@ struct ChatGPTService{
             let prompt = """
        \(problem)
        
-       From the text above give me a story from famous public figure related the problem so that I will be more motivated in a JSON format that have "introduction", "problem", and "resolution". Each structure has two paragraph and minimum five sentences."
+       From the text above give me a story from famous public figure related the problem so that I will be more motivated in a JSON format:
+       {
+       'introduction': 'Introduce the person and the problem in a way that hooks the reader. Write at least two paragraphs, each containing at least five sentences.',
+       'problem': 'Delve into the problem in more detail. Write at least two paragraphs, each containing at least five sentences.',
+       'resolution': 'Discuss how the problem was overcome. Write at least two paragraphs, each containing at least five sentences.'
+       }
+       
+       Please note: replace single quotes with double quotes for proper JSON formatting.
        """
             print("[fetchMotivatinStoryFromProblem][prompt]", prompt)
             

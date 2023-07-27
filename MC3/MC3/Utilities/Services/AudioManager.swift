@@ -20,7 +20,7 @@ class AudioManager: ObservableObject {
         player?.delegate = delegate
     }
     
-    func startPlayer(data: Data, isPreview: Bool = false){
+    func startPlayer(data: Data, isPreview: Bool = false) {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)

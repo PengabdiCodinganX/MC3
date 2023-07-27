@@ -10,4 +10,5 @@ import Foundation
 enum APIType: String {
     case chatGPT
     case elevenLabs
+    case voiceId
 }
