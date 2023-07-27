@@ -20,6 +20,7 @@ enum ViewPath: Hashable {
     case storyReflectionComplete
     case selfAffirmation
     case storyLog
+//    case developer
         
         @ViewBuilder
         var view: some View {
@@ -46,6 +47,8 @@ enum ViewPath: Hashable {
                 SelfAffirmationView()
             case .storyLog:
                 MyReflectionView()
+//            case .developer:
+//                DeveloperView()
             }
         }
 }

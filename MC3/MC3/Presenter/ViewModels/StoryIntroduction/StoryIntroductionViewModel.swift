@@ -18,11 +18,6 @@ class StoryIntroductionViewModel: ObservableObject {
     private var chatCPTService: ChatGPTService?
     private let nlpService: NLPService = NLPService()
     
-    func initializeService() async throws {
-        chatCPTService = try await ChatGPTService()
-        elevenLabsAPIService = try await ElevenLabsAPIService()
-    }
-    
     func getKeywordByText(text: String) -> [String] {
         return nlpService.generateSummary(for: text)
     }
@@ -40,8 +35,6 @@ class StoryIntroductionViewModel: ObservableObject {
             return success
         case .failure(let failure):
             print("[getStoryByKeyword][failure]", failure)
-            try await self.initializeService()
-            
             guard let data = try await getStoryByChatGPT(keywords: keywords, userProblem: userProblem) else {
                 return nil
             }
@@ -57,7 +50,8 @@ class StoryIntroductionViewModel: ObservableObject {
     }
     
     func getStoryByChatGPT(keywords: [String], userProblem: String) async throws -> StoryModel? {
-        try await self.initializeService()
+        self.chatCPTService = try await ChatGPTService()
+        self.elevenLabsAPIService = try await ElevenLabsAPIService()
         
         let result = await chatCPTService?.fetchMotivatinStoryFromProblem(problem: userProblem)
         print("[getStoryByChatGPT][keywords]", keywords)
@@ -123,14 +117,35 @@ class StoryIntroductionViewModel: ObservableObject {
     }
     
     func getSoundByTextList(textList: [String]) async throws -> [Data] {
-        var data: [Data] = []
-        
-        for text in textList {
-            guard let result = try await elevenLabsAPIService?.fetchTextToSpeech(text: text) else { return data
+        return try await withThrowingTaskGroup(of: Data.self) { group in
+            
+            for text in textList {
+                try await Task.sleep(nanoseconds: 1 * 1_000_000_000) // nanoseconds
+                
+                group.addTask {
+                    try await self.fetchWithRetry(service: self.elevenLabsAPIService!, text: text)
+                }
             }
-            data.append(result)
+
+            var data = [Data]()
+            for try await result in group {
+                data.append(result)
+            }
+
+            return data
         }
-        
-        return data
+    }
+
+    private func fetchWithRetry(service: ElevenLabsAPIService, text: String, retryCount: Int = 3) async throws -> Data {
+        do {
+            return try await service.fetchTextToSpeech(text: text)
+        } catch {
+            print("[fetchWithRetry][catch]", error)
+            if retryCount > 0 {
+                return try await fetchWithRetry(service: service, text: text, retryCount: retryCount - 1)
+            } else {
+                throw error
+            }
+        }
     }
 }

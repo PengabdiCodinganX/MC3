@@ -11,6 +11,20 @@ import NaturalLanguage
 
 @MainActor
 class StoryViewModel: ObservableObject {
+    @Published var audioManager: AudioManager = AudioManager()
+    
+    func playAudio(track: String) {
+        audioManager.startPlayer(track: track)
+    }
+    
+    func stopAudio() {
+        audioManager.stop()
+    }
+    
+    func setVolume(_ volume: Float) {
+        audioManager.setVolume(volume)
+    }
+    
     func getStageScenes(story: StoryModel) -> [StageScene] {
         return [
             StageScene(name: "a-scene-1", text: story.introduction, soundList: story.introductionSound),

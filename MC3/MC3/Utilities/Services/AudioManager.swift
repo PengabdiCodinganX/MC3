@@ -20,7 +20,7 @@ class AudioManager: ObservableObject {
         player?.delegate = delegate
     }
     
-    func startPlayer(data: Data, isPreview: Bool = false){
+    func startPlayer(data: Data, isPreview: Bool = false) {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
@@ -93,5 +93,16 @@ class AudioManager: ObservableObject {
                 isPlaying = false
             }
         }
+    }
+    
+    func setVolume(_ volume: Float) {
+        guard let player = player else{
+            print("Instance of audio player not found")
+            return
+        }
+        
+        // Ensure volume is between 0.0 and 1.0
+        let adjustedVolume = max(0.0, min(volume, 1.0))
+        player.volume = adjustedVolume
     }
 }

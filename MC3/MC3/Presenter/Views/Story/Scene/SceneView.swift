@@ -22,39 +22,56 @@ struct PlayTextView: View {
     var textColor: Color
     var scenes: [StageScene]
     
+    let onCompletion: () -> Void
+    
     @State var playedText: [String]
     @State var soundList: [Data]
     
     @Binding var index: Int
     
-    init(index: Binding<Int>, textColor: Color, scenes: [StageScene]) {
+    init(index: Binding<Int>, textColor: Color, scenes: [StageScene], onCompletion: @escaping () -> Void) {
         _index = index
         _playedText = State(initialValue: scenes[index.wrappedValue].text ?? [])
         _soundList = State(initialValue: scenes[index.wrappedValue].soundList ?? [])
         self.textColor = textColor
         self.scenes = scenes
+        self.onCompletion = onCompletion
     }
+    
+    @State private var timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    @State private var isTimer: Bool = true
     
     @State var highlightedText = 0
     @State var playedTime: Int = 0
     
     func changeHighlightedText(){
-        if !playedText.isEmpty {
+        print("[playedTime]", playedTime)
+        print("[playedText]", playedText)
+        print("[soundList]", soundList)
+
+        if (!playedText.isEmpty) {
             if(playedTime >= 1){
                 withAnimation{
                     playedText.remove(atOffsets: IndexSet(integer: 0))
                     soundList.remove(atOffsets: IndexSet(integer: 0))
                 }
             }
+            
+            if playedText.count == 2 && playedText.count == soundList.count {
+                withAnimation{
+                    playedText.remove(atOffsets: IndexSet(integer: 0))
+                    soundList.remove(atOffsets: IndexSet(integer: 0))
+                }
+            }
+            
             withAnimation{
-                highlightedText = 1
+                highlightedText = playedText.count == 1 ? 0 : 1
             }
             playedTime += 1
         } else {
             playedTime = 0
         }
     }
-    
     
     var body: some View {
         VStack(spacing: 32){
@@ -81,11 +98,21 @@ struct PlayTextView: View {
                 playAudio()
             }
         })
-        .onChange(of: index){_ in
+        .onReceive(timer, perform: { timer in
+            print("[onReceive][timer]", timer)
+            print("[onReceive][viewModel.isPlaying]", viewModel.isPlaying)
+            
+            if !viewModel.isPlaying {
+                showNextText()
+                playAudio()
+            }
+        })
+        .onChange(of: index){ _ in
             changeScene()
         }
         .onDisappear {
             stopAudio()
+            timer.upstream.connect().cancel()
         }
     }
     
@@ -103,23 +130,33 @@ struct PlayTextView: View {
     
     private func playAudio() {
         print("[playAudio]", soundList)
-        guard !soundList.isEmpty else {
-            return
-        }
-        
+
         guard highlightedText < soundList.count else {
-            if(index < scenes.count-1){
+            guard playedText.isEmpty else {
+                print("[playAudio][playedText]", playedText)
+
+                showNextText()
+                return
+            }
+            
+            guard index >= scenes.count - 1 else {
+                print("[playAudio][index]", index)
+                print("[playAudio][scenes.count]", scenes.count)
+                
                 withAnimation(.spring()) {
                     index += 1
                 }
+                
+                return
             }
-            
-            changeScene()
+
+            onCompletion()
             return
         }
         
         viewModel.playAudio(data: soundList[highlightedText])
     }
+
     
     private func showNextText() {
         changeHighlightedText()
@@ -133,7 +170,6 @@ struct SceneView: View {
     @State var index = 0
     @State var isAnimationVisible = true
     @StateObject var animationController = LottieController()
-
     
     let onCompletion: () -> Void
     
@@ -151,7 +187,10 @@ struct SceneView: View {
                 .tint(.black)
                 Spacer()
                 
-                PlayTextView(index: $index, textColor: scenes[index].textColor, scenes: scenes)
+                PlayTextView(
+                    index: $index,
+                    textColor: scenes[index].textColor,
+                    scenes: scenes, onCompletion: onCompletion)
                 
                 Spacer()
                 HStack{
@@ -176,11 +215,11 @@ struct SceneView: View {
             }
         }
         .onChange(of: index) { newIndex in
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.easeInOut(duration: 0.5)) {
                 isAnimationVisible = false
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeInOut(duration: 0.3)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.easeInOut(duration: 0.5)) {
                     isAnimationVisible = true
                 }
             }

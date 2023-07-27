@@ -29,6 +29,8 @@ struct Mascot: View {
     @StateObject var mouthLottieController = LottieController()
     @StateObject var charachterLottieController = LottieController()
     
+    var onCompletePlaying: () -> Void = {}
+    
     var body: some View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
         
@@ -125,8 +127,8 @@ struct Mascot: View {
             }
             
             guard currentIndex < mascotText.count - 1 else {
-                
                     mouthLottieController.pause()
+                    onCompletePlaying()
                 return
             }
             

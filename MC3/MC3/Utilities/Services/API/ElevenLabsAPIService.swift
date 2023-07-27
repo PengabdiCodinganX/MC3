@@ -14,13 +14,16 @@ class ElevenLabsAPIService {
     
     private let baseURL = "https://api.elevenlabs.io/v1/"
     private var apiKey: String = ""
+    private var voiceId: String = ""
     
     init() async throws {
         apiKey = try await apiManager.fetchAPIKey(apiType: .elevenLabs)
+        voiceId = try await apiManager.fetchAPIKey(apiType: .voiceId)
     }
     
     /// /v1/text-to-speech/{voice_id}
-    func fetchTextToSpeech(text: String, voiceId: String = "QwuGL0uyjADhPWD68iBb") async throws -> Data {
+    func fetchTextToSpeech(text: String) async throws -> Data {
+        print("[fetchTextToSpeech][apiKey]", apiKey)
         guard let url = URL(string: baseURL + "text-to-speech/\(voiceId)") else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Base URL not found"])
         }
@@ -44,9 +47,9 @@ class ElevenLabsAPIService {
         request.httpBody = jsonData
         print("[ElevenLabsAPIService][fetchTextToSpeech][request]", request)
         
-        let result = try await APIManager().fetchData(request: request)
-        
+        let result = try await apiManager.fetchData(request: request)
         print("[ElevenLabsAPIService][fetchTextToSpeech][result]", result)
+        
         return result
     }
 }
