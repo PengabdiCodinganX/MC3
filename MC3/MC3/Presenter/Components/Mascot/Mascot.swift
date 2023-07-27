@@ -18,7 +18,7 @@ struct Mascot: View {
     
     var mascotText: [TextTrack]
     var alignment: MascotAlignment
-    var mascotImage: MascotImage = .face
+    var mascotImage: MascotImage = .show
     var mascotContentMode: UIView.ContentMode = .scaleAspectFill
     
     @State private var texts: [String] = []
@@ -26,7 +26,7 @@ struct Mascot: View {
     
     var body: some View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
-
+        
         return layout {
             
             if alignment == .vertical && !texts.isEmpty {
@@ -36,15 +36,17 @@ struct Mascot: View {
                         .padding(.bottom, 8)
                 }
                 
-                LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
+                if mascotImage == .show {
+                    LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
+                }
             }
             
             
             if alignment == .horizontal && !texts.isEmpty {
-                
+                if mascotImage == .show {
                     LottieView(lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: .scaleAspectFit)
                         .frame(width: 100, height: 160)
-                
+                }
                 
                 ForEach(texts.indices, id: \.self){index in
                     BubbleText(
@@ -55,9 +57,9 @@ struct Mascot: View {
                         textAlignment: .leading
                     )
                     
-                        .opacity(index == texts.count-1 ? 1 : 0.5)
-                        .padding(.bottom, 8)
-                        .padding()
+                    .opacity(index == texts.count-1 ? 1 : 0.5)
+                    .padding(.bottom, 8)
+                    .padding()
                 }
             }
         }
@@ -79,7 +81,7 @@ struct Mascot: View {
                 return
             }
             
-
+            
             showText(textList: mascotText)
             playAudio(textList: mascotText)
         }
@@ -100,7 +102,7 @@ struct Mascot: View {
             guard currentIndex < textList.count else {
                 return
             }
-
+            
             showText(textList: textList)
             playAudio(textList: textList)
         })

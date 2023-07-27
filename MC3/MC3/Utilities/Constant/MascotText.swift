@@ -8,29 +8,37 @@
 import Foundation
 
 //struct MascotText {
-    let introductionData: [TextTrack] = [
-        TextTrack(text: "Hi there! You've come into the right place...", track: ""),
-        TextTrack(text: "I’m Leo the Lion! your companion to discover the motivation you seek.", track: "")
-    ]
-    
-    let permissionData: [TextTrack] = [
-        TextTrack(text: "But before that, I would like you to set up some privacies..", track: ""),
-        TextTrack(text: "In order to make us close, what should I call you?", track: "")
-    ]
-    
-    let problemData: [TextTrack] = [
-        TextTrack(text: "You can share your problems with me; you don't have to face them alone. I'm here to listen.", track: "problem1")
-    ]
-    
-    let problemTwoData: [TextTrack] = [
-        TextTrack(text: "I value your vulnerability. Your feelings are valid; it's crucial to acknowledge and process them to grow.", track: "problem2"),
-        TextTrack(text: "You're not alone. Let's figure it out together, step by step.", track: "problem3"),
-        TextTrack(text: "Find comfort in music. Relax and let it soothe your soul. Try deep breathing?", track: "problem4")
-    ]
-    
-    let reflectionData: [TextTrack] = [
-        TextTrack(text: "Reflect on the inspiring story and create an action plan for your next steps.", track: "")
-    ]
+let introductionData: [TextTrack] = [
+    TextTrack(text: "Hi there! You've come into the right place...", track: ""),
+    TextTrack(text: "I’m Leo the Lion! your companion to discover the motivation you seek.", track: "")
+]
+
+let permissionData: [TextTrack] = [
+    TextTrack(text: "But before that, I would like you to set up some privacies..", track: ""),
+    TextTrack(text: "In order to make us close, what should I call you?", track: "")
+]
+
+let problemData: [TextTrack] = [
+    TextTrack(text: "You can share your problems with me; you don't have to face them alone. I'm here to listen.", track: "storyProblem1")
+]
+
+let problemTwoData: [TextTrack] = [
+    TextTrack(text: "I value your vulnerability. Your feelings are valid; it's crucial to acknowledge and process them to grow.", track: "storyProblem2"),
+    TextTrack(text: "You're not alone. Let's figure it out together, step by step.", track: "storyProblem3"),
+    TextTrack(text: "Find comfort in music. Relax and let it soothe your soul. Try deep breathing?", track: "storyProblem4")
+]
+
+let storyIntroductionData: [TextTrack] = [
+    TextTrack(text: "Now I'd want to tell you a story. I believe that this narrative will benefit you in some way. Pay close attention, listen, and see if you can relate.", track: "storyIntroduction1")
+]
+
+let reflectionData: [TextTrack] = [
+    TextTrack(text: "Reflect on the inspiring story and create an action plan for your next steps.", track: "storyReflection1")
+]
+
+let reflectionTwoData: [TextTrack] = [
+    TextTrack(text: "Reflect on the inspiring story and create an action plan for your next steps.", track: "storyReflection2")
+]
 //}
 
 //let storyData: [String] = [
