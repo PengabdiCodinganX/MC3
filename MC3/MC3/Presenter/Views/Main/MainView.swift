@@ -44,11 +44,6 @@ struct MainView: View {
                 viewModel.signOut()
             }
         }
-        .navigationDestination(for: ViewPath.self) { viewPath in
-            withAnimation() {
-                viewPath.view
-            }.transition(.opacity)
-        }
     }
     
     func getOnboardingType() -> OnboardingType {

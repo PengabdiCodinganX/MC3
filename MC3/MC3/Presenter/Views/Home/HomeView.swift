@@ -63,6 +63,11 @@ struct HomeView: View {
             user = await viewModel.getUser()
             print("[user]", user)
         }
+        .navigationDestination(for: ViewPath.self) { viewPath in
+            withAnimation() {
+                viewPath.view
+            }.transition(.opacity)
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
