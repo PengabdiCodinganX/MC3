@@ -29,7 +29,7 @@ struct SelfAffirmationView: View {
                 Button {
                     if self.didLongPress {
                         self.didLongPress = false
-                        selfAffirmationVM.ofRecording()
+                        selfAffirmationVM.offRecording()
                         selfAffirmationVM.toggleRecording()
                         print(selfAffirmationVM.counterWord)
                     } else {
