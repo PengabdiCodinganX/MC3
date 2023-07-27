@@ -8,6 +8,21 @@
 import Foundation
 
 //struct MascotText {
+
+let dashboardData: [TextTrack] = [
+    TextTrack(text: "Hey there I’m Leon! My specialty is providing motivation. Tap me if you need some 😄", track: "home1"),
+    TextTrack(text: "Oh you need motivation? Wait. Let Me think...", track: "home2")
+]
+
+let motivationData: [TextTrack] = [
+    TextTrack(text: "”Life is like riding a bicycle. To keep your balance, you must keep moving”. - Albert Einstein.", track: "quote1"),
+    TextTrack(text: "”I’ve failed over and over and over again in my life…, and that is why i succeed”. - Michael Jordan.", track: "quote2"),
+    TextTrack(text: "The future depends on what you do today”. - Mahatma Gandhi", track: "quote3"),
+    TextTrack(text:  "”Yesterday is history, tomorrow is a mystery, but today is a gift. That is why it is called the present.” -Master Oogway", track: "quote4")
+   
+]
+
+
 let introductionData: [TextTrack] = [
     TextTrack(text: "Hi there! You've come into the right place...", track: ""),
     TextTrack(text: "I’m Leo the Lion! your companion to discover the motivation you seek.", track: "")
