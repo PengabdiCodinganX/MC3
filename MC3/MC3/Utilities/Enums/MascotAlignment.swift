@@ -13,6 +13,6 @@ enum MascotAlignment {
 }
 
 enum MascotImage {
-    case face
-    case half
+    case show
+    case hide
 }

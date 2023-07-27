@@ -23,7 +23,7 @@ struct StoryProblemView: View {
             Color("AccentColor").edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 0){
-                Mascot(mascotText: mascotText, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
+                Mascot(mascotText: mascotText, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotContentMode: .scaleAspectFit)
                         .padding([.leading, .trailing])
                         .onTapGesture {
                             hideKeyboard()

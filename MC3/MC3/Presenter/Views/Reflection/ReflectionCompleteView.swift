@@ -12,7 +12,7 @@ struct ReflectionCompleteView: View {
     
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
     
-    @State private var textList: [TextTrack] = [TextTrack(text: "Believe in yourself, self-affirmation boosts confidence!", track: nil)]
+    @State private var textList: [TextTrack] = reflectionTwoData
     @State private var feedback: String = ""
     
     var body: some View {
@@ -20,7 +20,7 @@ struct ReflectionCompleteView: View {
             Color("AccentColor").edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 0){
-                Mascot(mascotText: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
+                Mascot(mascotText: reflectionTwoData, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotContentMode: .scaleAspectFit)
                     .padding([.leading, .trailing])
                     .onTapGesture {
                         hideKeyboard()

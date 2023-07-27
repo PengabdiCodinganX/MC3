@@ -11,8 +11,6 @@ struct ReflectionInputView: View {
     @EnvironmentObject private var pathStore: PathStore
     @StateObject private var viewModel: ReflectionInputViewModel = ReflectionInputViewModel()
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
-    
-    @State private var textList: [TextTrack] = [TextTrack(text: "Now Reflect on the inspiring story and create an action plan for your next steps.", track: nil)]
     @State private var reflection: String = ""
     
     @State var history: HistoryModel
@@ -21,13 +19,10 @@ struct ReflectionInputView: View {
         ZStack{
             VStack(spacing: 0){
                 Mascot(
-                    mascotText: textList,
+                    mascotText: reflectionData,
                     alignment: keyboardService.isKeyboardOpen
                     ? .horizontal
                     : .vertical,
-                    mascotImage: keyboardService.isKeyboardOpen
-                    ? .face
-                    : .half,
                     mascotContentMode: .scaleAspectFit
                 )
                 .padding([.leading, .trailing])
