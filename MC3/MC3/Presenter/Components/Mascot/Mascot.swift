@@ -41,11 +41,14 @@ struct Mascot: View {
                         .padding(.bottom, 8)
                 }
                 
-                ZStack{
-                    LottieView(controller: charachterLottieController, lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
-                    LottieView(controller: mouthLottieController, lottieFile: "mouth-animation-lottie", loopMode: .loop, contentMode: .scaleToFill)
+                
+                if mascotImage != .hide {
+                    ZStack{
+                        LottieView(controller: charachterLottieController, lottieFile: "charachter-animation-lottie", loopMode: .loop, contentMode: mascotContentMode)
+                        LottieView(controller: mouthLottieController, lottieFile: "mouth-animation-lottie", loopMode: .loop, contentMode: .scaleToFill)
+                    }
                 }
-            } 
+            }
             
             
             if alignment == .horizontal && !texts.isEmpty {
