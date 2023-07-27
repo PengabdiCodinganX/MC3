@@ -13,19 +13,13 @@ import AVFAudio
 class HomeViewModel: ObservableObject {
     private let appStorageService: AppStorageService = AppStorageService()
     private let userCloudKitService: UserCloudKitService = UserCloudKitService()
-    
-    @Published var user: UserModel = UserModel()
+
     @Published var dailyMotivation: String = ""
     
     @Published var isError: Bool = false
     @Published var error: String = ""
     
-    init() {
-        self.getUser()
-    }
-    
-    func getUser() {
-        Task {
+    func getUser() async -> UserModel? {
             print("[PermissionViewModel][getUser]")
             let userIdentifier = self.appStorageService.userIdentifier
             print("[PermissionViewModel][getUser][userIdentifier]", userIdentifier)
@@ -34,11 +28,11 @@ class HomeViewModel: ObservableObject {
             switch result {
             case .success(let user):
                 print("[PermissionViewModel][getUser][user]", user)
-                self.user = user
+                return user
             case .failure(let error):
                 setError(error: error.localizedDescription)
+                return nil
             }
-        }
     }
     
     func setError(error: String) {

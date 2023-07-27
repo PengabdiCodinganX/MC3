@@ -16,9 +16,9 @@ struct TextTrack: Equatable {
 struct Mascot: View {
     @StateObject private var viewModel: MascotViewModel = MascotViewModel()
     
-    var textList: [TextTrack]
+    var mascotText: [TextTrack]
     var alignment: MascotAlignment
-    var mascotImage: MascotImage = .face
+    var mascotImage: MascotImage = .show
     var mascotContentMode: UIView.ContentMode = .scaleAspectFill
     
     @State private var texts: [String] = []
@@ -31,7 +31,7 @@ struct Mascot: View {
     
     var body: some View {
         let layout = alignment == .horizontal ? AnyLayout(HStackLayout()) : AnyLayout(VStackLayout())
-
+        
         return layout {
             
             if alignment == .vertical && !texts.isEmpty {
@@ -66,35 +66,35 @@ struct Mascot: View {
                         textAlignment: .leading
                     )
                     
-                        .opacity(index == texts.count-1 ? 1 : 0.5)
-                        .padding(.bottom, 8)
-                        .padding()
+                    .opacity(index == texts.count-1 ? 1 : 0.5)
+                    .padding(.bottom, 8)
+                    .padding()
                 }
             }
         }
         .onAppear {
-            print("[onAppear][textList]", textList)
+            print("[onAppear][textList]", mascotText)
             
             withAnimation(.spring()) {
                 texts = []
                 currentIndex = 0
             }
             
-            guard !textList.isEmpty else {
+            guard !mascotText.isEmpty else {
                 return
             }
             
             print("[onAppear][currentIndex]", currentIndex)
-            print("[onAppear][textList.count]", textList.count)
-            guard currentIndex < textList.count else {
+            print("[onAppear][textList.count]", mascotText.count)
+            guard currentIndex < mascotText.count else {
                 return
             }
             
-
-            showText(textList: textList)
-            playAudio(textList: textList)
+            
+            showText(textList: mascotText)
+            playAudio(textList: mascotText)
         }
-        .onChange(of: textList, perform: { textList in
+        .onChange(of: mascotText, perform: { textList in
             print("[onChange][textList]", textList)
             
             withAnimation(.spring()) {
@@ -111,7 +111,7 @@ struct Mascot: View {
             guard currentIndex < textList.count else {
                 return
             }
-
+            
             showText(textList: textList)
             playAudio(textList: textList)
         })
@@ -121,7 +121,7 @@ struct Mascot: View {
                 return
             }
             
-            guard currentIndex < textList.count - 1 else {
+            guard currentIndex < mascotText.count - 1 else {
                 
                     mouthLottieController.pause()
                 return
@@ -131,8 +131,8 @@ struct Mascot: View {
                 currentIndex += 1
             }
             
-            showText(textList: textList)
-            playAudio(textList: textList)
+            showText(textList: mascotText)
+            playAudio(textList: mascotText)
         }
         .onDisappear {
             viewModel.stopAudio()
@@ -175,6 +175,6 @@ struct Mascot: View {
 
 struct Mascot_Previews: PreviewProvider {
     static var previews: some View {
-        Mascot(textList: [TextTrack(text: "test", track: "")], alignment: .vertical)
+        Mascot(mascotText: [TextTrack(text: "test", track: "")], alignment: .vertical)
     }
 }

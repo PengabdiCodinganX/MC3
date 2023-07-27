@@ -8,38 +8,35 @@
 import SwiftUI
 
 struct StoryView: View {
+    @EnvironmentObject private var pathStore: PathStore
     @StateObject private var viewModel: StoryViewModel = StoryViewModel()
     @State private var scenes: [StageScene] = []
     
-    var userProblem: String
+    var history: HistoryModel
+    var story: StoryModel
     
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.all)
             
-            switch viewModel.storyType {
-            case .loading:
-                LoadingView()
-            case .scene:
-                SceneView(scenes: scenes)
-            }
-    }
-        .onAppear {
-            Task {
-                print("[userProblem]", userProblem)
-                guard let story = try await viewModel.getStory(userProblem: userProblem) else {
-                    return
+            if !scenes.isEmpty {
+                SceneView(scenes: scenes) {
+                    proceedToStoryRecap()
                 }
-                
-                scenes = viewModel.getStageScenes(story: story)
-                viewModel.setScene()
             }
         }
+        .onAppear {
+            scenes = viewModel.getStageScenes(story: story)
+        }
+    }
+    
+    func proceedToStoryRecap() {
+        pathStore.navigateToView(viewPath: .storyRecap(history, story))
     }
 }
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {
-        StoryView(userProblem: "Test")
+        StoryView(history: HistoryModel(), story: StoryModel(keywords: [], introduction: [], problem: [], resolution: []))
     }
 }

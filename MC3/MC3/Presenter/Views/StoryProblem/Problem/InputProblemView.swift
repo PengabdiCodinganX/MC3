@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct InputProblemView: View {
-//    @EnvironmentObject private var pathStore: PathStore
-//    @StateObject private var viewModel: InputProblemViewModel = InputProblemViewModel()
-    //    @State private var textList: [TextTrack] = problemData
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
     @Binding var userInput: String
    var userInputType: UserInputType

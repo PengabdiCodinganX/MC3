@@ -8,31 +8,23 @@
 import SwiftUI
 
 struct ValidateProblemView: View {
-    @EnvironmentObject private var pathStore: PathStore
-    @State var timer: Timer?
-    @State private var currentIndex = 0
-    
-    var userProblem: String
+    let onContinue: () -> Void
+    let onDismiss: () -> Void
     
     var body: some View {
         
         PrimaryButton(text: " Continue ", isFull: true) {
-            proceedToBreathing()
+            onContinue()
         }
         
         SecondaryButton(text: "Not now", isFull: true) {
-            //
+            onDismiss()
         }
-        
-    }
-    func proceedToBreathing() {
-        print("[proceedToBreathing][userProblem]", userProblem)
-        pathStore.path.append(ViewPath.breathing(userProblem))
     }
 }
 
 struct ValidateFeelingView_Previews: PreviewProvider {
     static var previews: some View {
-        ValidateProblemView(userProblem: "")
+        ValidateProblemView(onContinue: {}, onDismiss: {})
     }
 }

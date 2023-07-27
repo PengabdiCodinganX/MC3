@@ -32,6 +32,27 @@ class UserCloudKitService {
         }
     }
     
+    func getUserRecord(userIdentifier: String) async -> Result<CKRecord, Error> {
+        let predicate = NSPredicate(format: "userIdentifier == %@", userIdentifier)
+        let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
+        
+        do {
+            let result = try await cloudKitManager.fetchData(query: query, resultsLimit: 1)
+            print("[CloudKitService][fetchApiKeyData][result]", result)
+            
+            let data = result.matchResults
+                .compactMap { _, result in try? result.get() }
+
+            guard let user = data.first else {
+                throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found"])
+            }
+            
+            return .success(user)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     func getUser(userIdentifier: String) async -> Result<UserModel, Error> {
         let predicate = NSPredicate(format: "userIdentifier == %@", userIdentifier)
         let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)

@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct SelfAffirmationView: View {
+    @EnvironmentObject private var pathStore: PathStore
+    
     @StateObject var selfAffirmationVM = SelfAffirmationViewModel()
+    
     @State private var didLongPress = false
     
     var body: some View {
@@ -55,8 +58,7 @@ struct SelfAffirmationView: View {
                 //check answer
                 if (selfAffirmationVM.isAnswer){
                     PrimaryButton(text: "Continue", isFull: true) {
-                        //TODO: Navigate path
-                        print()
+                        proceedToHome()
                     }
                 }
             }
@@ -65,6 +67,10 @@ struct SelfAffirmationView: View {
                 selfAffirmationVM.getAffirmationWords()
             }
         }
+    }
+    
+    private func proceedToHome() {
+        pathStore.popToRoot()
     }
 }
 

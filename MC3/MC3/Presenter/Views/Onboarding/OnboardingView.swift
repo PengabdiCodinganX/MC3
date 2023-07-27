@@ -27,7 +27,7 @@ struct OnboardingView: View {
                 Spacer()
                 
                 Mascot(
-                    textList: textList,
+                    mascotText: textList,
                     alignment: .vertical,
                     mascotContentMode: .scaleAspectFit
                 )

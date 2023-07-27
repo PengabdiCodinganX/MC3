@@ -12,20 +12,20 @@ import SwiftUI
 struct StoryProblemView: View {
     @EnvironmentObject private var pathStore: PathStore
     
-    @StateObject private var viewModel: StoryIntroductionViewModel = StoryIntroductionViewModel()
+    @StateObject private var viewModel: StoryProblemViewModel = StoryProblemViewModel()
     @StateObject private var keyboardService: KeyboardService = KeyboardService()
     
+    @State private var history: HistoryModel?
     @State private var userProblem: String = ""
     @State private var storyProblemType: StoryProblemType = .inputProblem
-    @State private var textList: [TextTrack] = []
-    
-    
+    @State private var mascotText: [TextTrack] = []
     
     var body: some View {
         ZStack {
             Color("AccentColor").edgesIgnoringSafeArea(.top)
+            
             VStack(spacing: 0){
-                Mascot(textList: textList, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotImage: keyboardService.isKeyboardOpen ? .face : .half, mascotContentMode: .scaleAspectFit)
+                Mascot(mascotText: mascotText, alignment: keyboardService.isKeyboardOpen ? .horizontal : .vertical, mascotContentMode: .scaleAspectFit)
                         .padding([.leading, .trailing])
                         .onTapGesture {
                             hideKeyboard()
@@ -38,7 +38,12 @@ struct StoryProblemView: View {
                             handleOnClicked()
                         })
                     case .validateFeeling:
-                        ValidateProblemView(userProblem: userProblem)
+                        ValidateProblemView {
+                            handleOnContinue()
+                        } onDismiss: {
+                            handleOnDismiss()
+                        }
+
                     }
                 }
                 .padding([.leading, .trailing, .bottom], 16)
@@ -64,18 +69,37 @@ struct StoryProblemView: View {
             print("Error")
             return
         }
-        hideKeyboard()
-        withAnimation(.spring()) {
-            storyProblemType = .validateFeeling
+        
+        let keyword = viewModel.getKeywordByText(text: userProblem)
+        
+        guard !keyword.isEmpty else {
+            return
         }
+        
+        Task {
+            history = try await viewModel.saveHistory(problem: userProblem)
+            
+            hideKeyboard()
+            withAnimation(.spring()) {
+                storyProblemType = .validateFeeling
+            }
+        }
+    }
+    
+    func handleOnContinue() {
+        proceedToBreathing()
+    }
+    
+    func handleOnDismiss() {
+        proceedToStory()
     }
     
     func handleOnStoryProblemTypeChanges() {
         switch storyProblemType {
         case .inputProblem:
-            textList = problemData
+            mascotText = problemData
         case .validateFeeling:
-            textList = problemTwoData
+            mascotText = problemTwoData
         }
     }
     
@@ -93,6 +117,22 @@ struct StoryProblemView: View {
                 Text("Back")
             }
         }
+    }
+        func proceedToBreathing() {
+            guard history != nil else {
+                print("history not found")
+                return
+            }
+            
+            pathStore.path.append(ViewPath.breathing(history!))
+        }
+    
+    func proceedToStory() {
+        guard history != nil else {
+            return
+        }
+        
+        pathStore.path.append(ViewPath.storyIntro(history!))
     }
 }
 

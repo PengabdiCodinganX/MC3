@@ -70,6 +70,7 @@ struct PlayTextView: View {
                     .animation(.default, value: text)
             }
         }
+        .padding(.horizontal, 32)
         .onAppear{
             playAudio()
         }
@@ -83,7 +84,13 @@ struct PlayTextView: View {
         .onChange(of: index){_ in
             changeScene()
         }
-        .padding(.horizontal, 32)
+        .onDisappear {
+            stopAudio()
+        }
+    }
+    
+    private func stopAudio() {
+        viewModel.stopAudio()
     }
     
     func changeScene() {
@@ -127,6 +134,9 @@ struct SceneView: View {
     @State var isAnimationVisible = true
     @StateObject var animationController = LottieController()
 
+    
+    let onCompletion: () -> Void
+    
     var body: some View {
         ZStack (alignment: .center){
             LottieView(controller: animationController,lottieFile: scenes[index].name ?? "", loopMode: .loop)
@@ -152,9 +162,7 @@ struct SceneView: View {
                                 index += 1
                             }
                         } else {
-                            withAnimation(.spring()){
-                                index = 0
-                            }
+                            onCompletion()
                         }
                     } label: {
                         HStack{
@@ -186,6 +194,6 @@ struct SceneView_Previews: PreviewProvider {
             StageScene(name: "a-scene-1", text: ["John doe john jode ndeodjn djknwqeqwe", "d kqwoineklwqnelk qwnelkqwnmjdpoc nso ifbeoiqwehwqoejqwojfdpsfmds"]),
             StageScene(name: "a-scene-2", text: ["test"]),
             StageScene(name: "a-scene-3", text: ["test"])
-        ])
+        ], onCompletion: {})
     }
 }
