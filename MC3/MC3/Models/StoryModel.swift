@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-struct StoryModel {
+struct StoryModel: Hashable {
     var id: CKRecord.ID?
     let keywords: [String]
     var rating: Int64 = 0

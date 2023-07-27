@@ -23,7 +23,7 @@ struct HomeView: View {
             Color("AccentColor").edgesIgnoringSafeArea(.all)
             
             VStack {
-                Mascot(textList: [TextTrack(text: "Good afternoon, \(viewModel.user.name ?? "")! What would you like to do?", track: "")], alignment: .horizontal)
+                Mascot(mascotText: [TextTrack(text: "Good afternoon, \(viewModel.user.name ?? "")! What would you like to do?", track: "")], alignment: .horizontal)
                 
                 MenuButton(
                     text: "Share your story, Find relief!",

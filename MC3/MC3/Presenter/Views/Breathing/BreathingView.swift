@@ -32,7 +32,7 @@ struct BreathingView: View {
     @State var status: BreatheStatus = BreatheStatus.breatheIn
     @State var timer: Timer?
     
-    var userProblem: String
+    var history: HistoryModel
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
@@ -153,13 +153,13 @@ struct BreathingView: View {
     
     
     func proceedToStoryIntro() {
-        pathStore.path.append(ViewPath.storyIntro(userProblem))
+        pathStore.path.append(ViewPath.storyIntro(history))
     }
 }
 
 
 struct MeditationView_Previews: PreviewProvider {
     static var previews: some View {
-        BreathingView(userProblem: "")
+        BreathingView(history: HistoryModel())
     }
 }

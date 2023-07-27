@@ -10,13 +10,14 @@ import SwiftUI
 
 enum ViewPath: Hashable {
     case problem
-    case breathing(String)
-    case storyIntro(String)
-    case story(String)
-    case storyRecap
+    case breathing(HistoryModel)
+    case storyIntro(HistoryModel)
+    case story(HistoryModel, StoryModel)
+    case storyRecap(HistoryModel, StoryModel)
     case storyRepeat
-    case storyReflection
-    case storyReflectionDetail(String)
+    case storyReflection(HistoryModel)
+    case storyReflectionDetail(HistoryModel)
+    case storyReflectionComplete
     case selfAffirmation
     case storyLog
         
@@ -25,20 +26,22 @@ enum ViewPath: Hashable {
             switch self {
             case .problem:
                 StoryProblemView()
-            case .breathing(let userProblem):
-                BreathingView(userProblem: userProblem)
-            case .storyIntro(let userProblem):
-                IntroductionToStoryView(userProblem: userProblem)
-            case .story(let userProblem):
-                StoryView(userProblem: userProblem)
-            case .storyRecap:
-                StoryRecapView()
+            case .breathing(let history):
+                BreathingView(history: history)
+            case .storyIntro(let history):
+                StoryIntroductionView(history: history)
+            case .story(let history, let story):
+                StoryView(history: history, story: story)
+            case .storyRecap(let history, let story):
+                StoryRecapView(history: history, story: story)
             case .storyRepeat:
                 EmptyView()
-            case .storyReflection:
-                EmptyView()
-            case .storyReflectionDetail(let userReflection):
-                ReflectionDetailView(reflection: userReflection)
+            case .storyReflection(let history):
+                ReflectionInputView(history: history)
+            case .storyReflectionDetail(let history):
+                ReflectionDetailView(history: history)
+            case .storyReflectionComplete:
+                ReflectionCompleteView()
             case .selfAffirmation:
                 SelfAffirmationView()
             case .storyLog:

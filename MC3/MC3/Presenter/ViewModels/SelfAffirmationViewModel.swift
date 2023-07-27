@@ -56,6 +56,7 @@ class SelfAffirmationViewModel: ObservableObject{
     
     // Function to compare answer and transcribe
     func checkAnswer(){
+        print("speechRecognizer.transcript", speechRecognizer.transcript)
         if(isRecording == false && speechRecognizer.transcript != ""){
             isAnswer = speechRecognizer.transcript.lowercased() == selectedWord.lowercased()
         }

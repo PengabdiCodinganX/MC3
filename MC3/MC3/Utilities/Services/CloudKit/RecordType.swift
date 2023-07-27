@@ -12,5 +12,5 @@ enum RecordType: String {
     case story = "Story"
     case sound = "Sound"
     case history = "History"
-
+    case rating = "Rating"
 }
