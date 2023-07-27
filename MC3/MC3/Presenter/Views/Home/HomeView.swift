@@ -78,7 +78,7 @@ struct HomeView: View {
                     }
                 VStack(spacing: 16){
                     Button{
-                        pathStore.navigateToView(viewPath: .problem)
+                        proceedToProblem()
                     } label: {
                         HStack{
                             ZStack{
@@ -108,7 +108,9 @@ struct HomeView: View {
                         .background(Color("SecondaryColor"))
                         .cornerRadius(16)
                     }
-                    Button{} label: {
+                    Button{
+                        proceedToHistory()
+                    } label: {
                         HStack{
                             ZStack{
                                 Rectangle()
@@ -153,13 +155,6 @@ struct HomeView: View {
             withAnimation() {
                 viewPath.view
             }.transition(.opacity)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Second") {
-                    proceedToDev()
-                }
-            }
         }
     }
     

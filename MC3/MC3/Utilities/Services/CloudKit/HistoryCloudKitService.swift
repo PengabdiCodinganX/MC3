@@ -14,7 +14,9 @@ class HistoryCloudKitService {
     
     func getAllHistoryByUser(user: CKRecord.Reference) async -> Result<[HistoryModel], Error> {
         let predicate = NSPredicate(format: "user == %@", user)
+        let sort = NSSortDescriptor(key: "creationDate", ascending: true)
         let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
+        query.sortDescriptors = [sort]
         
         do {
             let result = try await cloudKitManager.fetchData(query: query)
