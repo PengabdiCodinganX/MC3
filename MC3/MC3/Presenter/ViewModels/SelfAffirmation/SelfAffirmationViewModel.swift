@@ -39,14 +39,16 @@ class SelfAffirmationViewModel: ObservableObject{
         if isRecording {
             speechRecognizer.transcribe()
         } else {
-            speechRecognizer.stopTranscribing()
-            checkAnswer()
-            getAffirmationWords()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.speechRecognizer.stopTranscribing()
+                self.checkAnswer()
+                self.getAffirmationWords()
+            }
         }
     }
     
     
-    func ofRecording(){
+    func offRecording(){
         isRecording = false
     }
     
