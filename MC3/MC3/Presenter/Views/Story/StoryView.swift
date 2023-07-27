@@ -25,7 +25,7 @@ struct StoryView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+//        .navigationBarBackButtonHidden(true)
         .onAppear {
             scenes = viewModel.getStageScenes(story: story)
             

@@ -82,7 +82,7 @@ struct HomeView: View {
     }
     
     func proceedToDev() {
-        pathStore.navigateToView(viewPath: .developer)
+//        pathStore.navigateToView(viewPath: .developer)
     }
 }
 
