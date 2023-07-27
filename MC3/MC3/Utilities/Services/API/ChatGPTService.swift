@@ -47,7 +47,7 @@ struct ChatGPTService{
             let prompt = """
        \(problem)
        
-       From the text above, give me a famous public figure/person related story that can motivate me in a JSON format that have "introduction", "problem", and "resolution"
+       From the text above give me a story from famous public figure/person related the problem so that I will be more motivated in a JSON format that have "introduction", "problem", and "resolution". Each structure has one paragraph and minimum five sentences."
        """
             print("[fetchMotivatinStoryFromProblem][prompt]", prompt)
             
