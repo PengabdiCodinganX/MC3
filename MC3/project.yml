@@ -1,4 +1,4 @@
-name: MC3
+name: TalesOfBrave
 options:
   bundleIdPrefix: com.Vincent-Gunawan
   settings:
@@ -9,15 +9,15 @@ packages:
     url: https://github.com/airbnb/lottie-spm.git
     minorVersion: 4.2.0
 targets:
-  MC3:
+  TalesOfBrave:
     type: application
     platform: iOS
     deploymentTarget: "16.4"
     sources:
-      - MC3
+      - TalesOfBrave
     settings:
           base:
-            CODE_SIGN_ENTITLEMENTS: MC3/MC3.entitlements
+            CODE_SIGN_ENTITLEMENTS: TalesOfBrave/TalesOfBrave.entitlements
     dependencies:
       - package: Lottie
 
