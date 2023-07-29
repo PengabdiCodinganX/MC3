@@ -1291,7 +1291,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Pengabdi-Codingan.TalesOfBrave";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1317,7 +1317,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Pengabdi-Codingan.TalesOfBrave";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
