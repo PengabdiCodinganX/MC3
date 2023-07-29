@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,6 +44,7 @@
 		48E3985055E0E27ADE25CD47 /* UserInputType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5C9E0F2327EF4B11D84A6A /* UserInputType.swift */; };
 		4AC22A7A1130044057DCD4A2 /* NLPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79375A742D2A1E0B9005A58 /* NLPService.swift */; };
 		4AD571FF9C663EBAC63DDD54 /* quote2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 077A76F32FD44D6A35759738 /* quote2.mp3 */; };
+		4C4DBFA3FD1C80B7BDBBF37F /* MyReflectionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191E9D9F45C89A028E5CBEDE /* MyReflectionDetailViewModel.swift */; };
 		517606DB750BB43862732A20 /* PathStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABF8B11A080A0715B598C3C /* PathStore.swift */; };
 		586031A5CB78EA5FF3D57992 /* storyIntroduction1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1086E8F31450566790A1261A /* storyIntroduction1.mp3 */; };
 		58D81C03EF28BB7829FB83F8 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD0BADBA6D69F8694228C34 /* PrimaryButton.swift */; };
@@ -96,6 +97,7 @@
 		9E2287FD123AFBC48753D3DA /* charachter-animation-lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = F137669727367FE80EFA5B9A /* charachter-animation-lottie.json */; };
 		A0A3142F3F04D469A64B9D83 /* BodyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05384F89A0269540B46A8545 /* BodyText.swift */; };
 		A3A9FA0EF051ADB4DE967C30 /* ReflectionInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFA37DDE66F8EA8CA3AF9B5 /* ReflectionInputViewModel.swift */; };
+		A65DEF313B88B430EE4F702E /* MyReflectionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5E2BD507B339840EB2E9F9 /* MyReflectionDetailView.swift */; };
 		AE83939BA12714C2E1760F76 /* problem4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9889953ACF49B2D1985B0B4 /* problem4.mp3 */; };
 		B307F72517A8EEBEDBDBB711 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42F431359379795BCBB83A /* SignInView.swift */; };
 		B53286F5A549D15B65D9762E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6B78E1FF7C273FDF05E13D /* SpeechRecognizer.swift */; };
@@ -159,6 +161,7 @@
 		1575C714768B955920D010B6 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		166F912647AB96290ED3F2F0 /* MascotText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotText.swift; sourceTree = "<group>"; };
 		18C8965F4036FD49FCE99376 /* problem3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = problem3.mp3; sourceTree = "<group>"; };
+		191E9D9F45C89A028E5CBEDE /* MyReflectionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReflectionDetailViewModel.swift; sourceTree = "<group>"; };
 		1F189A78C12C160AD2585524 /* storyProblem2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = storyProblem2.mp3; sourceTree = "<group>"; };
 		1F5668F823CD58E6DD591BCC /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		24DF1580C9620E1BC2458F76 /* ViewPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPath.swift; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 		2CC2023317018EECB4E6CCA3 /* meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = meditation.mp3; sourceTree = "<group>"; };
 		2E4EC18D562A66BB21744CFE /* TitleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleText.swift; sourceTree = "<group>"; };
 		2E6B78E1FF7C273FDF05E13D /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		2F5E2BD507B339840EB2E9F9 /* MyReflectionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReflectionDetailView.swift; sourceTree = "<group>"; };
 		30EBCB4FD3915E26016A1F43 /* StoryRecapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRecapView.swift; sourceTree = "<group>"; };
 		329891F216982D6528EDF4CC /* MascotAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotAlignment.swift; sourceTree = "<group>"; };
 		32A907ABF9D03325DC316F20 /* InputProblemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputProblemView.swift; sourceTree = "<group>"; };
@@ -224,7 +228,7 @@
 		83251F47FDFE5723E4EC2940 /* SelfAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAffirmationView.swift; sourceTree = "<group>"; };
 		8423D701306AF8A4BE5B6662 /* UserCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoreDataService.swift; sourceTree = "<group>"; };
 		869018E39C76D967776F055F /* StoryProblemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryProblemView.swift; sourceTree = "<group>"; };
-		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C31E8960B80953AFCCF1B4 /* IntroductionToStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionToStoryView.swift; sourceTree = "<group>"; };
 		8BB6E401B63806BD84F4EF0B /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		8E7257913DE58AEA8D70075D /* MyReflectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReflectionView.swift; sourceTree = "<group>"; };
@@ -760,6 +764,7 @@
 		AD3D51D2F037E58B436BB5FE /* MyReflection */ = {
 			isa = PBXGroup;
 			children = (
+				191E9D9F45C89A028E5CBEDE /* MyReflectionDetailViewModel.swift */,
 				623B1FB9947D5B0E3D48612F /* MyReflectionViewModel.swift */,
 			);
 			path = MyReflection;
@@ -896,6 +901,7 @@
 		E94B02618A2B95EC02E1464A /* MyReflection */ = {
 			isa = PBXGroup;
 			children = (
+				2F5E2BD507B339840EB2E9F9 /* MyReflectionDetailView.swift */,
 				8E7257913DE58AEA8D70075D /* MyReflectionView.swift */,
 			);
 			path = MyReflection;
@@ -985,8 +991,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = D0EAD7872B128F8F23DBB2AB /* Build configuration list for PBXProject "TalesOfBrave" */;
 			compatibilityVersion = "Xcode 11.0";
@@ -1098,6 +1102,8 @@
 				66286935A73EC407D6BEEBDD /* MenuButtonType.swift in Sources */,
 				C9D0CFF20FAB06CD5DC18156 /* MoreStoryView.swift in Sources */,
 				BEF2010F8F8CE5A65ABB991B /* MusicModel.swift in Sources */,
+				A65DEF313B88B430EE4F702E /* MyReflectionDetailView.swift in Sources */,
+				4C4DBFA3FD1C80B7BDBBF37F /* MyReflectionDetailViewModel.swift in Sources */,
 				393710081C59EA59B6540808 /* MyReflectionView.swift in Sources */,
 				7CA931371D5917FFBB5AE914 /* MyReflectionViewModel.swift in Sources */,
 				4AC22A7A1130044057DCD4A2 /* NLPService.swift in Sources */,
@@ -1282,12 +1288,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1300,12 +1309,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
