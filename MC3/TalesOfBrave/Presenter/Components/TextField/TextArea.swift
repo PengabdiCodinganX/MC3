@@ -13,7 +13,6 @@ struct TextArea: View {
     @Binding var text: String
     @FocusState private var focused: Bool
 
-    
     var body: some View {
         ZStack(alignment: .topLeading) {
             //MARK: TextEditor
