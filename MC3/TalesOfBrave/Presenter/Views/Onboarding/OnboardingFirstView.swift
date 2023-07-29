@@ -17,15 +17,13 @@ enum OnboardingState{
 }
 
 struct OnboardingFirstView: View {
-    @Binding var isSignedIn: Bool
-
-    @State var state: OnboardingState = .first
-    @Binding var isOnboardingFinished: Bool
-
-    
     @StateObject private var viewModel: SignInViewModel = SignInViewModel()
     @StateObject var permissionViewModel: PermissionViewModel = PermissionViewModel()
-
+    
+    @State var state: OnboardingState = .first
+    
+    @Binding var isSignedIn: Bool
+    @Binding var isOnboardingFinished: Bool
     
     func getSubmitText() -> String {
         switch state {
@@ -44,11 +42,6 @@ struct OnboardingFirstView: View {
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.top)
-                .onChange(of: viewModel.isSignedIn){_ in
-                    if(viewModel.isSignedIn == true){
-                        state = .permission
-                    }
-                }
             VStack(spacing: 0){
                 Spacer()
                 switch state {
@@ -110,6 +103,7 @@ struct OnboardingFirstView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, (state != .third) ? 36 : 16)
+                    
                     if(state != .third){
                         PrimaryButton(text: getSubmitText(), isFull: true){
                             print("tapped")
@@ -149,9 +143,16 @@ struct OnboardingFirstView: View {
                 .background(.white)
                 .cornerRadius(16, corners: [.topLeft, .topRight])
                 
-                
             }
             
+        }
+        .onChange(of: viewModel.isSignedIn){_ in
+            if(viewModel.isSignedIn == true){
+                state = .permission
+            }
+        }
+        .alert(isPresented: $viewModel.isError) {
+            Alert(title: Text(viewModel.error))
         }
     }
 }
