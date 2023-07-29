@@ -18,7 +18,6 @@ struct StoryRecapView: View {
     @State private var storyAudio: [Data]?
     @State private var storyAudioIndex: Int = 0
     
-    @State var isLoading: Bool = false
     @State var history: HistoryModel
     var story: StoryModel
     
@@ -53,7 +52,7 @@ struct StoryRecapView: View {
                     }
                 }
                 
-                PrimaryButton(text: "Continue", isFull: true, isLoading: isLoading) {
+                PrimaryButton(text: "Continue", isFull: true) {
                     handleOnContinue()
                 }
                 
@@ -97,22 +96,17 @@ struct StoryRecapView: View {
     }
     
     func handleOnContinue() {
-        isLoading = true
-        
         Task {
             guard let rating = try await viewModel.saveRating(rate: rate, story: story) else {
-                isLoading = false
                 return
             }
             
             guard let history = await viewModel.updateHistory(history: history, rating: rating) else {
-                isLoading = false
                 return
             }
             
-            isLoading = false
-            
             self.history = history
+            
             proceedToStoryReflection()
         }
     }

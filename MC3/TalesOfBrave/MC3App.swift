@@ -11,7 +11,8 @@ import SwiftUI
 struct MC3App: App {
     var body: some Scene {
         WindowGroup {
-            MainView().preferredColorScheme(.light)
+            MainView()
+                .preferredColorScheme(.light)
         }
     }
 }

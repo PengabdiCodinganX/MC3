@@ -14,10 +14,10 @@ struct StoryIntroductionView: View {
     @StateObject var animationController = LottieController()
     @StateObject var mouthAnimationController = LottieController()
     
-    @State private var isLoading: Bool = false
     @State private var story: StoryModel?
     @State var history: HistoryModel
-
+    
+    @State private var isLoading: Bool = false
     var body: some View {
         VStack{
             ZStack(alignment: .top){
@@ -35,7 +35,7 @@ struct StoryIntroductionView: View {
             Spacer()
             
             //MARK: Continue Button
-            PrimaryButton(text: "Continue", isFull: true, isLoading: isLoading) {
+            PrimaryButton(text: "Continue", isFull: true) {
                 proceedToStory()
             }
             .padding(.horizontal, 16)
@@ -62,8 +62,8 @@ struct StoryIntroductionView: View {
                     return
                 }
                 
-                self.isLoading = false
                 self.history = history
+                self.isLoading = false
             } catch {
                 print("error", error)
             }

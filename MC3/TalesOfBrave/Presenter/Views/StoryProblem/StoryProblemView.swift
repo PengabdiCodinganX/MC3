@@ -18,8 +18,6 @@ struct StoryProblemView: View {
     @State private var history: HistoryModel?
     @State private var userProblem: String = ""
     @State private var storyProblemType: StoryProblemType = .inputProblem
-    
-    @State private var isLoading: Bool = false
     @State private var mascotText: [TextTrack] = []
     
     var body: some View {
@@ -36,7 +34,7 @@ struct StoryProblemView: View {
                 VStack{ 
                     switch storyProblemType {
                     case .inputProblem:
-                        InputProblemView(userInput: $userProblem, userInputType: .problem, isLoading: isLoading, onSubmit: {
+                        InputProblemView(userInput: $userProblem, userInputType: .problem , onSubmit: {
                             handleOnClicked()
                         })
                     case .validateFeeling:
@@ -67,7 +65,6 @@ struct StoryProblemView: View {
     
     
     func handleOnClicked() {
-        print("[handleOnClicked]")
         guard !userProblem.isEmpty else {
             print("Error")
             return
@@ -79,12 +76,8 @@ struct StoryProblemView: View {
             return
         }
         
-        isLoading = true
-        
         Task {
             history = try await viewModel.saveHistory(problem: userProblem)
-            
-            isLoading = false
             
             hideKeyboard()
             withAnimation(.spring()) {
