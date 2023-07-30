@@ -1291,6 +1291,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tales of Brave: Motivation App";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1312,6 +1313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tales of Brave: Motivation App";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
