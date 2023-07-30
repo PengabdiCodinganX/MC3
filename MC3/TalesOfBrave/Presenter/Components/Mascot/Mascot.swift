@@ -66,6 +66,7 @@ struct Mascot: View {
                     BubbleText(
                         text: texts[index],
                         alignment: .horizontal,
+                        textType: .short(),
                         showPointer: index == texts.count-1,
                         expand: true,
                         textAlignment: .leading

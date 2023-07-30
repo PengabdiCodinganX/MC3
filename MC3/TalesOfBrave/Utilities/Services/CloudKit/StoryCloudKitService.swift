@@ -60,22 +60,12 @@ class StoryCloudKitService {
     }
     
     func getStory(id: CKRecord.ID) async -> Result<StoryModel, Error> {
-        let predicate = NSPredicate(format: "id == %@", id)
-        let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
-        
         do {
-            let result = try await cloudKitManager.fetchData(query: query, resultsLimit: 1)
-            print("[StoryCloudKitService][fetchApiKeyData][result]", result)
+            let data = try await cloudKitManager.fetchData(recordID: id)
             
-            let data = result.matchResults.compactMap { _, result in try? result.get() }.compactMap {
-                StoryModel(id: $0.recordID, keywords: $0["keywords"] as! [String], introduction: $0["introduction"] as! [String], problem: $0["problem"] as! [String], resolution: $0["resolution"] as! [String], introductionSound: $0["introductionSound"] as? [Data], problemSound: $0["problemSound"] as? [Data], resolutionSound: ($0["resolutionSound"] as? [Data]))
-            }
-            
-            guard let story = data.first else {
-                throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Story not found"])
-            }
-            
-            return .success(story)
+            return .success(
+                StoryModel(id: data.recordID, keywords: data["keywords"] as! [String], introduction: data["introduction"] as! [String], problem: data["problem"] as! [String], resolution: data["resolution"] as! [String], introductionSound: data["introductionSound"] as? [Data], problemSound: data["problemSound"] as? [Data], resolutionSound: (data["resolutionSound"] as? [Data]))
+            )
         } catch {
             return .failure(error)
         }

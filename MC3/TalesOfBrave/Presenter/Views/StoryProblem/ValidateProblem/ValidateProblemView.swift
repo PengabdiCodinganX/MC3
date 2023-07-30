@@ -12,7 +12,6 @@ struct ValidateProblemView: View {
     let onDismiss: () -> Void
     
     var body: some View {
-        
         PrimaryButton(text: " Continue ", isFull: true) {
             onContinue()
         }
