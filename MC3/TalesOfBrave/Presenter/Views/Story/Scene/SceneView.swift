@@ -182,9 +182,6 @@ struct SceneView: View {
                 .transition(.opacity)
                 .id(index)
             VStack{
-                ProgressView(value: min(max(0, Double(scenes[index].currentTextIndex)), Double((scenes[index].text?.count ?? 0) - 1)),
-                             total: Double((scenes[index].text?.count ?? 0) - 1))
-                .tint(.black)
                 Spacer()
                 
                 PlayTextView(

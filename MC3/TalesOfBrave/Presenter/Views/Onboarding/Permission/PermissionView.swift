@@ -22,8 +22,8 @@ struct PermissionView: View {
 //        Spacer()
         VStack(spacing: 24){
             
-            Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
-                .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
+//            Toggle("Allow push notifications", isOn: $viewModel.isPushNotificationPermissionAllowed)
+//                .onChange(of: viewModel.isPushNotificationPermissionAllowed, perform: viewModel.handleOnPushNotificationsPermissionToggled)
             Toggle("Allow access mirophone", isOn: $viewModel.isMicrophonePermissionAllowed)
                 .onChange(of: viewModel.isMicrophonePermissionAllowed, perform: viewModel.handleOnMicrophonePermissionToggled)
             
