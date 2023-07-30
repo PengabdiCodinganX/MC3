@@ -7,7 +7,7 @@
 
 import Foundation
 import CloudKit
-
+@MainActor
 class MyReflectionDetailViewModel: ObservableObject {
     private var storyCloudKitService: StoryCloudKitService = StoryCloudKitService()
     private var ratingCloudKitService: RatingCloudKitService = RatingCloudKitService()
@@ -25,13 +25,12 @@ class MyReflectionDetailViewModel: ObservableObject {
             var storyModel: StoryModel?
             do{
                 storyModel = try await getStory(story: data.story!)
-                print("[storyModel", storyModel)
                 if(storyModel != nil){
-                    var intro =  storyModel?.introduction.joined(separator: "")
-                    var prob =  storyModel?.problem.joined(separator: "")
+                    let intro =  storyModel?.introduction.joined(separator: "")
+                    let prob =  storyModel?.problem.joined(separator: "")
                     
-                    var res =  storyModel?.resolution.joined(separator: "")
-                    story = "\(intro). \(prob). \(res)"
+                    let res =  storyModel?.resolution.joined(separator: "")
+                    story = "\(intro.unsafelyUnwrapped). \(prob.unsafelyUnwrapped). \(res.unsafelyUnwrapped)"
                 }
             }
             catch{
