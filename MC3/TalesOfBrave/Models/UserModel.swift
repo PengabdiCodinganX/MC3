@@ -13,4 +13,5 @@ struct UserModel: Identifiable {
     var userIdentifier: String?
     var email: String?
     var name: String?
+    var dev: Int64?
 }

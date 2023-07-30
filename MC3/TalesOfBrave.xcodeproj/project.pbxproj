@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,7 @@
 		15A5C12B4CB1144826EFEC79 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6E401B63806BD84F4EF0B /* IntroductionView.swift */; };
 		163D32D9F26E81392E4C5446 /* StoryProblemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869018E39C76D967776F055F /* StoryProblemView.swift */; };
 		174CFFCCE849C7F64388669E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CAAFD41445FCAFDFB1B258 /* APIManager.swift */; };
+		17B3254DA2F4A1117601A770 /* DeveloperViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB5CCDB01EF8A82251D703D /* DeveloperViewModel.swift */; };
 		183250C80BF4C4B59C3AD3C5 /* a-scene-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 6193A554998C3B55E4D69BA4 /* a-scene-1.json */; };
 		1A97F3B8D7DAE42494C71EA8 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8194AE71D22E09C51EBFA /* UserViewModel.swift */; };
 		1F8F223DDAB56C928325C62E /* ButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3663D9CB076C4B3FFCDA5A1 /* ButtonType.swift */; };
@@ -85,6 +86,7 @@
 		8C045ADBB4994964F9E3A166 /* introduction-story-lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 0FE3984F89F243C3E0656D2B /* introduction-story-lottie.json */; };
 		8D812B2EFFB06A3884F9628F /* storyProblem4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 798E07DF778166452574B2BD /* storyProblem4.mp3 */; };
 		8E4AC0598F388CB049DD820F /* ReflectionInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F743B5B303DE0A510DA5F05 /* ReflectionInputView.swift */; };
+		90506B54AA87BAE665287861 /* DeveloperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F52DD17B4712801654D7FDF /* DeveloperView.swift */; };
 		90B09BFC6A07FF267D11E07B /* StoryRecapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC76D49917CC6A610B4EAA40 /* StoryRecapViewModel.swift */; };
 		9107EFDD18778F19F950FDF3 /* motivation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 42376A033938104D18ECC1AC /* motivation.mp3 */; };
 		917ED67E16519E5001290D88 /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671B79EBEF7CADF761A2C7DB /* RecordType.swift */; };
@@ -228,11 +230,12 @@
 		83251F47FDFE5723E4EC2940 /* SelfAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAffirmationView.swift; sourceTree = "<group>"; };
 		8423D701306AF8A4BE5B6662 /* UserCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoreDataService.swift; sourceTree = "<group>"; };
 		869018E39C76D967776F055F /* StoryProblemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryProblemView.swift; sourceTree = "<group>"; };
-		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C31E8960B80953AFCCF1B4 /* IntroductionToStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionToStoryView.swift; sourceTree = "<group>"; };
 		8BB6E401B63806BD84F4EF0B /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		8E7257913DE58AEA8D70075D /* MyReflectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReflectionView.swift; sourceTree = "<group>"; };
 		8EEBC131D1891B20DE38F955 /* StoryProblemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryProblemType.swift; sourceTree = "<group>"; };
+		8F52DD17B4712801654D7FDF /* DeveloperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperView.swift; sourceTree = "<group>"; };
 		8FFEF8E1F7C246DD674F158E /* quote4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = quote4.mp3; sourceTree = "<group>"; };
 		95A1FC98DD477D217E9BA392 /* UserCloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCloudKitService.swift; sourceTree = "<group>"; };
 		95CC8C3BB5EE28E76F97791F /* RoundedCornerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerExtension.swift; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		F137669727367FE80EFA5B9A /* charachter-animation-lottie.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "charachter-animation-lottie.json"; sourceTree = "<group>"; };
 		F4C7E82A8DD0641B4403C507 /* BubbleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleText.swift; sourceTree = "<group>"; };
 		FB3FC88B71B2229079B528E7 /* StoryCloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCloudKitService.swift; sourceTree = "<group>"; };
+		FCB5CCDB01EF8A82251D703D /* DeveloperViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +330,14 @@
 				6A6E2659BF84091A278BEEFD /* MainViewModel.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		1423026A85A91DF0D20CE28D /* Developer */ = {
+			isa = PBXGroup;
+			children = (
+				8F52DD17B4712801654D7FDF /* DeveloperView.swift */,
+			);
+			path = Developer;
 			sourceTree = "<group>";
 		};
 		157D27C2735D7FA00D191FB9 /* Home */ = {
@@ -451,6 +463,7 @@
 			children = (
 				76990347B49F90EF832F83B9 /* MoreStoryView.swift */,
 				1698F5BC0F4DAFA60428A9F5 /* Breathing */,
+				1423026A85A91DF0D20CE28D /* Developer */,
 				3C4D481D0D027A22D2EA8498 /* Home */,
 				3A87E88B61028A57C39CDC9C /* Main */,
 				E94B02618A2B95EC02E1464A /* MyReflection */,
@@ -649,6 +662,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		87E320DBDC8A5AA84FC2CF0D /* Developer */ = {
+			isa = PBXGroup;
+			children = (
+				FCB5CCDB01EF8A82251D703D /* DeveloperViewModel.swift */,
+			);
+			path = Developer;
+			sourceTree = "<group>";
+		};
 		8DA63D2DFA604A43A72977E9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +740,7 @@
 				0ADE8E93A106D9F2712B9E46 /* TextToSpeech.swift */,
 				4CE8194AE71D22E09C51EBFA /* UserViewModel.swift */,
 				46F1DCF0D2BB27EC6DD93A1C /* Breathing */,
+				87E320DBDC8A5AA84FC2CF0D /* Developer */,
 				157D27C2735D7FA00D191FB9 /* Home */,
 				14206B89B2BF380CBB15A4B8 /* Main */,
 				AD3D51D2F037E58B436BB5FE /* MyReflection */,
@@ -991,6 +1013,8 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = D0EAD7872B128F8F23DBB2AB /* Build configuration list for PBXProject "TalesOfBrave" */;
 			compatibilityVersion = "Xcode 11.0";
@@ -1077,6 +1101,8 @@
 				6B0CB14487004AC6E4E26804 /* ControlButton.swift in Sources */,
 				2F8A043F1EE2102688BEB323 /* CoreDataManager.swift in Sources */,
 				692F5C6C5D35039974E0B085 /* DateComponentsFormatter.swift in Sources */,
+				90506B54AA87BAE665287861 /* DeveloperView.swift in Sources */,
+				17B3254DA2F4A1117601A770 /* DeveloperViewModel.swift in Sources */,
 				9348FE6DFB3CDBF5F0209DBA /* ElevenLabsAPIService.swift in Sources */,
 				13EA78C7161F3C4482318798 /* HistoryCloudKitService.swift in Sources */,
 				700F5EDB9D5C14C98AC7F6CC /* HistoryModel.swift in Sources */,
@@ -1288,23 +1314,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Tales of Brave: Motivation App";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1314,23 +1332,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Tales of Brave: Motivation App";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

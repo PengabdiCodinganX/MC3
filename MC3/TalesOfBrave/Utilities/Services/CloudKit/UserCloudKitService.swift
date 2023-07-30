@@ -23,7 +23,7 @@ class UserCloudKitService {
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
-                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"])
+                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"], dev: $0["dev"])
                 }
             
             return .success(data)
@@ -64,7 +64,7 @@ class UserCloudKitService {
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
-                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"])
+                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"], dev: $0["dev"])
                 }
             
             guard let user = data.first else {
@@ -88,7 +88,7 @@ class UserCloudKitService {
             let data = result.matchResults
                 .compactMap { _, result in try? result.get() }
                 .compactMap{
-                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"])
+                    UserModel(id: $0.recordID, userIdentifier: $0["userIdentifier"], email: $0["email"], name: $0["name"], dev: $0["dev"])
                 }
             
             guard let user = data.first else {
@@ -111,7 +111,7 @@ class UserCloudKitService {
             let result = try await cloudKitManager.saveData(record: record)
             
             return .success(
-                UserModel(id: result.recordID, userIdentifier: user.userIdentifier, email: user.email, name: user.name)
+                UserModel(id: result.recordID, userIdentifier: user.userIdentifier, email: user.email, name: user.name, dev: user.dev)
             )
         } catch {
             return .failure(error)

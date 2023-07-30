@@ -62,6 +62,8 @@ struct HomeView: View {
     
     @StateObject var mouthLottieController = LottieController()
     
+    @State private var tapCount: Int = 0
+    
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.top)
@@ -75,6 +77,17 @@ struct HomeView: View {
                     .padding([.horizontal, .top], 32)
                     .onTapGesture {
                         handleMascotTap()
+                        
+                        guard user?.dev == 1 else {
+                            return
+                        }
+                        
+                        tapCount += 1
+                        
+                        if tapCount == 5 {
+                            tapCount = 0
+                            pathStore.navigateToView(viewPath: .developer)
+                        }
                     }
                 VStack(spacing: 16){
                     Button{
