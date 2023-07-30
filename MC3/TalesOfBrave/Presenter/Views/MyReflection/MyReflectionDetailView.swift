@@ -20,67 +20,70 @@ struct MyReflectionDetailView: View {
     }
     
     var body: some View {
-        ZStack{
-            Color("AccentColor") 
-                .ignoresSafeArea()
-                .onAppear{
-                    Task{
-                        
-                        await vm.initData(data: history)
+            ZStack{
+                Color("AccentColor")
+                    .ignoresSafeArea()
+                    .onAppear{
+                        Task{
+                            
+                            await vm.initData(data: history)
+                        }
                     }
-                }
-            VStack(spacing: 16){
-                DisclosureGroup("Related Motivation Story", isExpanded: $isMotivationExpanded) {
-                    VStack {
-                        Text(vm.story)
-                            .font(.callout)
-                            .onTapGesture {
-                                withAnimation{
-                                    isMotivationExpanded.toggle()
+                
+                    ScrollView{
+                VStack(spacing: 16){
+                    DisclosureGroup("Related Motivation Story", isExpanded: $isMotivationExpanded) {
+                        VStack {
+                            Text(vm.story)
+                                .font(.callout)
+                                .onTapGesture {
+                                    withAnimation{
+                                        isMotivationExpanded.toggle()
+                                    }
                                 }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .tint(Color("SecondaryColorDark"))
-                DisclosureGroup("Your Reflection", isExpanded: $isReflectionExpanded) {
-                    VStack {
-                        Text(vm.reflection)
-                            .font(.callout)
-                            .onTapGesture {
-                                withAnimation{
-                                    isReflectionExpanded.toggle()
+                    .tint(Color("SecondaryColorDark"))
+                    DisclosureGroup("Your Reflection", isExpanded: $isReflectionExpanded) {
+                        VStack {
+                            Text(vm.reflection)
+                                .font(.callout)
+                                .onTapGesture {
+                                    withAnimation{
+                                        isReflectionExpanded.toggle()
+                                    }
                                 }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .tint(Color("SecondaryColorDark"))
-                DisclosureGroup("Your Problem", isExpanded: $isProblemExpanded) {
-                    VStack {
-                        Text(vm.problem)
-                            .font(.callout)
-                            .onTapGesture {
-                                withAnimation{
-                                    isProblemExpanded.toggle()
+                    .tint(Color("SecondaryColorDark"))
+                    DisclosureGroup("Your Problem", isExpanded: $isProblemExpanded) {
+                        VStack {
+                            Text(vm.problem)
+                                .font(.callout)
+                                .onTapGesture {
+                                    withAnimation{
+                                        isProblemExpanded.toggle()
+                                    }
                                 }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .tint(Color("SecondaryColorDark"))
+                    Spacer()
                 }
-                .tint(Color("SecondaryColorDark"))
-                Spacer()
+                
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.white)
+                .cornerRadius(16)
+                
+                .padding(24)
             }
-            
-            .padding(24)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.white)
-            .cornerRadius(16)
-            
-            .padding(24)
         }
     }
 }
