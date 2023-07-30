@@ -92,8 +92,8 @@ struct OnboardingFirstView: View {
                         case .permission:
                             VStack(spacing: 24){
                                 
-                                Toggle("Allow push notifications", isOn: $permissionViewModel.isPushNotificationPermissionAllowed)
-                                    .onChange(of: permissionViewModel.isPushNotificationPermissionAllowed, perform: permissionViewModel.handleOnPushNotificationsPermissionToggled)
+//                                Toggle("Allow push notifications", isOn: $permissionViewModel.isPushNotificationPermissionAllowed)
+//                                    .onChange(of: permissionViewModel.isPushNotificationPermissionAllowed, perform: permissionViewModel.handleOnPushNotificationsPermissionToggled)
                                 Toggle("Allow access mirophone", isOn: $permissionViewModel.isMicrophonePermissionAllowed)
                                     .onChange(of: permissionViewModel.isMicrophonePermissionAllowed, perform: permissionViewModel.handleOnMicrophonePermissionToggled)
                                 

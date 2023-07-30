@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -228,7 +228,7 @@
 		83251F47FDFE5723E4EC2940 /* SelfAffirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfAffirmationView.swift; sourceTree = "<group>"; };
 		8423D701306AF8A4BE5B6662 /* UserCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoreDataService.swift; sourceTree = "<group>"; };
 		869018E39C76D967776F055F /* StoryProblemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryProblemView.swift; sourceTree = "<group>"; };
-		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8872BE397C3C45950EC55C91 /* TalesOfBrave.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TalesOfBrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C31E8960B80953AFCCF1B4 /* IntroductionToStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionToStoryView.swift; sourceTree = "<group>"; };
 		8BB6E401B63806BD84F4EF0B /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		8E7257913DE58AEA8D70075D /* MyReflectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReflectionView.swift; sourceTree = "<group>"; };
@@ -991,6 +991,8 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = D0EAD7872B128F8F23DBB2AB /* Build configuration list for PBXProject "TalesOfBrave" */;
 			compatibilityVersion = "Xcode 11.0";
@@ -1288,15 +1290,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1309,15 +1308,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalesOfBrave/TalesOfBrave.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 57DDT5D7L5;
 				INFOPLIST_FILE = TalesOfBrave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Vincent-Gunawan.TalesOfBrave";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

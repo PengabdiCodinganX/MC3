@@ -48,9 +48,9 @@ class PermissionViewModel: ObservableObject {
     
     func isPermissionsAllowed() -> Bool {
         // Check for permissions
-        guard appStorageService.isPushNotificationPermissionAllowed else {
-            return false
-        }
+//        guard appStorageService.isPushNotificationPermissionAllowed else {
+//            return false
+//        }
         
         guard appStorageService.isMicrophonePermissionAllowed else {
             return false
@@ -64,25 +64,25 @@ class PermissionViewModel: ObservableObject {
         self.isError = true
     }
     
-    func handleOnPushNotificationsPermissionToggled(_ isOn: Bool) {
-        if isOn {
-            // Request permission for push notifications if not yet granted.
-            let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-                withAnimation(.spring()) {
-                    self.appStorageService.isPushNotificationPermissionAllowed = granted
-                    
-                    Task {
-                        await MainActor.run {
-                            self.isPushNotificationPermissionAllowed = granted
-                        }
-                    }
-                }
-            }
-        } else {
-            print("Push notification permission toggle is off.")
-        }
-    }
+//    func handleOnPushNotificationsPermissionToggled(_ isOn: Bool) {
+//        if isOn {
+//            // Request permission for push notifications if not yet granted.
+//            let center = UNUserNotificationCenter.current()
+//            center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+//                withAnimation(.spring()) {
+//                    self.appStorageService.isPushNotificationPermissionAllowed = granted
+//
+//                    Task {
+//                        await MainActor.run {
+//                            self.isPushNotificationPermissionAllowed = granted
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            print("Push notification permission toggle is off.")
+//        }
+//    }
 
     func handleOnMicrophonePermissionToggled(_ isOn: Bool) {
         if isOn {
