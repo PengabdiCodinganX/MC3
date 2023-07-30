@@ -17,6 +17,7 @@ class MyReflectionDetailViewModel: ObservableObject {
     @Published var reflection: String = ""
     
     func initData(data: HistoryModel) async -> Void {
+        print("[data]", data)
         problem = data.problem ?? ""
         reflection = data.reflection ?? ""
         
@@ -24,12 +25,13 @@ class MyReflectionDetailViewModel: ObservableObject {
             var storyModel: StoryModel?
             do{
                 storyModel = try await getStory(story: data.story!)
+                print("[storyModel", storyModel)
                 if(storyModel != nil){
                     var intro =  storyModel?.introduction.joined(separator: "")
                     var prob =  storyModel?.problem.joined(separator: "")
                     
                     var res =  storyModel?.resolution.joined(separator: "")
-                    story = "\(intro). \(problem). \(res)"
+                    story = "\(intro). \(prob). \(res)"
                 }
             }
             catch{
@@ -45,6 +47,7 @@ class MyReflectionDetailViewModel: ObservableObject {
         
         switch result {
         case .success(let success):
+            print("[getStory][success]", success)
             return success
         case .failure(let failure):
             print("kfqwnflqwkndqw", failure)
