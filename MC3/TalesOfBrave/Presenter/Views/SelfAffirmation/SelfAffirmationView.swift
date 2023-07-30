@@ -17,55 +17,96 @@ struct SelfAffirmationView: View {
     var body: some View {
         ZStack{
             Color("AccentColor").edgesIgnoringSafeArea(.all)
-
+            
             VStack{
                 Spacer()
                 //MARK: chat bubble
-                BubbleText(text: "Say \(selfAffirmationVM.selectedWord.capitalized)", alignment: .vertical)
-                //MARK: maskot image
-                Image("Mascot-Half-Body")
-                    .padding(16)
-                //MARK: Button speech
-                Button {
-                    if self.didLongPress {
-                        self.didLongPress = false
-                        selfAffirmationVM.offRecording()
-                        selfAffirmationVM.toggleRecording()
-                        print(selfAffirmationVM.counterWord)
-                    } else {
-                        print("Tap button")
-                    }
-                } label: {
-                    Image(systemName: "mic.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 35)
-                        .tint(.white)
-                        .padding(16)
+                if(!selfAffirmationVM.isFinished){
+                    BubbleText(text: "Say '\(selfAffirmationVM.affirmationWords[selfAffirmationVM.currentAffirmationWordIndex])'", alignment: .vertical)
+                } else {
+                    
+                        BubbleText(text: "Nicely done", alignment: .vertical)
                 }
-                .frame(width: 80, height: 80)
-                .background(selfAffirmationVM.isRecording ? Color("SecondaryColor") : .black)
-                .cornerRadius(100)
-                .simultaneousGesture(
-                    LongPressGesture().onEnded { _ in self.didLongPress = true
-                        //Active Listening
-                        selfAffirmationVM.onRecording()
-                        selfAffirmationVM.toggleRecording()
+                //MARK: maskot image
+                switch selfAffirmationVM.affirmationStage {
+                case 0:
+                    Image("brave-base")
+                        .resizable()
+                        .aspectRatio( contentMode: .fit)
+                        .padding(16)
+                case 1:
+                    Image("brave-1")
+                        .resizable()
+                        .aspectRatio( contentMode: .fit)
+                        .padding(16)
+                case 2:
+                    Image("brave-2")
+                        .resizable()
+                        .aspectRatio( contentMode: .fit)
+                        .padding(16)
+                default:
+                    Image("brave-3")
+                        .resizable()
+                        .aspectRatio( contentMode: .fit)
+                        .padding(16)
+                    
+                }
+                
+                
+                if(!selfAffirmationVM.isFinished){
+                    
+                    if(selfAffirmationVM.isStarted){
+                        Text("Your answer :  \(selfAffirmationVM.speechRecognizer.transcript)")
+                    } else {
+                        Text("Hold to start record and relase to stop")
+                            .onAppear{
+                                selfAffirmationVM.initStart()
+                            }
                     }
-                )
+                    //MARK: Button speech
+                    Button {
+                        if self.didLongPress {
+                            self.didLongPress = false
+                            selfAffirmationVM.offRecording()
+                            selfAffirmationVM.toggleRecording()
+                            //                        print(selfAffirmationVM.counterWord)
+                        } else {
+                            print("Tap button")
+                        }
+                    } label: {
+                        Image(systemName: "mic.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 35)
+                            .tint(.white)
+                            .padding(16)
+                    }
+                    .frame(width: 80, height: 80)
+                    .background(selfAffirmationVM.isRecording ? Color("SecondaryColor") : .black)
+                    .cornerRadius(100)
+                    .simultaneousGesture(
+                        LongPressGesture().onEnded { _ in self.didLongPress = true
+                            //Active Listening
+                            selfAffirmationVM.onRecording()
+                            selfAffirmationVM.toggleRecording()
+                        }
+                    )
+                } else {
+                    PrimaryButton(text: "Finish", isFull: true){
+                        pathStore.popToRoot()
+                    }
+                }
                 
                 Spacer()
-                //check answer
-                if (selfAffirmationVM.isAnswer){
-                    PrimaryButton(text: "Continue", isFull: true) {
-                        proceedToHome()
-                    }
-                }
+                //                //check answer
+                //                if (selfAffirmationVM.isAnswer){
+                //                    PrimaryButton(text: "Continue", isFull: true) {
+                //                        proceedToHome()
+                //                    }
+                //                }
             }
             .padding()
-            .onAppear{
-                selfAffirmationVM.getAffirmationWords()
-            }
+            
         }
     }
     
