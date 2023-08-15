@@ -101,12 +101,13 @@ Here are the steps to enable these capabilities:
 ### Configuring CloudKit
 Initiate a cloud kit container and establish these Record Types with specific fields:
 
-API_Key: apiKey, name
-History: problem, rating, reflection, story, user
-Rating: rating, story, user
-Sound: id, sound, text
-Story: IntroductionSound, introduction, introductionSound, keywords, problem, problemSound, ratings, resolution, resolutionSound, storyRating
-User: dev, email, name, userIdentifier
+- API_Key: apiKey, name
+- History: problem, rating, reflection, story, user
+- Rating: rating, story, user
+- Sound: id, sound, text
+- Story: IntroductionSound, introduction, introductionSound, keywords, problem, problemSound, ratings, resolution, resolutionSound, storyRating
+- User: dev, email, name, userIdentifier
+
 Finally, include your Chat GPT and Elevenlabs API keys, labelling them chatGPT and elevenLabs respectively under API_Key.
 
 </details>
